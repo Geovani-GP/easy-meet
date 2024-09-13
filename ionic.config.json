@@ -1,0 +1,8 @@
+{
+  "name": "EasyMeet",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "d1d5a245"
+}
