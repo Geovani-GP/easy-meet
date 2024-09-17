@@ -1,2 +1,14 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+
+:root {
+    --background: none; // Color de fondo en modo claro
+}
+
+[color-mode="dark"] {
+    --background: none; // Color de fondo en modo oscuro
+}
+
+.item-native {
+    background: #7b66ff !important; // Cambia el fondo aquí
+}

@@ -1,0 +1,31 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>Splash Screen</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="full-screen">
+  <div class="slider-container-wrapper">
+  <div class="slider-container" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)">
+    <div class="image-wrapper">
+      <img [src]="images[currentIndex]" class="full-screen-image" />
+      <p class="image-description-title">{{ imageDescriptionsTitle[currentIndex] }}</p>
+      <p class="image-description">{{ imageDescriptions[currentIndex] }}</p> <!-- Texto descriptivo -->
+    </div>
+  </div>
+  <div class="dots-container">
+    <span *ngFor="let image of images; let i = index" 
+          [class.active]="i === currentIndex" 
+          (click)="onImageClick(i)"></span>
+  </div>
+<br>
+  <ion-item class="checkbox-container">
+    <ion-checkbox class="checkbox" [(ngModel)]="skipSplash">No mostrar nuevamente</ion-checkbox>
+  <!--   <ion-label></ion-label> -->
+  </ion-item>
+  <br>
+  <p class="skip-button" expand="full" (click)="continue()">Saltar introducción</p>
+  
+  
+</div> 
+</ion-content>

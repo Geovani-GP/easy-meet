@@ -3,8 +3,16 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+  hasSeenSplash: boolean = false;
+
+  constructor() {
+    this.initializeApp();
+  }
+
+  initializeApp() {
+    // Forzar el modo claro
+    document.body.setAttribute('color-mode', 'light');
+  }
 }

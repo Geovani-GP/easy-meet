@@ -3,16 +3,19 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { TabsPageRoutingModule } from './tabs-routing.module';
-
 import { TabsPage } from './tabs.page';
+import { TabsPageRoutingModule } from './tabs-routing.module';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   imports: [
-    IonicModule,
     CommonModule,
     FormsModule,
-    TabsPageRoutingModule
+    IonicModule,
+    MatCardModule, // Asegúrate de incluirlo aquí
+    MatButtonModule, // Incluye otros módulos que necesites
+    TabsPageRoutingModule // Asegúrate de importar el módulo de rutas
   ],
   declarations: [TabsPage]
 })

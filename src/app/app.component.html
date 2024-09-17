@@ -1,3 +1,4 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <app-splash-screen style="height: 100vh;" *ngIf="!hasSeenSplash" (splashDismissed)="hasSeenSplash = true"></app-splash-screen>
+  <ion-router-outlet *ngIf="hasSeenSplash" style="background-color: #f4f4f4;"></ion-router-outlet>
 </ion-app>

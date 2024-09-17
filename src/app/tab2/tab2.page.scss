@@ -1,0 +1,19 @@
+.card {
+    width: 90%; /* Ancho de la tarjeta */
+    margin: 20px; /* Espaciado alrededor de la tarjeta */
+    box-shadow: 2px 2px 12px 0px rgba(0, 0, 0, 0.1); /* Sombra */
+  }
+  
+  mat-card {
+    background-color: #f4f4f4; /* Color de fondo */
+    color: var(--text-color); /* Color del texto */
+  }
+  
+  mat-card-title, mat-card-subtitle {
+    color: white; /* Color del texto del título y subtítulo */
+  }
+
+  .header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }

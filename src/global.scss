@@ -1,3 +1,40 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the theme object.
+$app-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$azure-palette,
+    tertiary: mat.$blue-palette,
+  ),
+  density: (
+    scale: 0,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+:root {
+  @include mat.all-component-themes($app-theme);
+}
+
+// Comment out the line below if you want to use the pre-defined typography utility classes.
+// For more information: https://material.angular.io/guide/typography#using-typography-styles-in-your-application.
+// @include mat.typography-hierarchy($app-theme);
+
+// Comment out the line below if you want to use the deprecated `color` inputs.
+// @include mat.color-variants-backwards-compatibility($app-theme);
+// src/global.scss
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -16,7 +53,7 @@
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
-@import "@ionic/angular/css/display.css";
+@import '@ionic/angular/css/display.css';
 
 /* Optional CSS utils that can be commented out */
 @import "@ionic/angular/css/padding.css";
@@ -25,6 +62,11 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
+/* Swiper styles */
+/* @import 'swiper/scss';
+@import 'swiper/scss/navigation';
+@import 'swiper/scss/pagination'; */
+
 /**
  * Ionic Dark Mode
  * -----------------------------------------------------
@@ -32,6 +74,79 @@
  * https://ionicframework.com/docs/theming/dark-mode
  */
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+    /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
+/* @import "@ionic/angular/css/palettes/dark.system.css"; */
+
+:root {
+    --ion-color-backgroun: #7b66ff; // Color de fondo en modo claro
+    --ion-color-text: #ffffff; // Color de texto en modo claro
+    --ion-color-primary: #7b66ff; // Color primario de los botones en modo claro
+    --ion-color-secondary: #7b66ff; // Color secundario de los botones en modo claro
+    --knob-background: #7b66ff !important;
+  
+}
+
+.easy-meet-title{
+    color: #7b66ff !important;
+    font-weight: 500;
+    font-size: 14px !important;
+}
+
+.easy-meet-subtitle{
+    color: #303032 !important;
+    font-weight: 500;
+    font-size: 14px !important;
+}
+
+.easy-meet-text{
+    color: #181717 !important;
+    font-weight: 500;
+    font-size: 14px !important;
+
+}
+
+
+.easy-meet-button {
+    --background: #7b66ff; // Color de fondo cuando está seleccionado
+    --color: #fff; // Color del texto cuando está seleccionado
+    font-size: 10px;
+    border-radius: 15px !important; 
+  }
+  
+
+  
+  .easy-meet-button:hover {
+    --background: #7b66ff; // Color de fondo cuando está seleccionado
+    --color: #fff; // Color del texto cuando está seleccionado
+    font-size: 10px;
+    box-shadow: 1px 1px 7px 1px var(--ion-color-primary);
+    border-radius: 15px !important; // Color de fondo al pasar el mouse
+  }
+
+::host{
+    --knob-background: #7b66ff !important;
+}
+
+
+
+[color-mode="dark"] {
+    --ion-color-background: trasparent; // Color de fondo en modo oscuro
+    --ion-color-text: #ffffff; // Color de texto en modo oscuro
+    --ion-color-primary: #4a8cff; // Color primario de los botones en modo oscuro
+    --ion-color-secondary: #5ac8fa; // Color secundario de los botones en modo oscuro
+
+
+}
+
+.range-knob{
+    background-color: var(--ion-color-primary) !important;
+}
+
+.item-native {
+    background: var(--ion-color-background) !important; // Asegúrate de que el fondo sea el deseado
+    color: inherit;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
