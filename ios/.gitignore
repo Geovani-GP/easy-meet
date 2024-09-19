@@ -4,7 +4,8 @@ App/output
 App/App/public
 DerivedData
 xcuserdata
-
+src/environments/environment.prod.ts
+src/environments/environment.ts
 # Cordova plugins for Capacitor
 capacitor-cordova-ios-plugins
 
