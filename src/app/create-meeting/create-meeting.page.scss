@@ -1,0 +1,61 @@
+.content-container{
+    margin: 10px;
+    }
+    
+    .ion-range > .range-knob{
+      background-color: var(--ion-color-primary)!important;
+      border-radius: 20px; /* Cambia el borde redondeado */
+      width: 20px; /* Cambia el ancho */
+      height: 20px; /* Cambia la altura */
+      box-shadow: 0 0 0 2px var(--ion-color-primary); /* Cambia el color de la esfera */
+      background: var(--ion-color-primary) !important;
+    }
+    
+    :host{
+      --knob-background: #7b66ff;
+    }
+    
+    .fecha {
+        margin-top: 16px; // Espaciado superior
+        font-size: 14px; // Tamaño de la fecha
+      }
+  
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5); // Fondo semi-transparente
+        display: flex;
+        justify-content: center;
+        z-index: 1000;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: center;
+      }
+
+      ion-datetime {
+        background: white; // Fondo blanco para el date picker
+        border-radius: 8px; // Bordes redondeados
+        padding: 16px; // Espaciado interno
+      }
+    ion-content {
+        padding: 16px; // Espaciado interno
+        background-color: #f8f8f8; // Color de fondo del contenido
+      }
+ion-header {
+    background-color: #f8f8f8; /* Color de fondo del encabezado */
+  }
+  
+  ion-content {
+    padding: 16px; /* Espaciado interno */
+  }
+
+ion-item {
+    margin-bottom: 16px; /* Espaciado entre los elementos del formulario */
+}
+
+ion-button {
+    margin-top: 20px; /* Espaciado superior para el botón de registrar */
+}

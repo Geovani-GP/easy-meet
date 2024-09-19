@@ -1,0 +1,27 @@
+.event-image {
+  text-align: center;
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+}
+
+.event-details {
+  padding: 16px;
+  h2 {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+  p {
+    margin: 4px 0;
+    font-size: 16px;
+  }
+}
+
+.event-actions {
+  padding: 16px;
+  ion-button {
+    margin-top: 8px;
+  }
+}

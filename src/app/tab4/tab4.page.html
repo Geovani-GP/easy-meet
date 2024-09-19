@@ -1,0 +1,78 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="content">
+  <div class="content-container">
+  <div class="profile">
+    <img src="assets/profile.jpg" alt="Perfil" class="profile-picture">
+    <h2 class="easy-meet-title">Geovani Gómez Pérez</h2>
+    <p class="easy-meet-subtitle">Geovanieofku</p>
+    <p class="easy-meet-subtitle">20 junio 2024</p>
+    <ion-button color="danger" size="small">Cerrar sesión</ion-button>
+  </div>
+
+  <div class="interests">
+    <h3 class="easy-meet-title">Intereses</h3>
+    <ion-button fill="outline" icon-only (click)="navigateToCreateInterests()">
+      <ion-icon name="create"></ion-icon>
+    </ion-button>
+  </div>
+
+
+
+
+  
+  <div class="assistance">
+    <h3 class="easy-meet-title">Mis asistencias</h3>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <ion-card style="height: 200px;" (click)="navigateToAssistanceDetail()">
+            <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Asistencia 1">
+            <ion-card-header>
+              <ion-card-title class="easy-meet-subtitle">Degustación de Puros</ion-card-title>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-card style="height: 200px;" (click)="navigateToAssistanceDetail()">
+            <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Asistencia 2">
+            <ion-card-header>
+              <ion-card-title class="easy-meet-subtitle">Reunión de desarrolladores</ion-card-title>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <div class="meetings">
+    <h3 class="easy-meet-title">Mis reuniones</h3>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <ion-card style="height: 200px;" (click)="navigateToMeetingDetail()">
+            <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Reunión 1">
+            <ion-card-header>
+              <ion-card-title class="easy-meet-subtitle">Reunión de desarrolladores</ion-card-title>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-card style="height: 200px;" (click)="navigateToMeetingDetail()">
+            <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Reunión 2">
+            <ion-card-header>
+              <ion-card-title class="easy-meet-subtitle">Reunión 1</ion-card-title>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <ion-button expand="full" color="primary" class="create-meeting-button" (click)="navigateToCreateMeeting()">Crear reunión</ion-button>
+</div>
+</ion-content>

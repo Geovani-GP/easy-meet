@@ -1,0 +1,70 @@
+.details-container {
+  padding: 16px;
+  text-align: center;
+}
+
+.trend-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.trend-name {
+  font-size: 20px;
+  color: #666;
+  margin: 5px 0;
+}
+
+.trend-date {
+  font-size: 14px;
+  color: #999;
+  margin: 5px 0;
+}
+
+.trend-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+.trend-description {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.trend-multitarea {
+  font-size: 16px;
+  color: #007bff; // Color para resaltar
+  margin: 10px 0;
+}
+
+/* Estilos para la tarjeta de usuario */
+.user-card {
+  display: flex;
+  align-items: center;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-info {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-alias {
+  font-size: 16px;
+  font-weight: bold;
+}

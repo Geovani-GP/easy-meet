@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-tab1',
   templateUrl: './tab1.page.html',
   styleUrls: ['./tab1.page.scss'],
 })
 export class Tab1Page {
+  constructor(private router: Router) {}
   intereses = [
     { name: 'Arte Y Manualidades', selected: false },
     { name: 'Astrología Y Espiritualidad', selected: false },
@@ -50,5 +51,11 @@ export class Tab1Page {
   onDateChange(event: any) {
     this.selectedDate = event.detail.value; // Actualizar la fecha seleccionada
     this.isDatePickerVisible = false; // Ocultar el date picker después de seleccionar
+  }
+
+  buscar() {
+    // Aquí puedes implementar la lógica para realizar la búsqueda
+    // Por ejemplo, podrías almacenar la consulta en un servicio o pasarla como parámetro
+    this.router.navigate(['/search-results']);
   }
 }

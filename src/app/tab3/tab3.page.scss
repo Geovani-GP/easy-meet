@@ -1,0 +1,74 @@
+ion-header {
+  background-color: #f8f8f8; /* Color de fondo del encabezado */
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+
+.easy-meet-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 16px;
+}
+ion-title {
+ 
+}
+
+ion-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px; /* Espaciado interno */
+  line-height: 1.5; /* Aumentar el espacio entre líneas */
+}
+
+ion-item {
+  width: 100%; /* Ancho completo */
+  margin-bottom: 16px; /* Espaciado entre campos */
+}
+
+ion-button {
+  /* background-color: #6a1b9a; /* Color del botón */
+  color: white; /* Color del texto del botón */
+}
+
+.divider {
+  text-align: center; /* Centrar el texto "o" */
+  margin: 16px 0; /* Espaciado vertical */
+  font-weight: bold; /* Negrita */
+}
+
+a {
+  color: #6a1b9a; /* Color de los enlaces */
+  text-decoration: underline; /* Subrayar enlaces */
+}
+
+.social-buttons {
+    display: flex;
+    justify-content: space-around; /* Espaciado entre botones */
+    margin-top: 16px; /* Espaciado superior */
+}
+
+.social-button {
+    width: 50px; /* Ancho del botón */
+    height: 50px; /* Alto del botón */
+    border-radius: 50%; /* Hacer el botón redondo */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0; /* Ocultar texto */
+}
+
+.social-button img {
+    width: 70%; /* Ajustar el tamaño de la imagen */
+    height: auto; /* Mantener la proporción */
+}

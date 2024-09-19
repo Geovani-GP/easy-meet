@@ -1,0 +1,41 @@
+<ion-content fullscreen>
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/tabs/tab1"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Resultados de Búsqueda</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <div class="content">
+    <mat-card class="card" appearance="outlined">
+      <mat-card-header>
+        <div mat-card-avatar class="header-image"></div>
+        <mat-card-title class="easy-meet-title">Shiba Inu</mat-card-title>
+        <mat-card-subtitle class="easy-meet-subtitle">Dog Breed</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+     <!--  <mat-card-content class="easy-meet-text">
+        <p>
+          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+          A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+          bred for hunting.
+        </p>
+      </mat-card-content> -->
+      <mat-card-actions>
+        <div
+          style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;width: 100%;line-height: 0px;">
+          <div style="display: flex; flex-direction: column; align-items: flex-start;">
+            <p class="easy-meet-title">Bienestar y autocuidado</p>
+            <p class="easy-meet-title">Tepetongo</p>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: flex-end;">
+           <!--  <button mat-button>LIKE</button>
+            <button mat-button>SHARE</button> -->
+            <button mat-button (click)="verDetalles()">Detalles</button>
+          </div>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</ion-content>
