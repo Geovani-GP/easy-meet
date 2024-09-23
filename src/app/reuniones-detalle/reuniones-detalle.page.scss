@@ -1,0 +1,76 @@
+.details-container {
+    padding: 16px;
+    text-align: center;
+  }
+
+ion-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  background-color: #f8f8f8;
+  padding: 10px 0;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  color: #007bff;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.tab:hover {
+  background-color: #e0e0e0;
+}
+
+.tab.selected {
+  border-bottom: 2px solid #007bff;
+}
+
+
+/* Estilos para la tarjeta de usuario */
+.user-card {
+    display: flex;
+    align-items: center;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .user-info {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .user-alias {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  ion-modal {
+    --height: 35%; /* Ajusta la altura del modal */
+    --border-radius: 16px; /* Bordes redondeados solo en la parte superior */
+    --top: auto; /* Asegura que no se posicione en la parte superior */
+    --bottom: 0; /* Posiciona el modal en la parte inferior */
+  }
+  
+ion-button {
+    margin-top: 10px; /* Espacio entre los botones */
+  }

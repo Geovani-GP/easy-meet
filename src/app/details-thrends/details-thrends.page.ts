@@ -1,31 +1,51 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { SpinnerService } from '../services/spinner.service';
+import { ServicesService } from '../services/services.service';
 
 @Component({
   selector: 'app-details-thrends',
   templateUrl: './details-thrends.page.html',
   styleUrls: ['./details-thrends.page.scss'],
 })
-export class DetailsThrendsPage {
+export class DetailsThrendsPage implements OnInit {
   id: number = 0;
-  // Aquí puedes agregar más propiedades para almacenar los detalles del trend
+  trendDetails: any;
+  uid: string | undefined;
+  trend: any;
+  isLoading: boolean = true;
 
-  constructor(private route: ActivatedRoute) {}
-
+  constructor(private route: ActivatedRoute,
+    private apiService: ServicesService,
+    private spinnerService: SpinnerService) {
+    this.trend = JSON.parse(localStorage.getItem('selectedTrend') || '{}');
+  }
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.id = +params['id']; // Obtiene el ID del trend
-      this.loadDetails(this.id); // Carga los detalles del trend
-    });
+    this.uid = this.route.snapshot.paramMap.get('uid') as string; 
+    this.loadTrendDetails(); 
   }
 
-  loadDetails(id: number) {
-    // Aquí puedes implementar la lógica para cargar los detalles del trend según el ID
-    console.log('Cargando detalles para el trend con ID:', id);
+  loadTrendDetails() {
+    this.spinnerService.show(); 
+    if (this.trend) {
+      console.log(this.trend)
+      this.apiService.getTrendDetails(this.trend.uid).subscribe(
+        (response) => {
+          this.trendDetails = response.payload; 
+          console.log('Detalles del trend:', this.trendDetails); 
+          this.isLoading = false; 
+          this.spinnerService.hide(); 
+      },
+      (error) => {
+        console.error('Error al obtener detalles del trend:', error); 
+        this.isLoading = false; 
+        this.spinnerService.hide(); 
+      }
+    );
   }
+}
 
   contactar() {
-    // Implementa la lógica para contactar
     console.log('Contactar');
   }
 }

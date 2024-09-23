@@ -7,10 +7,11 @@
 </ion-header>
 
 <ion-content>
+  <app-spinner></app-spinner> <!-- Asegúrate de que el spinner esté aquí -->
   <div class="logo-container">
     <img src="assets/logo_corto.png" width="50%" alt="Logo de la aplicación">
   </div>
-  <form>
+  <form (submit)="navigateToTab4($event)"> <!-- Previene el comportamiento por defecto -->
     <ion-item>
       <ion-label position="floating">Correo electrónico</ion-label>
       <ion-input type="email" required></ion-input>
@@ -21,12 +22,12 @@
       <ion-input type="password" required></ion-input>
     </ion-item>
     
-    <ion-button expand="full" type="submit" (click)="navigateToTab4()">Iniciar</ion-button>
+    <ion-button expand="full" type="submit">Iniciar</ion-button>
     <div class="easy-meet-container">
-    <ion-label>
-      <a href="#">Recuperar contraseña</a>
-    </ion-label>
-  </div>
+      <ion-label>
+        <a href="#">Recuperar contraseña</a>
+      </ion-label>
+    </div>
     <div class="divider">o</div>
     
     <div class="social-buttons">

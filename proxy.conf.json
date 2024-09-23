@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "http://nni.com.mx:3200",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

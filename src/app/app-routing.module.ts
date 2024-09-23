@@ -22,7 +22,8 @@ const routes: Routes = [
   {
     path: 'create-meeting',
     loadChildren: () => import('./create-meeting/create-meeting.module').then( m => m.CreateMeetingPageModule)
-  },  {
+  },
+  {
     path: 'details-thrends',
     loadChildren: () => import('./details-thrends/details-thrends.module').then( m => m.DetailsThrendsPageModule)
   },

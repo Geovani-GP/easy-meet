@@ -27,6 +27,7 @@ const routes: Routes = [
         path: 'create-meeting',
         loadChildren: () => import('../create-meeting/create-meeting.module').then(m => m.CreateMeetingPageModule)
       },
+      
       {
         path: '',
         redirectTo: 'tab2', // Redirige a tab1 por defecto

@@ -16,7 +16,7 @@
 
     <ion-item>
       <ion-label position="floating">Descripción</ion-label>
-      <ion-input [(ngModel)]="descripcion" name="descripcion" required></ion-input>
+      <ion-textarea [(ngModel)]="descripcion" name="descripcion" required></ion-textarea>
     </ion-item>
 
     <div class="fecha">
@@ -94,15 +94,15 @@
       </ion-header>
       <ion-content>
         <ion-item>
-          <ion-label position="floating">Dirección</ion-label>
-          <ion-input [(ngModel)]="direccion" placeholder="Escribe la dirección" (ionInput)="buscarDireccion()"></ion-input>
+          <ion-label position="floating" class="easy-meet-title" style="margin-bottom: 20px;">Dirección</ion-label>
+          <ion-textarea [(ngModel)]="direccion" placeholder="Escribe la dirección" (ionInput)="buscarDireccion()"></ion-textarea>
         </ion-item>
         <ion-list *ngIf="sugerencias.length > 0">
           <ion-item *ngFor="let sugerencia of sugerencias" (click)="seleccionarSugerencia(sugerencia)">
             {{ sugerencia.description }}
           </ion-item>
         </ion-list>
-        <div id="map" style="height: 400px; width: 100%;"></div>
+        <div id="map" style="height: 70vh; width: 100%;"></div>
         <ion-button expand="full" (click)="guardarDireccion()">Guardar Dirección</ion-button>
       </ion-content>
     </ng-template>

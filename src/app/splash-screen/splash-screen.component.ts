@@ -39,7 +39,7 @@ export class SplashScreenComponent implements OnInit {
     'EasyMeet es una aplicación diseñada para simplificar la gestion de encuentros y reuniones.',
     'Promueve realciones más sólidas al fomentar la escucha activa y el entendimiento mutuo.'
   ];
-
+  isDesktop: boolean = false;
   fadeOut: boolean = false;
   @Output() splashDismissed = new EventEmitter<void>();
 
@@ -53,11 +53,22 @@ export class SplashScreenComponent implements OnInit {
       this.dismissSplash();
     }
     this.startAutoSlide();
+    this.desktop();
+  }
+
+  async desktop(){
+    this.isDesktop = window.innerWidth >= 768;
+    if (this.isDesktop){
+      await this.storage.set('skipSplash', false);
+    }
   }
 
   async continue() {
     if (this.skipSplash) {
       await this.storage.set('skipSplash', true);
+    }
+    else{
+      await this.storage.set('skipSplash', false);
     }
     console.log('Continuar pulsado');
     this.dismissSplash();
@@ -111,5 +122,11 @@ export class SplashScreenComponent implements OnInit {
     setTimeout(() => {
       this.fadeOut = false;
     }, 500);
+  }
+
+  async onCheckboxChange(event: any) {
+    this.skipSplash = event.detail.checked; // Actualiza el valor de skipSplash
+    await this.storage.set('skipSplash', this.skipSplash); // Guarda el valor en el almacenamiento
+    console.log('skipSplash guardado como:', this.skipSplash); // Mensaje de depuración
   }
 }

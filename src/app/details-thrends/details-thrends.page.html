@@ -1,4 +1,5 @@
 <ion-header>
+  <app-spinner></app-spinner>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/tab2"></ion-back-button>
@@ -7,30 +8,30 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="!isLoading">
   <div class="details-container">
-    <h2 class="trend-title">t12</h2>
-    <h3 class="trend-name">Tepetongo</h3>
-    <p class="trend-date">30 septiembre 2024 | Arte Y Manualidades</p>
+    <h2 class="trend-title">{{trend.titulo}}</h2>
+    <h3 class="trend-name">{{trend.usuario}}</h3>
+    <p class="trend-date">{{trendDetails.fecha | date: 'd MMMM yyyy'}} | {{trend.interes}}</p>
     
-    <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Descripción de la imagen" class="trend-image" />
+    <img mat-card-image [src]="trend.enc_img ? trend.enc_img : 'assets/no_image.png'" alt="Imagen de tendencia"> 
 
     <p>
-      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-      bred for hunting.
+      {{trendDetails.descripcion}}
     </p>
-    <p class="trend-multitarea">Multitarea</p>
+    <p class="trend-multitarea">{{trendDetails.tipo}}</p>
 
-    <ion-chip color="primary">Edad: 18 - 60 años</ion-chip>
-    <ion-chip color="success">Costo: $150.00</ion-chip>
+    <ion-chip color="primary">Edad: {{trendDetails.edad_ini}} - {{trendDetails.edad_fin}} años</ion-chip>
+    <ion-chip color="success">Costo: {{trendDetails.costo}}</ion-chip>
     
     <div class="user-card">
-      <img src="assets/profile.jpg" alt="Perfil" class="user-image" />
+      <img [src]="trend.usu_img ? trend.usu_img : 'assets/profile.jpg'" alt="Perfil" class="user-image" />
       <div class="user-info">
-        <p class="user-alias">rayd0w56</p>
+        <p class="user-alias">{{trendDetails.usuario}}</p>
         <ion-button fill="outline" (click)="contactar()">Contactar</ion-button>
       </div>
     </div>
   </div>
 </ion-content>
+
+<app-spinner *ngIf="isLoading"></app-spinner> 
