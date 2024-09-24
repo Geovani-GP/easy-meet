@@ -4,16 +4,16 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'splash', // Redirige al splash screen al inicio
+    redirectTo: 'splash', 
     pathMatch: 'full'
   },
   {
-    path: 'splash', // Asegúrate de que esta ruta esté configurada
+    path: 'splash', 
     loadChildren: () => import('./splash-screen/splash-screen.module').then(m => m.SplashScreenModule)
   },
   {
     path: 'tabs',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule) // Ruta a las tabs
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule) 
   },
   {
     path: 'tab4',
@@ -45,7 +45,7 @@ const routes: Routes = [
   },
 
 
-  // Otras rutas...
+  
 ];
 
 @NgModule({

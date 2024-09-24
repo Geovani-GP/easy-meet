@@ -20,7 +20,7 @@ const routes: Routes = [
         loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
       },
       {
-        path: 'tab4', // Nueva ruta para el tab4
+        path: 'tab4',
         loadChildren: () => import('../tab4/tab4.module').then(m => m.Tab4PageModule)
       },
       {
@@ -30,7 +30,7 @@ const routes: Routes = [
       
       {
         path: '',
-        redirectTo: 'tab2', // Redirige a tab1 por defecto
+        redirectTo: 'tab2', 
         pathMatch: 'full'
       }
     ]

@@ -12,7 +12,6 @@ export class AppComponent {
   }
 
   initializeApp() {
-    // Forzar el modo claro
     document.body.setAttribute('color-mode', 'light');
   }
 }

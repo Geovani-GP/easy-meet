@@ -17,8 +17,8 @@ import { MatButtonModule } from '@angular/material/button';
     ExploreContainerComponentModule,
     Tab2PageRoutingModule,
     SpinnerModule,
-    MatCardModule, // Asegúrate de incluirlo aquí
-    MatButtonModule // Incluye otros módulos que necesites
+    MatCardModule, 
+    MatButtonModule 
   ],
   declarations: [Tab2Page]
 })

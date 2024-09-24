@@ -1,61 +1,98 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ServicesService } from '../services/services.service';
+import { SpinnerService } from '../services/spinner.service';
+
 @Component({
   selector: 'app-tab1',
   templateUrl: './tab1.page.html',
   styleUrls: ['./tab1.page.scss'],
 })
-export class Tab1Page {
-  constructor(private router: Router) {}
-  intereses = [
-    { name: 'Arte Y Manualidades', selected: false },
-    { name: 'Astrología Y Espiritualidad', selected: false },
-    { name: 'Baile Y Danza', selected: false },
-    { name: 'Bienestar Y Autocuidado', selected: false },
-    { name: 'Cine Y Cineclubes', selected: false },
-    { name: 'Clubes De Idiomas Y Intercambio Cultural', selected: false },
-    { name: 'Cocina Y Gastronomía', selected: false },
-    { name: 'Debate Y Discusión De Temas Actuales', selected: false },
-    { name: 'Deportes Y Actividades Físicas', selected: false },
-    { name: 'Ecología Y Sostenibilidad', selected: false },
-    { name: 'Encuentros 1:1', selected: false },
-    { name: 'Fotografía', selected: false },
-    { name: 'Jardinería Y Horticultura', selected: false },
-    { name: 'Juegos De Mesa Y Juegos De Rol', selected: false },
-    { name: 'Lectura Y Clubes De Libros', selected: false },
-    { name: 'Música Y Conciertos', selected: false },
-    { name: 'Senderismo Y Actividades Al Aire Libre', selected: false },
-    { name: 'Tecnología Y Programación', selected: false },
-    { name: 'Viajes Y Aventuras', selected: false },
-    { name: 'Yoga Y Meditación', selected: false },
-  ];
-  rangeValues: { lower: number; upper: number } = { lower: 0, upper: 100 }; // Valores iniciales
-  lowerValue: number = this.rangeValues.lower; // Valor inferior
-  upperValue: number = this.rangeValues.upper; // Valor superior
+export class Tab1Page implements OnInit {
+  intereses: any[] = [];
+  selectedInterestsIds: string = '';
+  isLoading: boolean = false; // Variable para controlar el spinner
 
+  constructor(private router: Router,private spinnerService: SpinnerService, private servicesService: ServicesService) {}
 
-  
-  updateValues() {
-    this.lowerValue = this.rangeValues.lower; // Actualiza el valor inferior
-    this.upperValue = this.rangeValues.upper; // Actualiza el valor superior
+  ngOnInit() {
+    this.loadInterests();
   }
-  selectedDate: string = new Date().toISOString(); // Fecha inicial
+
+  findMeet() {
+    this.selectedInterestsIds = this.getSelectedInterests();
+    this.spinnerService.show();  // Mostrar spinner
+    this.servicesService.findMeet(this.selectedInterestsIds, this.lowerValue, this.upperValue, this.selectedDate).subscribe(
+      (response) => {
+         this.spinnerService.hide(); // Ocultar spinner
+        this.router.navigate(['/search-results'], { state: { searchResults: response.payload } });
+      },
+      (error) => {
+         this.spinnerService.hide(); // Ocultar spinner
+        console.error('Error en findMeet:', error);
+      }
+    );
+  }
+
+  loadInterests() {
+    this.spinnerService.show();  // Mostrar spinner
+    this.servicesService.getInterests().subscribe(
+      (response) => {
+         this.spinnerService.hide(); // Ocultar spinner
+        if (response.payload && Array.isArray(response.payload)) {
+          this.intereses = response.payload.map((interest: any) => ({
+            id: interest.id,
+            name: interest.interes, 
+            selected: false
+          }));
+        } else {
+          console.error('La respuesta no contiene payloads o no es un arreglo:', response);
+        }
+      },
+      (error) => {
+         this.spinnerService.hide(); // Ocultar spinner
+        console.error('Error al cargar intereses:', error);
+      }
+    );
+  }
+
+  getSelectedInterests() {
+    const selectedInterests = this.intereses.filter(interest => interest.selected);
+    if (selectedInterests.length === 0) {
+      const allInterestsIds = this.intereses.map(interest => interest.id).join(',');
+      return allInterestsIds;
+    } else {
+      const selectedInterestsIds = selectedInterests.map(interest => interest.id).join(',');
+      console.log('IDs de intereses seleccionados:', selectedInterestsIds);
+      return selectedInterestsIds;
+    }
+  }
+
+  rangeValues: { lower: number; upper: number } = { lower: 0, upper: 100 }; 
+  lowerValue: number = this.rangeValues.lower; 
+  upperValue: number = this.rangeValues.upper; 
+
+
+  updateValues() {
+    this.lowerValue = this.rangeValues.lower; 
+    this.upperValue = this.rangeValues.upper; 
+  }
+  selectedDate: string = new Date().toISOString(); 
   isDatePickerVisible: boolean = false;
 
   showDatePicker() {
     console.log('showDatePicker');
-    this.isDatePickerVisible = !this.isDatePickerVisible; // Alternar visibilidad
-    console.log('showDatePicker', this.isDatePickerVisible); // Verifica el estado
+    this.isDatePickerVisible = !this.isDatePickerVisible; 
+    console.log('showDatePicker', this.isDatePickerVisible); 
   }
 
   onDateChange(event: any) {
-    this.selectedDate = event.detail.value; // Actualizar la fecha seleccionada
-    this.isDatePickerVisible = false; // Ocultar el date picker después de seleccionar
+    this.selectedDate = event.detail.value; 
+    this.isDatePickerVisible = false; 
   }
 
   buscar() {
-    // Aquí puedes implementar la lógica para realizar la búsqueda
-    // Por ejemplo, podrías almacenar la consulta en un servicio o pasarla como parámetro
+    
     this.router.navigate(['/search-results']);
   }
 }

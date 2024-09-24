@@ -125,8 +125,8 @@ export class SplashScreenComponent implements OnInit {
   }
 
   async onCheckboxChange(event: any) {
-    this.skipSplash = event.detail.checked; // Actualiza el valor de skipSplash
-    await this.storage.set('skipSplash', this.skipSplash); // Guarda el valor en el almacenamiento
-    console.log('skipSplash guardado como:', this.skipSplash); // Mensaje de depuración
+    this.skipSplash = event.detail.checked; 
+    await this.storage.set('skipSplash', this.skipSplash); 
+    console.log('skipSplash guardado como:', this.skipSplash); 
   }
 }

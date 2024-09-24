@@ -3,24 +3,24 @@
 } */
 
 .item-native {
-  background: none !important; // Cambia el fondo aquí
-  border: none; // Elimina cualquier borde que pueda estar afectando el fondo
+  background: none !important; 
+  border: none; 
 }
 
 ion-content .item-native {
-  background: none !important; // Asegúrate de que el fondo sea el deseado
+  background: none !important;
 }
 
 
 
 .slider-container-wrapper{
   height: 100vh;
-/*   background:rgba(153,150,239,1) !important; */
+
   background: linear-gradient(0deg, rgb(153, 150, 239) 0%, rgba(246,197,216,1) 100%);
 }
 
 ion-content {
-  background-color: var(--ion-color-background) !important; // Aplica el color de fondo a ion-content
+  background-color: var(--ion-color-background) !important; 
   
 }
 ion-content {
@@ -43,18 +43,18 @@ ion-item{
 }
 
 ion-slides {
-  height: 300px; /* Ajusta la altura según sea necesario */
+  height: 300px; 
 }
 
 img {
-  object-fit: cover; /* Asegura que la imagen cubra el área del slide */
+  object-fit: cover; 
 }
 
 .slider-container {
   position: relative;
   overflow: hidden;
   touch-action: pan-y; 
-  flex: 1; /* Permite que el contenedor de la imagen ocupe espacio */
+  flex: 1; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -63,7 +63,7 @@ img {
 .slide {
   width: 100%;
   height: auto;
-  transition: opacity 0.5s ease-in-out; // Transición de opacidad
+  transition: opacity 0.5s ease-in-out; 
 }
 
 .controls {
@@ -76,7 +76,7 @@ img {
   display: flex;
   justify-content: center;
   margin-top: 10px;
-  margin: 10px 0; /* Espaciado entre los puntos y otros elementos */
+  margin: 10px 0;
 
   span {
     height: 10px;
@@ -89,7 +89,7 @@ img {
     transition: background-color 0.3s;
 
     &.active {
-      background-color: var(--ion-color-primary); // Color del punto activo
+      background-color: var(--ion-color-primary); 
     }
   }
 }
@@ -97,31 +97,31 @@ img {
 .full-screen {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centra verticalmente */
-  align-items: center; /* Centra horizontalmente */
-  height: 100vh; /* Altura completa de la ventana */
-  width: 100vw; /* Ancho completo de la ventana */
+  justify-content: center; 
+  align-items: center; 
+  height: 100vh; 
+  width: 100vw; 
 }
 
 .full-screen-image {
-  max-width: 100%; /* Asegura que la imagen no exceda el ancho */
-  max-height: 100%; /* Asegura que la imagen no exceda la altura */
-  object-fit: cover; /* Mantiene la proporción de la imagen */
+  max-width: 100%;
+  max-height: 100%; 
+  object-fit: cover; 
 }
 
 .image-wrapper {
   display: flex;
-  flex-direction: column; /* Asegura que la imagen y la descripción estén en columna */
-  align-items: center; /* Centra horizontalmente */
+  flex-direction: column; 
+  align-items: center;
   margin-top: 15%;
   margin-bottom: 15%;
 }
 
 .image-description {
-  text-align: center; /* Centra el texto */
-  margin-top: 10px; /* Espaciado superior */
-  font-size: 16px; /* Tamaño de fuente */
-  color: #fff; /* Color del texto, ajusta según tu diseño */
+  text-align: center; 
+  margin-top: 10px;
+  font-size: 16px;
+  color: #fff;
 }
 
 .image-description-title {
@@ -173,12 +173,12 @@ img {
 .qr-title {
   font-size: 24px;
   font-weight: bold;
-  color: #333; // Color del texto
+  color: #333;
 }
 
 .qr-description {
   font-size: 16px;
-  color: #666; // Color del texto
+  color: #666; 
 }
 
 .app-promotion {

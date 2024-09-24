@@ -16,8 +16,8 @@ import { SearchResultsPage } from './search-results.page';
     FormsModule,
     SearchResultsPageRoutingModule,
     ExploreContainerComponentModule,
-    MatCardModule, // Asegúrate de incluirlo aquí
-    MatButtonModule // Incluye otros módulos que necesites
+    MatCardModule, 
+    MatButtonModule
   ],
   declarations: [SearchResultsPage]
 })

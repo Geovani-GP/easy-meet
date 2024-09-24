@@ -27,13 +27,13 @@ import { HttpClientModule } from '@angular/common/http';
     SplashScreenModule,
     IonicStorageModule.forRoot(),
     SpinnerModule,
-    HttpClientModule, // Asegúrate de importar HttpClientModule
-    // otros módulos
+    HttpClientModule, 
+    
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideAnimationsAsync(),
-    // otros proveedores
+    
   ],
   bootstrap: [AppComponent],
 })

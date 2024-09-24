@@ -15,6 +15,9 @@ export class ServicesService {
 
   constructor(private http: HttpClient) {}
 
+
+  //Obtener los encuentros
+
   getTrends(page: number): Observable<any> {
     const headers = new HttpHeaders({
       'ApiKey': '_$4DM1N$_',
@@ -42,6 +45,7 @@ export class ServicesService {
     );
   }
 
+  //Obtener los detalles de un encuentro
   getTrendDetails(uid: string): Observable<any> {
     const headers = new HttpHeaders({
       'ApiKey': '_$4DM1N$_',
@@ -64,6 +68,69 @@ export class ServicesService {
       }),
       catchError((error) => {
         console.error('Error en la solicitud de detalles:', error); // Manejo de errores
+        return throwError(error); // Lanza el error para que pueda ser manejado en el componente
+      })
+    );
+  }
+
+  //Buscar encuentros
+  findMeet(int: string, iniEdad: number, finEdad: number, fecha: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'ApiKey': '_$4DM1N$_',
+    });
+
+    const params = new URLSearchParams({
+      int,
+      ini_edad: iniEdad.toString(),
+      fin_edad: finEdad.toString(),
+      fecha
+    });
+
+    return this.http.get(`${this.apiUrl}/meet/find?${params.toString()}`, { headers, observe: 'response' }).pipe(
+      map((response) => {
+        // Validar el código de respuesta
+        if (response.status === 200) {
+          const body = response.body;
+          // Validar la estructura de la respuesta
+          if (body) {
+            return body; // Retorna la respuesta si es válida
+          } else {
+            throw new Error('Estructura de respuesta inválida'); // Lanza un error si la estructura no es válida
+          }
+        } else {
+          throw new Error(`Error en la solicitud: ${response.status}`); // Lanza un error si el código de respuesta no es 200
+        }
+      }),
+      catchError((error) => {
+        console.error('Error en la solicitud de findMeet:', error); // Manejo de errores
+        return throwError(error); // Lanza el error para que pueda ser manejado en el componente
+      })
+    );
+  }
+
+  // Obtener los intereses
+  getInterests(): Observable<any> {
+    const headers = new HttpHeaders({
+      'ApiKey': '_$4DM1N$_',
+    });
+
+    return this.http.get(`${this.apiUrl}/usuarios/intereses`, { headers, observe: 'response' }).pipe(
+      map((response) => {
+        // Validar el código de respuesta
+        if (response.status === 200) {
+          const body = response.body;
+          // Validar la estructura de la respuesta
+          if (body) {
+            return body; // Retorna la respuesta si es válida
+          } else {
+            throw new Error('Estructura de respuesta inválida'); // Lanza un error si la estructura no es válida
+          }
+        } else {
+          throw new Error(`Error en la solicitud: ${response.status}`); // Lanza un error si el código de respuesta no es 200
+        }
+      }),
+      catchError((error) => {
+        console.error('Error en la solicitud de intereses:', error); // Manejo de errores
         return throwError(error); // Lanza el error para que pueda ser manejado en el componente
       })
     );

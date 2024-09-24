@@ -15,9 +15,9 @@ import { SpinnerModule } from '../spinner/spinner.module';
     FormsModule,
     IonicModule,
     SpinnerModule,
-    MatCardModule, // Asegúrate de incluirlo aquí
-    MatButtonModule, // Incluye otros módulos que necesites
-    TabsPageRoutingModule // Asegúrate de importar el módulo de rutas
+    MatCardModule, 
+    MatButtonModule, 
+    TabsPageRoutingModule 
   ],
   declarations: [TabsPage]
 })

@@ -12,32 +12,32 @@ export class Tab3Page implements OnInit {
   constructor(private router: Router, private spinnerService: SpinnerService) {}
 
   navigateToTab4(event: Event) {
-    event.preventDefault(); // Previene el comportamiento por defecto del formulario
-    this.spinnerService.show(); // Muestra el spinner
-    // Simulación de carga
+    event.preventDefault(); 
+    this.spinnerService.show(); 
+    
     setTimeout(() => {
-      this.router.navigate(['/tabs/tab4']); // Navega a Tab4 después de 3 segundos
-      this.spinnerService.hide(); // Oculta el spinner
+      this.router.navigate(['/tabs/tab4']); 
+      this.spinnerService.hide(); 
     }, 3000);
   }
 
   loadData() {
-    this.spinnerService.show(); // Muestra el spinner
-    // Simulación de carga
+    this.spinnerService.show(); 
+    
     setTimeout(() => {
-      this.spinnerService.hide(); // Oculta el spinner después de 3 segundos
+      this.spinnerService.hide(); 
     }, 3000);
   }
 
   ngOnInit() {
-    this.loadTrends(); // Llama a la función al inicializar el componente
+    this.loadTrends(); 
   }
 
   loadTrends() {
-    this.spinnerService.show(); // Muestra el spinner
-    // Simulación de carga
+    this.spinnerService.show(); 
+    
     setTimeout(() => {
-      this.spinnerService.hide(); // Oculta el spinner después de 3 segundos
+      this.spinnerService.hide(); 
     }, 3000);
   }
 

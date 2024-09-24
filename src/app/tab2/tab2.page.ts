@@ -9,9 +9,9 @@ import { ServicesService } from '../services/services.service';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page implements OnInit {
-  trends: any[] = []; // Para almacenar los datos de tendencias
-  currentPage: number = 1; // Página actual
-  hasMoreData: boolean = true; // Indica si hay más datos para cargar
+  trends: any[] = []; 
+  currentPage: number = 1; 
+  hasMoreData: boolean = true; 
 
   constructor(
     private router: Router,
@@ -24,42 +24,44 @@ export class Tab2Page implements OnInit {
   }
 
   loadTrends() {
-    this.spinnerService.show(); // Muestra el spinner
+    this.spinnerService.show(); 
     this.apiService.getTrends(this.currentPage).subscribe(
       (response) => {
-        this.trends = response.payload; // Almacena los datos de tendencias desde el payload
-        this.hasMoreData = this.trends.length > 0; // Actualiza si hay más datos
-
-        this.spinnerService.hide(); // Oculta el spinner
+        this.trends = response.payload; 
+        this.hasMoreData = this.trends.length > 0; 
+        this.spinnerService.hide(); 
       },
       (error) => {
-        console.error('Error al obtener tendencias en Tab2:', error); // Muestra el error en la consola
-        this.spinnerService.hide(); // Asegúrate de ocultar el spinner en caso de error
+        console.error('Error al obtener tendencias en Tab2:', error); 
+        this.spinnerService.hide(); 
       }
     );
   }
 
   loadMoreData(event: any) {
-    this.currentPage++; // Incrementa la página actual
+    this.currentPage++; 
+    this.spinnerService.show(); 
     this.apiService.getTrends(this.currentPage).subscribe(
       (response) => {
-        const newTrends = response.payload; // Obtiene los nuevos datos
-        this.trends = [...this.trends, ...newTrends]; // Agrega los nuevos datos a la lista existente
-        this.hasMoreData = newTrends.length > 0; // Actualiza si hay más datos
-        event.target.complete(); // Completa el evento de scroll infinito
+        const newTrends = response.payload; 
+        this.trends = [...this.trends, ...newTrends]; 
+        this.hasMoreData = newTrends.length > 0; 
+        event.target.complete(); 
         if (newTrends.length === 0) {
-          event.target.disabled = true; // Desactiva el scroll infinito si no hay más datos
+          event.target.disabled = true; 
         }
+        this.spinnerService.hide(); 
       },
       (error) => {
         console.error('Error al cargar más tendencias:', error);
-        event.target.complete(); // Completa el evento de scroll infinito incluso en caso de error
+        event.target.complete(); 
+        this.spinnerService.hide(); 
       }
     );
   }
 
   navigateToDetails(trend: any) {
-    localStorage.setItem('selectedTrend', JSON.stringify(trend)); // Almacena el objeto en localStorage
-    this.router.navigate(['/details-thrends']); // Navega a la página de detalles
+    localStorage.setItem('selectedTrend', JSON.stringify(trend)); 
+    this.router.navigate(['/details-thrends']); 
   }
 }
