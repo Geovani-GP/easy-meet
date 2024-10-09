@@ -11,7 +11,10 @@
     <h2 class="easy-meet-title">Geovani Gómez Pérez</h2>
     <p class="easy-meet-subtitle">Geovanieofku</p>
     <p class="easy-meet-subtitle">20 junio 2024</p>
-    <ion-button color="danger" size="small">Cerrar sesión</ion-button>
+    <div class="logout-button-container">
+      <ion-button color="warning" size="small" (click)="payment()">Premium</ion-button>
+      <ion-button color="danger" size="small" (click)="logout()">Cerrar sesión</ion-button>
+    </div>
   </div>
 
   <div class="interests">

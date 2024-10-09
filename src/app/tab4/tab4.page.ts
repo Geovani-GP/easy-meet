@@ -27,4 +27,12 @@ export class Tab4Page implements OnInit {
   navigateToCreateInterests() {
     this.router.navigate(['/crear-intereses']);
   }
+
+  logout() {
+    this.router.navigate(['/tabs/tab2']);
+  }
+
+  payment() {
+    this.router.navigate(['/payment']);
+  }
 }

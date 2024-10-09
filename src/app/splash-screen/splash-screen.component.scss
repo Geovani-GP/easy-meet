@@ -11,7 +11,21 @@ ion-content .item-native {
   background: none !important;
 }
 
+.background-content{
+  background:rgb(153, 150, 239) !important;
+}
 
+#background-content{
+  background:rgb(153, 150, 239) !important;
+}
+:host ::ng-deep #background-content {
+  background: rgb(153, 150, 239) !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  position: static !important; /* Cambia la posición a estática si es necesario */
+}
 
 .slider-container-wrapper{
   height: 100vh;
@@ -231,3 +245,23 @@ background: linear-gradient(131deg, rgb(74 61 153 / 35%) 0%, rgb(123, 102, 255) 
   right: 0;
   margin-right: 27px;
 }
+
+@media (max-width: 768px) {
+  .qr-section {
+    display: none;
+  }
+
+  #background-content{
+    display: flex;
+  }
+}
+@media (min-width: 768px) {
+  .qr-section {
+    display: flex;
+  }
+
+  #background-content{
+    display: none;
+  }
+}
+

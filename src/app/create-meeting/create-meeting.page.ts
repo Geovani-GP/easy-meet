@@ -34,6 +34,7 @@ export class CreateMeetingPage implements OnInit {
   }
 
   ngOnInit() {
+    this.loadGoogleMaps();
   }
 
   loadGoogleMaps() {
@@ -41,7 +42,7 @@ export class CreateMeetingPage implements OnInit {
     script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}&libraries=places&callback=initMap`;
     script.async = true;
     script.defer = true;
-    document.body.appendChild(script);
+    document.head.appendChild(script);
   }
 
   // Método para seleccionar una sugerencia

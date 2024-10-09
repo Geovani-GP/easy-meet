@@ -1,0 +1,71 @@
+{
+  "project_info": {
+    "project_number": "371173407",
+    "project_id": "easymeet-93346",
+    "storage_bucket": "easymeet-93346.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371173407:android:3c1c3677ff7974e0ca4d2a",
+        "android_client_info": {
+          "package_name": "com.nni.easy_meet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "371173407-85i3akvmoib83a2aa12ni3ep9ju9h19s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nni.easy_meet",
+            "certificate_hash": "d1e03ae6996be4343bf995f6ee0d1f0a18980cfe"
+          }
+        },
+        {
+          "client_id": "371173407-ibr1s3k6jf9ei8ajl3t4rpbd95sf63o7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nni.easy_meet",
+            "certificate_hash": "178641bd0bdb8998f5a365194f0ea9920dfb6958"
+          }
+        },
+        {
+          "client_id": "371173407-n024l8hbald8qa5bt6hch7j8pfr6kp26.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nni.easy_meet",
+            "certificate_hash": "cce1728e8977243c577380bc3c020a19ee635aec"
+          }
+        },
+        {
+          "client_id": "371173407-ndt9vmilp7h2qrdt1dpu2grgro54hfeu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nni.easy_meet",
+            "certificate_hash": "be4c5113bd05fc356329d662e8f6d0d118c6cf03"
+          }
+        },
+        {
+          "client_id": "371173407-5i537bpcil9bv4qrmtk0i1640kpg05fg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDMmxE3kA-rg4e096TCofX4TCEkI9BP4o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "371173407-5i537bpcil9bv4qrmtk0i1640kpg05fg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

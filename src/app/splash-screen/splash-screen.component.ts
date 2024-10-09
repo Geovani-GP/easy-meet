@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 import { NavController } from '@ionic/angular';
 
@@ -6,7 +6,6 @@ import { NavController } from '@ionic/angular';
   selector: 'app-splash-screen',
   templateUrl: './splash-screen.component.html',
   styleUrls: ['./splash-screen.component.scss'],
-  styles: [],
   encapsulation: ViewEncapsulation.None
 })
 

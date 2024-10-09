@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "easymeet-93346",
     "public": "www",
     "ignore": [
       "firebase.json",

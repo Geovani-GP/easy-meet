@@ -43,9 +43,10 @@ const routes: Routes = [
     path: 'crear-intereses',
     loadChildren: () => import('./crear-intereses/crear-intereses.module').then( m => m.CrearInteresesPageModule)
   },
-
-
-  
+  {
+    path: 'payment',
+    loadChildren: () => import('./payment/payment.module').then( m => m.PaymentPageModule)
+  },
 ];
 
 @NgModule({
@@ -54,4 +55,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

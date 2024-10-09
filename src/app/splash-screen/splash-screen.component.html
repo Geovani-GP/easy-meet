@@ -5,7 +5,7 @@
 </ion-header> -->
 
 <ion-content class="full-screen">
-  <div *ngIf="!isDesktop">
+  <div id="background-content" style="background: rgb(153, 150, 239) !important; left: auto !important; right: auto !important; top: auto !important; bottom: auto !important; position: static !important;">
     <div class="slider-container-wrapper">
       <div class="slider-container" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)">
         <div class="image-wrapper">
@@ -26,6 +26,8 @@
       </ion-item>
       <br>
       <p class="skip-button" expand="full" (click)="continue()">Saltar introducción</p>
+      <br>
+    
     </div>
   </div>
   <div *ngIf="isDesktop" class="qr-section">
@@ -50,6 +52,8 @@
       <p class="qr-title">¿Prefieres la versión web?</p>
       <p class="qr-description">¡Escanea el código QR y accede a nuestra plataforma desde cualquier dispositivo!</p>
       <img src="./assets/qr-code.png" alt="Código QR" class="qr-image" />
+      <p class="qr-description">¡Es hora de comenzar nuevas aventuras sociales con</p> 
+      <p class="qr-description" style="color:rgb(153, 150, 239); font-weight: 500;">¡EasyMeet!</p>
      <p class="footer-text">Powered by:  Neural Network Initiative (nni.ai) https://nni.ai</p>
     </div>
   </div>
