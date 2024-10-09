@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '../auth.guard';
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
@@ -21,11 +22,13 @@ const routes: Routes = [
       },
       {
         path: 'tab4',
-        loadChildren: () => import('../tab4/tab4.module').then(m => m.Tab4PageModule)
+        loadChildren: () => import('../tab4/tab4.module').then(m => m.Tab4PageModule),
+        canActivate: [AuthGuard]
       },
       {
         path: 'create-meeting',
-        loadChildren: () => import('../create-meeting/create-meeting.module').then(m => m.CreateMeetingPageModule)
+        loadChildren: () => import('../create-meeting/create-meeting.module').then(m => m.CreateMeetingPageModule),
+        canActivate: [AuthGuard]
       },
       
       {

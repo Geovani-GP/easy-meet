@@ -145,8 +145,9 @@ export class ServicesService {
 loginWithEmail(email: string, password: string): Observable<any> {
   return new Observable(observer => {
     this.afAuth.signInWithEmailAndPassword(email, password)
-      .then(async userCredential => { // Cambiado a async
+      .then(async userCredential => {
         if (userCredential.user) {
+          console.log(userCredential.user);
           const user = userCredential.user;
           localStorage.setItem('uid', user.uid);
           localStorage.setItem('userData', JSON.stringify({
@@ -154,17 +155,7 @@ loginWithEmail(email: string, password: string): Observable<any> {
             displayName: user.displayName,
             photoURL: user.photoURL
           }));
-          const deviceToken = localStorage.getItem('deviceToken') || '';
-          try {
-            const response = await this.sendDeviceToken(user.uid, deviceToken).toPromise(); // Cambiado a await
-            if (response) {
-              localStorage.setItem('oauth', 'true');
-              localStorage.setItem('easyMeetUser', JSON.stringify(response));
-            }
-          } catch (error) {
-            console.error('Error al enviar el token del dispositivo:', error);
-            localStorage.setItem('oauth', 'false');
-          }
+          localStorage.setItem('oauth', 'true');
           observer.next(userCredential);
           observer.complete();
         }
@@ -276,6 +267,55 @@ public sendDeviceToken(uid: string, token: string): Observable<any> {
     );
 }
 
+getMyAssists(uid: string, page: number): Observable<any> {
+  const headers = new HttpHeaders({
+    'ApiKey': '_$4DM1N$_',
+  });
+
+  return this.http.get(`${this.apiUrl}/meet/myassists?uid=${uid}&page=${page}`, { headers, observe: 'response' }).pipe(
+    map((response) => {
+      if (response.status === 200) {
+        const body = response.body;
+        if (body) {
+          return body; // Devuelve el cuerpo de la respuesta
+        } else {
+          throw new Error('Estructura de respuesta inválida');
+        }
+      } else {
+        throw new Error(`Error en la solicitud: ${response.status}`);
+      }
+    }),
+    catchError((error) => {
+      console.error('Error en la solicitud de mis asistencias:', error);
+      return throwError(error);
+    })
+  );
+}
+
+getMyMeetings(uid: string, page: number): Observable<any> {
+  const headers = new HttpHeaders({
+    'ApiKey': '_$4DM1N$_', // Asegúrate de usar la clave API correcta
+  });
+
+  return this.http.get(`${this.apiUrl}/meet/mymeetings?uid=${uid}&page=${page}`, { headers, observe: 'response' }).pipe(
+    map((response) => {
+      if (response.status === 200) {
+        const body = response.body;
+        if (body) {
+          return body; // Devuelve el cuerpo de la respuesta
+        } else {
+          throw new Error('Estructura de respuesta inválida');
+        }
+      } else {
+        throw new Error(`Error en la solicitud: ${response.status}`);
+      }
+    }),
+    catchError((error) => {
+      console.error('Error en la solicitud de mis reuniones:', error);
+      return throwError(error);
+    })
+  );
+}
 
 }
 

@@ -32,3 +32,16 @@
   .create-meeting-button {
     margin-top: 20px;
   }
+
+  .assistance-row {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+
+  .assistance-scroll, .meetings-scroll {
+    width: 100%; 
+    overflow-x: auto;
+    margin-bottom: 20px; 
+  }

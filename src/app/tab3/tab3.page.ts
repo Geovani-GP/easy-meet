@@ -25,7 +25,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 export class Tab3Page implements OnInit {
   email: string = ''; 
   password: string = ''; 
-
+  userData: any;
   constructor(private router: Router, private spinnerService: SpinnerService, private servicesService: ServicesService, private toastController: ToastController) {}
 
   navigateToTab4(event: Event) {
@@ -47,7 +47,13 @@ export class Tab3Page implements OnInit {
   }
 
   ngOnInit() {
-     
+    const userData = localStorage.getItem('userData');
+    if (userData) {
+        this.userData = JSON.parse(userData);
+        this.router.navigate(['/tabs/tab4']);
+    } else {
+        this.router.navigate(['/tabs/tab3']);
+    }
   }
 
   loadTrends() {
@@ -63,8 +69,6 @@ export class Tab3Page implements OnInit {
     try {
       const user = await this.servicesService.loginWithEmail(this.email, this.password).toPromise();
       console.log('Inicio de sesión exitoso', user);
-      
-      // Asegúrate de que el valor de 'oauth' se actualice correctamente
       const oauthValue = localStorage.getItem('oauth');
       if (oauthValue === 'true') {
         this.router.navigate(['/tabs/tab4']);
