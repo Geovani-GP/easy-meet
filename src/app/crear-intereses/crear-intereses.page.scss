@@ -1,0 +1,49 @@
+.content-container{
+    margin: 10px;
+    }
+    
+    
+    :host{
+      --knob-background: #7b66ff;
+    }
+    
+
+      
+      ion-content {
+        padding: 16px; // Espaciado interno
+        background-color: #f8f8f8; // Color de fondo del contenido
+      }
+      
+      h1 {
+        font-size: 24px; // Tamaño del título
+        margin-bottom: 16px; // Espaciado inferior
+      }
+      
+      .intereses {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px; // Espaciado entre los intereses
+      }
+      
+      .easy-meet-selectible {
+        --background: #e0e0e0; // Color de fondo por defecto
+        --color: #000; // Color del texto
+        border-radius: 8px; // Bordes redondeados
+        font-size: 10px;
+      }
+      
+      .easy-meet-selectible.selected {
+        --background: var(--ion-color-primary); // Color de fondo cuando está seleccionado
+        --color: #fff; // Color del texto cuando está seleccionado
+        font-size: 10px;
+        box-shadow: 1px 1px 7px 1px var(--ion-color-primary);
+        border-radius: 15px; 
+      }
+      
+      .interes {
+        padding: 8px; // Espaciado interno
+      }
+      
+      .interes:hover {
+        background-color: #d3d3d3; // Color al pasar el mouse
+      }

@@ -11,8 +11,9 @@ export class AuthServiceService {
   }
 
   logout() {
-    localStorage.removeItem('oauth'); // Eliminar el estado de autenticación
-    localStorage.removeItem('uid'); // Opcional: eliminar el UID
-    localStorage.removeItem('userData'); // Opcional: eliminar los datos del usuario
+    localStorage.removeItem('oauth');
+    localStorage.removeItem('uid'); 
+    localStorage.removeItem('userData'); 
+    localStorage.removeItem('EMUser');
   }
 }

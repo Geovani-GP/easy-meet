@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { SpinnerService } from '../services/spinner.service';
 import { ServicesService } from '../services/services.service';
 import { ToastController } from '@ionic/angular';
+import { AuthServiceService } from '../services/auth-service.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
@@ -26,7 +27,33 @@ export class Tab3Page implements OnInit {
   email: string = ''; 
   password: string = ''; 
   userData: any;
-  constructor(private router: Router, private spinnerService: SpinnerService, private servicesService: ServicesService, private toastController: ToastController) {}
+
+  constructor(
+    private router: Router,
+    private spinnerService: SpinnerService,
+    private servicesService: ServicesService,
+    private toastController: ToastController,
+    public authService: AuthServiceService  // Cambiado de private a public
+  ) {}
+
+  ngOnInit() {
+    console.log('Tab3Page ngOnInit');
+    this.checkAuthAndRedirect();
+  }
+
+  ionViewWillEnter() {
+    console.log('Tab3Page ionViewWillEnter');
+    this.checkAuthAndRedirect();
+  }
+
+  private checkAuthAndRedirect() {
+    if (this.authService.isAuthenticated()) {
+      console.log('Usuario autenticado en tab3, redirigiendo al área de usuario...');
+      this.router.navigate(['/tabs/tab4']);
+    } else {
+      console.log('Usuario no autenticado en tab3, permaneciendo en la página');
+    }
+  }
 
   navigateToTab4(event: Event) {
     event.preventDefault(); 
@@ -46,35 +73,13 @@ export class Tab3Page implements OnInit {
     }, 3000);
   }
 
-  ngOnInit() {
-    const userData = localStorage.getItem('userData');
-    if (userData) {
-        this.userData = JSON.parse(userData);
-        this.router.navigate(['/tabs/tab4']);
-    } else {
-        this.router.navigate(['/tabs/tab3']);
-    }
-  }
-
-  loadTrends() {
-    this.spinnerService.show(); 
-    
-    setTimeout(() => {
-      this.spinnerService.hide(); 
-    }, 3000);
-  }
-
   async login() {
     this.spinnerService.show();
     try {
       const user = await this.servicesService.loginWithEmail(this.email, this.password).toPromise();
       console.log('Inicio de sesión exitoso', user);
-      const oauthValue = localStorage.getItem('oauth');
-      if (oauthValue === 'true') {
-        this.router.navigate(['/tabs/tab4']);
-      } else {
-        this.showToast('Error al iniciar sesión. Inténtalo de nuevo.', 'danger');
-      }
+      localStorage.setItem('oauth', 'true');
+      this.checkAuthAndRedirect();
     } catch (error) {
       console.error('Error en el inicio de sesión', error);
       this.showToast('Error al iniciar sesión. Inténtalo de nuevo.', 'danger');
@@ -82,45 +87,28 @@ export class Tab3Page implements OnInit {
       this.spinnerService.hide();
     }
   }
-  
 
   async loginWithGoogle() {
     this.spinnerService.show();
-   await this.servicesService.loginWithGoogle().subscribe(
-        response => {
-            console.log('Inicio de sesión con Google exitoso', response);
-          if(localStorage.getItem('oauth') === 'true'){
-            this.router.navigate(['/tabs/tab4']);
-          }else{
-            this.showToast('Error al iniciar sesión. Inténtalo de nuevo.', 'danger');
-          }
-            this.spinnerService.hide();
-        },
-        error => {
-            console.error('Error en el inicio de sesión con Google', error);
-            this.spinnerService.hide();
-        }
-    );
-  }
-
-/*   private async sendDeviceToken(): Promise<void> {
-    const uid =  localStorage.getItem('uid'); // Obtener el UID del almacenamiento local
-    const token =  localStorage.getItem('deviceToken'); // Aquí deberías obtener el token del dispositivo de alguna manera
-    console.log(uid, token);
-    if (uid && token) {
-      console.log(uid, token);
-      this.servicesService.sendDeviceToken(uid, token).subscribe(
-        response => {
-          console.log('Token enviado correctamente:', response);
-        },
-        error => {
-          console.error('Error al enviar el token:', error);
-        }
-      );
-    } else {
-      console.error('No se encontró UID en el almacenamiento local o el token es nulo');
+    try {
+      const response = await this.servicesService.loginWithGoogle().toPromise();
+      console.log('Respuesta completa del inicio de sesión con Google:', response);
+      
+      if (response && response.user) {
+        localStorage.setItem('oauth', 'true');
+        console.log('Inicio de sesión con Google exitoso');
+        this.checkAuthAndRedirect();
+      } else {
+        console.error('La respuesta no contiene la información del usuario esperada');
+        this.showToast('Error en el inicio de sesión. Datos de usuario incompletos.', 'danger');
+      }
+    } catch (error) {
+      console.error('Error en el inicio de sesión con Google', error);
+      this.showToast('Error al iniciar sesión. Inténtalo de nuevo.', 'danger');
+    } finally {
+      this.spinnerService.hide();
     }
-  } */
+  }
 
   recoverPassword() {
     if (this.email) {
@@ -128,12 +116,12 @@ export class Tab3Page implements OnInit {
         this.servicesService.recoverPassword(this.email).subscribe(
             response => {
                 console.log(response);
-                    this.showToast(response, 'success'); // Muestra un mensaje al usuario
+                    this.showToast(response, 'success'); 
                 this.spinnerService.hide();
             },
             error => {
                 console.error('Error en la recuperación de contraseña', error);
-                this.showToast(error, 'danger'); // Muestra un mensaje de error al usuario
+                this.showToast(error, 'danger'); 
                 this.spinnerService.hide();
             }
         );
@@ -147,23 +135,39 @@ export class Tab3Page implements OnInit {
 
     switch (type) {
       case 'success':
-        color = 'success'; // Cambiar a 'success' para el color
+        color = 'success'; 
         break;
       case 'warning':
-        color = 'warning'; // Cambiar a 'warning' para el color
+        color = 'warning'; 
         break;
       case 'danger':
-        color = 'danger'; // Cambiar a 'danger' para el color
+        color = 'danger'; 
         break;
       default:
-        color = 'dark'; // Color por defecto
+        color = 'dark'; 
     }
 
     this.toastController.create({
       message: message,
       duration: 3000,
       position: 'bottom',
-      color: color // Se agrega el color
+      color: color
     }).then(toast => toast.present());
+  }
+
+  registerUser() {
+    this.router.navigate(['/register-user']);
+  }
+
+  navigateToUserArea() {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/tabs/tab4']);
+    } else {
+      this.showToast('Por favor, inicia sesión primero.', 'warning');
+    }
+  }
+
+  isAuthenticated(): boolean {
+    return this.authService.isAuthenticated();
   }
 }

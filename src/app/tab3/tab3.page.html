@@ -43,8 +43,12 @@
     
     <div class="easy-meet-container">
       <ion-label class="easy-meet-subtitle">
-        ¿Aún no tienes una cuenta? <a href="#" class="easy-meet-title">Crear cuenta</a>
+        ¿Aún no tienes una cuenta? <a class="easy-meet-title" (click)="registerUser()">Crear cuenta</a>
     </ion-label>
     </div>
+    
+    <ion-button expand="block" (click)="navigateToUserArea()" *ngIf="isAuthenticated()">
+      Ir al área de usuario
+    </ion-button>
   </form>
 </ion-content>

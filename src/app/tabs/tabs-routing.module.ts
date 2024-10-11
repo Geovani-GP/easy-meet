@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../auth.guard';
 import { TabsPage } from './tabs.page';
+import { RegisterUserPage } from '../register-user/register-user.page';
 
 const routes: Routes = [
   {
@@ -30,7 +31,10 @@ const routes: Routes = [
         loadChildren: () => import('../create-meeting/create-meeting.module').then(m => m.CreateMeetingPageModule),
         canActivate: [AuthGuard]
       },
-      
+      {
+        path: 'register-user',
+        loadChildren: () => import('../register-user/register-user.module').then(m => m.RegisterUserPageModule)
+      },
       {
         path: '',
         redirectTo: 'tab2', 
