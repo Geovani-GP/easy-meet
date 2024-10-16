@@ -4,12 +4,12 @@
       <ion-buttons slot="start">
         <ion-back-button defaultHref="/tabs/tab1"></ion-back-button>
       </ion-buttons>
-      <ion-title>Resultados de Búsqueda</ion-title>
+      <ion-title>{{translate('resultados-busqueda')}}</ion-title>
     </ion-toolbar>
   </ion-header>
   <div class="content">
     <div *ngIf="searchResults.length === 0" style="text-align: center; margin: 20px;">
-      <p>No hay datos disponibles.</p>
+      <p>{{translate('no-datos-disponibles')}}</p>
     </div>
     <div *ngFor="let trend of trends">
       <mat-card class="card" appearance="outlined">
@@ -29,14 +29,14 @@
             <p class="easy-meet-title">{{ trend.lugar }} </p>
           </div>
           <div style="display: flex; flex-direction: column; align-items: flex-end;">
-            <button mat-button  (click)="navigateToDetails(trend)">Detalles</button>
+            <button mat-button  (click)="navigateToDetails(trend)">{{translate('detalles')}}</button>
           </div>
         </div>
       </mat-card-actions>
     </mat-card>
   </div>
   <div *ngIf="trends.length > 0 && !hasMoreData" style="text-align: center; margin: 20px;">
-    <p>Fin de los eventos</p>
+    <p>{{translate('fin-eventos')}}</p>
   </div>
   </div>
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreData($event)">

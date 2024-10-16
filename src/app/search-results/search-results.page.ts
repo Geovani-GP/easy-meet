@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SpinnerService } from '../services/spinner.service';
-
+import { TranslationService } from '../services/translation.service';
 @Component({
   selector: 'app-search-results',
   templateUrl: './search-results.page.html',
@@ -12,7 +12,7 @@ export class SearchResultsPage implements OnInit {
   trends: any[] = []; 
   hasMoreData: boolean = true;
 
-  constructor(private router: Router, private spinnerService: SpinnerService) {
+  constructor(private router: Router, private spinnerService: SpinnerService, private translationService: TranslationService) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
       this.searchResults = navigation.extras.state['searchResults'];
@@ -23,6 +23,15 @@ export class SearchResultsPage implements OnInit {
   ngOnInit() {
     console.log('Resultados de búsqueda:', this.searchResults);
     this.hasMoreData = this.trends.length > 0;
+  }
+
+  
+  translate(key: string): string {
+    if (this.translationService && this.translationService.translate) {
+      return this.translationService.translate(key);
+    }
+    console.warn('Translation service is not available');
+    return key;
   }
 
   verDetalles() {

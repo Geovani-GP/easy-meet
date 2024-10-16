@@ -5,7 +5,7 @@ import { ServicesService } from '../services/services.service';
 import { ToastController } from '@ionic/angular';
 import { AuthServiceService } from '../services/auth-service.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-
+import { TranslationService } from '../services/translation.service';
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
@@ -33,7 +33,8 @@ export class Tab3Page implements OnInit {
     private spinnerService: SpinnerService,
     private servicesService: ServicesService,
     private toastController: ToastController,
-    public authService: AuthServiceService  // Cambiado de private a public
+    public authService: AuthServiceService,
+    private translationService: TranslationService
   ) {}
 
   ngOnInit() {
@@ -169,5 +170,13 @@ export class Tab3Page implements OnInit {
 
   isAuthenticated(): boolean {
     return this.authService.isAuthenticated();
+  }
+
+  translate(key: string): string {
+    if (this.translationService && this.translationService.translate) {
+      return this.translationService.translate(key);
+    }
+    console.warn('Translation service is not available');
+    return key;
   }
 }

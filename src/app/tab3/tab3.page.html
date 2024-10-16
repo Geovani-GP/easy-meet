@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Login
+      {{translate('login')}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -13,19 +13,19 @@
   </div>
   <form (submit)="login()"> 
     <ion-item>
-      <ion-label position="floating">Correo electrónico</ion-label>
+      <ion-label position="floating">{{translate('correo-electronico')}}</ion-label>
       <ion-input type="email"  [(ngModel)]="email" name="email" required></ion-input>
     </ion-item>
     
     <ion-item>
-      <ion-label position="floating">Contraseña</ion-label>
+      <ion-label position="floating">{{translate('contrasena')}}</ion-label>
       <ion-input type="password" [(ngModel)]="password"  name="password" required></ion-input>
     </ion-item>
     
-    <ion-button expand="full" type="submit">Iniciar</ion-button>
+    <ion-button expand="full" type="submit">{{translate('iniciar')}}</ion-button>
     <div class="easy-meet-container">
       <ion-label>
-        <a href="#" (click)="recoverPassword()">Recuperar contraseña</a>
+        <a href="#" (click)="recoverPassword()">{{translate('recuperar-contrasena')}}</a>
       </ion-label>
     </div>
     <div class="divider">o</div>
@@ -33,7 +33,7 @@
     <div class="social-buttons">
         <ion-button expand="full" color="light" class="social-button" fill="clear" (click)="loginWithGoogle()">
             <img src="assets/google.png" alt="Google">
-            Iniciar sesión con Google
+            {{translate('iniciar-sesion-con-google')}}
         </ion-button>
 
         <ion-button expand="full" color="light" class="social-button" fill="clear">
@@ -43,12 +43,12 @@
     
     <div class="easy-meet-container">
       <ion-label class="easy-meet-subtitle">
-        ¿Aún no tienes una cuenta? <a class="easy-meet-title" (click)="registerUser()">Crear cuenta</a>
+        {{translate('aun-no-tienes-una-cuenta')}} <a class="easy-meet-title" (click)="registerUser()">{{translate('crear-cuenta')}}</a>
     </ion-label>
     </div>
     
     <ion-button expand="block" (click)="navigateToUserArea()" *ngIf="isAuthenticated()">
-      Ir al área de usuario
+      {{translate('ir-al-area-de-usuario')}}
     </ion-button>
   </form>
 </ion-content>

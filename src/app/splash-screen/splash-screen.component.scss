@@ -265,3 +265,12 @@ background: linear-gradient(131deg, rgb(74 61 153 / 35%) 0%, rgb(123, 102, 255) 
   }
 }
 
+.language-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+width: 100%;
+}
+

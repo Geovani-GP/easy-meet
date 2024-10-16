@@ -25,3 +25,9 @@
     margin-top: 8px;
   }
 }
+
+.small-modal {
+  --width: 300px; 
+  --max-height: 200px; 
+  --border-radius: 10px;
+}

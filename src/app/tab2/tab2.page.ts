@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SpinnerService } from '../services/spinner.service';
 import { ServicesService } from '../services/services.service';
+import { TranslationService } from '../services/translation.service';
 
 @Component({
   selector: 'app-tab2',
@@ -12,15 +13,23 @@ export class Tab2Page implements OnInit {
   trends: any[] = []; 
   currentPage: number = 1; 
   hasMoreData: boolean = true; 
-
   constructor(
     private router: Router,
     private spinnerService: SpinnerService,
-    private apiService: ServicesService
+    private apiService: ServicesService,
+    private translationService: TranslationService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() { 
     this.loadTrends(); 
+  }
+
+  translate(key: string): string {
+    if (this.translationService && this.translationService.translate) {
+      return this.translationService.translate(key);
+    }
+    console.warn('Translation service is not available');
+    return key;
   }
 
   loadTrends() {

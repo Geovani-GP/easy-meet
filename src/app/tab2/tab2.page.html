@@ -3,7 +3,7 @@
   <ion-header [translucent]="true">
     <ion-toolbar>
       <ion-title>
-        Proximos eventos
+        {{ translate('Proximos-eventos') }}
       </ion-title>
     </ion-toolbar>
   </ion-header>
@@ -35,7 +35,7 @@
           <div style="display: flex; flex-direction: column; align-items: flex-end;">
            <!--  <button mat-button>LIKE</button>
             <button mat-button>SHARE</button> -->
-            <button mat-button  (click)="navigateToDetails(trend)">Detalles</button>
+            <button mat-button  (click)="navigateToDetails(trend)">{{translate('detalles')}}</button>
           </div>
         </div>
       </mat-card-actions>

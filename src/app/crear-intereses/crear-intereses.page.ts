@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServicesService } from '../services/services.service';
 import { SpinnerService } from '../services/spinner.service';
 import { ToastController } from '@ionic/angular';
+import { TranslationService } from '../services/translation.service';
 
 @Component({
   selector: 'app-crear-intereses',
@@ -11,11 +12,19 @@ import { ToastController } from '@ionic/angular';
 export class CrearInteresesPage implements OnInit {
   intereses: any[] = [];
   selectedInterestsIds: string = '';
-  constructor(private servicesService: ServicesService, private spinnerService: SpinnerService, private toastController: ToastController) { }
+  constructor(private servicesService: ServicesService, private spinnerService: SpinnerService, private toastController: ToastController, private translationService: TranslationService) { }
 
   ngOnInit() {
     this.loadInterests();
     this.loadSelectedInterests();
+  }
+
+  translate(key: string): string {
+    if (this.translationService && this.translationService.translate) {
+      return this.translationService.translate(key);
+    }
+    console.warn('Translation service is not available');
+    return key;
   }
 
   loadInterests() {
@@ -26,7 +35,7 @@ export class CrearInteresesPage implements OnInit {
         if (response.payload && Array.isArray(response.payload)) {
           this.intereses = response.payload.map((interest: any) => ({
             id: interest.id,
-            name: interest.interes, 
+            name: this.translate(interest.interes), 
             selected: false
           }));
           this.loadSelectedInterests(); 

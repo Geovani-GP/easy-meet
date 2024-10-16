@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, AfterViewChecked, ViewChild, ElementRef } from '@angular/core';
 import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
-
+import { TranslationService } from '../services/translation.service';
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.page.html',
@@ -14,6 +14,8 @@ export class PaymentPage implements OnInit, AfterViewInit, AfterViewChecked {
   amount: number = 0; // Añadido para el monto del pago
   stripeInitialized: boolean = false; // Añadido para evitar múltiples inicializaciones
 
+
+  constructor(private translationService: TranslationService) { }
   async ngOnInit() {
     try {
       // Cambia la clave de API a la clave de prueba
@@ -107,5 +109,13 @@ export class PaymentPage implements OnInit, AfterViewInit, AfterViewChecked {
     } else {
       console.error('handleStripePayment: cardElementRef no está inicializado');
     }
+  }
+
+  translate(key: string): string {
+    if (this.translationService && this.translationService.translate) {
+      return this.translationService.translate(key);
+    }
+    console.warn('Translation service is not available');
+    return key;
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServicesService } from '../services/services.service';
 import { SpinnerService } from '../services/spinner.service';
+import { TranslationService } from '../services/translation.service';
 
 @Component({
   selector: 'app-tab1',
@@ -13,10 +14,18 @@ export class Tab1Page implements OnInit {
   selectedInterestsIds: string = '';
   isLoading: boolean = false; // Variable para controlar el spinner
 
-  constructor(private router: Router,private spinnerService: SpinnerService, private servicesService: ServicesService) {}
+  constructor(private router: Router,private spinnerService: SpinnerService, private servicesService: ServicesService, private translationService: TranslationService) {}
 
   ngOnInit() {
     this.loadInterests();
+  }
+
+  translate(key: string): string {
+    if (this.translationService && this.translationService.translate) {
+      return this.translationService.translate(key);
+    }
+    console.warn('Translation service is not available');
+    return key;
   }
 
   findMeet() {
@@ -42,11 +51,9 @@ export class Tab1Page implements OnInit {
         if (response.payload && Array.isArray(response.payload)) {
           this.intereses = response.payload.map((interest: any) => ({
             id: interest.id,
-            name: interest.interes, 
+            name: this.translate(interest.interes),  // Traducir el nombre del interés
             selected: false
           }));
-        } else {
-          console.error('La respuesta no contiene payloads o no es un arreglo:', response);
         }
       },
       (error) => {

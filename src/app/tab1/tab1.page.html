@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
   
-    <ion-title>Busqueda</ion-title>
+    <ion-title>{{ translate('Buscar-eventos') }}</ion-title>
     
   </ion-toolbar>
 </ion-header>
@@ -9,7 +9,7 @@
 <ion-content [fullscreen]="true">
   <app-spinner></app-spinner>
   <div class="content-container" *ngIf="!isLoading">
-    <h1 class="easy-meet-title">Edad: {{ lowerValue }} - {{ upperValue }}</h1>
+    <h1 class="easy-meet-title">{{ translate('edad') }}: {{ lowerValue }} - {{ upperValue }}</h1>
     <ion-range 
       aria-label="Dual Knobs Range" 
       [dualKnobs]="true" 
@@ -17,7 +17,7 @@
       (ionChange)="updateValues()">
     </ion-range>
 
-    <h2 class="easy-meet-title" >Intereses</h2>
+    <h2 class="easy-meet-title" >{{ translate('intereses') }}</h2>
     <div class="intereses">
       <ion-button  class="easy-meet-selectible"
         *ngFor="let interes of intereses" 
@@ -28,7 +28,7 @@
     </div>
 
     <div class="fecha">
-      <h2 class="easy-meet-title">Fecha</h2>
+      <h2 class="easy-meet-title">{{ translate('fecha') }}</h2>
       <p (click)="showDatePicker()">{{ selectedDate | date: 'dd MMMM yyyy' }}</p>
       <div class="modal" *ngIf="isDatePickerVisible">
         <ion-datetime 
@@ -37,12 +37,12 @@
           displayFormat="MMM DD YYYY"
           pickerFormat="MMM DD YYYY">
         </ion-datetime>
-        <ion-button expand="full" (click)="isDatePickerVisible = false">Cerrar</ion-button>
+        <ion-button expand="full" (click)="isDatePickerVisible = false">{{ translate('cerrar') }}</ion-button>
       </div>
     </div>
     <br>
     <div>
-      <ion-button expand="full" class="easy-meet-button" (click)="findMeet()">Buscar</ion-button>
+      <ion-button expand="full" class="easy-meet-button" (click)="findMeet()">{{ translate('buscar') }}</ion-button>
     </div>
   </div>
 </ion-content>

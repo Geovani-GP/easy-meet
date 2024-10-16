@@ -4,7 +4,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/tab2"></ion-back-button>
     </ion-buttons>
-    <ion-title>Detalles</ion-title>
+    <ion-title>{{translate('detalles')}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -21,14 +21,14 @@
     </p>
     <p class="trend-multitarea">{{trendDetails.tipo}}</p>
 
-    <ion-chip color="primary">Edad: {{trendDetails.edad_ini}} - {{trendDetails.edad_fin}} años</ion-chip>
-    <ion-chip color="success">Costo: {{trendDetails.costo}}</ion-chip>
+    <ion-chip color="primary">{{translate('edad')}}: {{trendDetails.edad_ini}} - {{trendDetails.edad_fin}} {{translate('anios')}}</ion-chip>
+    <ion-chip color="success">{{translate('costo')}}: {{trendDetails.costo}}</ion-chip>
     
-    <div class="user-card">
+    <div class="user-card" *ngIf="oauth">
       <img [src]="trend.usu_img ? trend.usu_img : 'assets/profile.jpg'" alt="Perfil" class="user-image" />
       <div class="user-info">
         <p class="user-alias">{{trendDetails.usuario}}</p>
-        <ion-button fill="outline" (click)="contactar()">Contactar</ion-button>
+        <ion-button fill="outline" (click)="contactar()">{{translate('contactar')}}</ion-button>
       </div>
     </div>
   </div>

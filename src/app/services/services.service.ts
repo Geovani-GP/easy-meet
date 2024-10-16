@@ -448,4 +448,47 @@ registerUser(data: any): Observable<any> {
     });
   }
 
+  solicitarContacto(meet: string, usuario: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'ApiKey': '_$4DM1N$_',
+    });
+
+    const body = {
+      meet,
+      usuario
+    };
+
+    return this.http.post(`${this.apiUrl}/meet/solicitud`, body, { headers }).pipe(
+      map(response => response),
+      catchError(error => {
+        console.error('Error al solicitar contacto:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  cancelAssistance(data: { solicitud: string; motivo: string }): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'ApiKey': '_$4DM1N$_', 
+    });
+
+    return this.http.put(`${this.apiUrl}/meet/cancelacion`, data, { headers }).pipe(
+      map(response => response),
+      catchError(error => {
+        console.error('Error al cancelar la asistencia:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+
+  getEventDetails(uuid: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'ApiKey': '_$4DM1N$_' 
+    });
+    return this.http.get(`${this.apiUrl}/meet/listings?uid=${uuid}`, { headers });
+  }
+
 }

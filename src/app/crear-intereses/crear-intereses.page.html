@@ -3,12 +3,12 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/tab4"></ion-back-button>
     </ion-buttons>
-    <ion-title>Mis intereses</ion-title>
+    <ion-title>{{translate('mis-intereses')}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <h2 class="easy-meet-title" >Intereses</h2>
+  <h2 class="easy-meet-title" >{{translate('intereses')}}</h2>
     <div class="intereses">
       <ion-button  class="easy-meet-selectible"
         *ngFor="let interes of intereses" 
@@ -17,5 +17,8 @@
         {{ interes.name }}
       </ion-button>
     </div>
-    <ion-button expand="block" (click)="saveInterests()">Guardar intereses</ion-button>
+    <br>
+    <br>
+    
+    <ion-button expand="block" (click)="saveInterests()">{{translate('guardar-intereses')}}</ion-button>
 </ion-content>

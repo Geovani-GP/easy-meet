@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServicesService } from '../services/services.service';
+import { TranslationService } from '../services/translation.service';
 
 @Component({
   selector: 'app-tab4',
@@ -12,7 +13,7 @@ export class Tab4Page implements OnInit {
   myAssists: any[] = [];
   myMeetings: any[] = []; 
 
-  constructor(private router: Router, private servicesService: ServicesService) { }
+  constructor(private router: Router, private servicesService: ServicesService, private translationService: TranslationService) { }
 
   ngOnInit() {
     const userData = localStorage.getItem('userData');
@@ -59,17 +60,23 @@ export class Tab4Page implements OnInit {
     this.router.navigate(['/create-meeting']);
   }
 
-  navigateToMeetingDetail() {
-    this.router.navigate(['/reuniones-detalle']);
+  navigateToMeetingDetail(meeting: any) {
+    this.router.navigate(['/reuniones-detalle'], { state: { meeting } });
   }
   
-  navigateToAssistanceDetail() {
-    this.router.navigate(['/asistencias-detalle']);
+  navigateToAssistanceDetail(assistance: any) {
+    this.router.navigate(['/asistencias-detalle'], { state: { assistance } });
   }
 
   navigateToCreateInterests() {
     this.router.navigate(['/crear-intereses']);
   }
+
+  navigateToUserProperties() {
+    this.router.navigate(['/user-properties']); // Asegúrate de que la ruta sea correcta
+  }
+
+
 
   logout() {
     localStorage.removeItem('oauth');
@@ -80,6 +87,14 @@ export class Tab4Page implements OnInit {
 
   payment() {
     this.router.navigate(['/payment']);
+  }
+
+  translate(key: string): string {
+    if (this.translationService && this.translationService.translate) {
+      return this.translationService.translate(key);
+    }
+    console.warn('Translation service is not available');
+    return key;
   }
 
 }

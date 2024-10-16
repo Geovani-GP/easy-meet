@@ -3,6 +3,7 @@ import { SpinnerService } from '../services/spinner.service';
 import { ServicesService } from '../services/services.service';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { TranslationService } from '../services/translation.service';
 @Component({
   selector: 'app-register-user',
   templateUrl: './register-user.page.html',
@@ -18,9 +19,17 @@ export class RegisterUserPage implements OnInit {
   sexo: string = 'M';
   pais: string = '52'; 
 
-  constructor(private spinnerService: SpinnerService, private servicesService: ServicesService, private toastController: ToastController, private router: Router) { }
+  constructor(private spinnerService: SpinnerService, private servicesService: ServicesService, private toastController: ToastController, private router: Router, private translationService: TranslationService) { }
 
   ngOnInit() {}
+
+  translate(key: string): string {
+    if (this.translationService && this.translationService.translate) {
+      return this.translationService.translate(key);
+    }
+    console.warn('Translation service is not available');
+    return key;
+  }
 
   async register() {
     this.spinnerService.show(); // Mostrar el spinner

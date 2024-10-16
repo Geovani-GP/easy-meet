@@ -3,24 +3,24 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/tab1"></ion-back-button>
     </ion-buttons>
-    <ion-title>Crear Reunión</ion-title>
+    <ion-title>{{translate('crear-reunion')}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <form (ngSubmit)="onSubmit()">
     <ion-item>
-      <ion-label position="floating">Título</ion-label>
+      <ion-label position="floating">{{translate('titulo')}}</ion-label>
       <ion-input [(ngModel)]="titulo" name="titulo" required></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Descripción</ion-label>
+      <ion-label position="floating">{{translate('descripcion')}}</ion-label>
       <ion-textarea [(ngModel)]="descripcion" name="descripcion" required></ion-textarea>
     </ion-item>
 
     <div class="fecha">
-      <h2 class="easy-meet-title">Fecha</h2>
+      <h2 class="easy-meet-title">{{translate('fecha')}}</h2>
       <p (click)="showDatePicker()">{{ selectedDate | date: 'dd MMMM yyyy' }}</p>
       <div class="modal" *ngIf="isDatePickerVisible">
         <ion-datetime 
@@ -30,33 +30,33 @@
           pickerFormat="MMM DD YYYY"
           name="fecha"> <!-- Asegúrate de agregar el name aquí -->
         </ion-datetime>
-        <ion-button expand="full" (click)="isDatePickerVisible = false">Cerrar</ion-button>
+        <ion-button expand="full" (click)="isDatePickerVisible = false">{{translate('cerrar')}}</ion-button>
       </div>
     </div>
 
     <ion-item>
-      <ion-label position="floating">Costo</ion-label>
+      <ion-label position="floating">{{translate('costo')}}</ion-label>
       <ion-input type="number" [(ngModel)]="costo" name="costo" required></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label>Tipo</ion-label>
+      <ion-label>{{translate('tipo')}}</ion-label>
       <ion-select [(ngModel)]="tipo" name="tipo" placeholder="Selecciona un tipo" required>
-        <ion-select-option value="tipo1">Tipo 1</ion-select-option>
-        <ion-select-option value="tipo2">Tipo 2</ion-select-option>
+        <ion-select-option value="tipo1">{{translate('tipo1')}}</ion-select-option>
+        <ion-select-option value="tipo2">{{translate('tipo2')}}</ion-select-option>
       </ion-select>
     </ion-item>
 
     <ion-item>
-      <ion-label>Tema</ion-label>
+      <ion-label>{{translate('tema')}}</ion-label>
       <ion-select [(ngModel)]="tema" name="tema" placeholder="Selecciona un tema" required>
-        <ion-select-option value="tema1">Tema 1</ion-select-option>
-        <ion-select-option value="tema2">Tema 2</ion-select-option>
+        <ion-select-option value="tema1">{{translate('tema1')}}</ion-select-option>
+        <ion-select-option value="tema2">{{translate('tema2')}}</ion-select-option>
       </ion-select>
     </ion-item>
 
     <ion-item>
-      <h1 class="easy-meet-title">Edad: {{ rangeValues.lower }} - {{ rangeValues.upper }}</h1>
+      <h1 class="easy-meet-title">{{translate('edad')}}: {{ rangeValues.lower }} - {{ rangeValues.upper }}</h1>
       <ion-range 
         aria-label="Dual Knobs Range" 
         [dualKnobs]="true" 
@@ -67,35 +67,35 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Subir Imagen</ion-label>
+      <ion-label>{{translate('subir-imagen')}}</ion-label>
       <ion-button fill="outline" slot="end" (click)="subirImagen()">
         <ion-icon name="camera"></ion-icon>
       </ion-button>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating" class="easy-meet-title">Dirección</ion-label>
+      <ion-label position="floating" class="easy-meet-title">{{translate('direccion')}}</ion-label>
       <br>
-      <p (click)="showMapModal()">{{ direccion || 'Selecciona una dirección' }}</p>
+      <p (click)="showMapModal()">{{ translate('direccion') || translate('selecciona-una-direccion') }}</p>
     </ion-item>
 
-    <ion-button expand="full" color="primary" type="submit">Registrar</ion-button>
+    <ion-button expand="full" color="primary" type="submit">{{translate('registrar')}}</ion-button>
   </form>
 
   <ion-modal [isOpen]="isMapModalOpen" (ionDidPresent)="onMapModalDidPresent()" (ionDidClose)="isMapModalOpen = false">
     <ng-template>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Seleccionar Ubicación</ion-title>
+          <ion-title>{{translate('seleccionar-ubicacion')}}</ion-title>
           <ion-buttons slot="end">
-            <ion-button (click)="isMapModalOpen = false">Cerrar</ion-button>
+            <ion-button (click)="isMapModalOpen = false">{{translate('cerrar')}}</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content>
         <ion-item>
-          <ion-label position="floating" class="easy-meet-title" style="margin-bottom: 20px;">Dirección</ion-label>
-          <ion-textarea [(ngModel)]="direccion" placeholder="Escribe la dirección" (ionInput)="buscarDireccion()"></ion-textarea>
+          <ion-label position="floating" class="easy-meet-title" style="margin-bottom: 20px;">{{translate('direccion')}}</ion-label>
+          <ion-textarea [(ngModel)]="direccion" placeholder="{{translate('escribe-la-direccion')}}" (ionInput)="buscarDireccion()"></ion-textarea>
         </ion-item>
         <ion-list *ngIf="sugerencias.length > 0">
           <ion-item *ngFor="let sugerencia of sugerencias" (click)="seleccionarSugerencia(sugerencia)">
@@ -103,7 +103,7 @@
           </ion-item>
         </ion-list>
         <div id="map" style="height: 70vh; width: 100%;"></div>
-        <ion-button expand="full" (click)="guardarDireccion()">Guardar Dirección</ion-button>
+        <ion-button expand="full" (click)="guardarDireccion()">{{translate('guardar-direccion')}}</ion-button>
       </ion-content>
     </ng-template>
   </ion-modal>

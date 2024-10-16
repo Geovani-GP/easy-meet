@@ -3,17 +3,17 @@
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="tab1" (click)="navigateTo('tab1')">
       <ion-icon aria-hidden="true" name="search"></ion-icon>
-      <ion-label>Buscar</ion-label>
+      <ion-label>{{translate('buscar')}}</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="tab2" (click)="navigateTo('tab2')">
       <ion-icon aria-hidden="true" name="layers"></ion-icon>
-      <ion-label>Feed</ion-label>
+      <ion-label>{{translate('feed')}}</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="tab3" (click)="navigateTo('tab3')">
       <ion-icon aria-hidden="true" name="person-circle"></ion-icon>
-      <ion-label>Cuenta</ion-label>
+      <ion-label>{{translate('cuenta')}}</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
  

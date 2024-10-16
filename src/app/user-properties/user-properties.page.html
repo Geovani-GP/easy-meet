@@ -1,0 +1,44 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab4"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{translate('propiedades-de-usuario')}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="profile">
+    <div class="profile-picture-container">
+      <img src="{{userData.photoURL}}" alt="Perfil" class="profile-picture">
+      <ion-icon name="create"></ion-icon>
+    </div>
+    <h2 class="easy-meet-title">{{userData.displayName}}</h2>
+    <p class="easy-meet-subtitle">{{userData.email}}</p>
+    <p class="easy-meet-subtitle">{{userData.createdAt}}</p>
+  </div>
+
+
+  <div class="properties-container">
+    <hr style="border-top: 1px solid #ccc; width: 100%; margin: 20px 0;">
+    <div class="language-selector">
+      <ion-label>{{translate('seleccionar-idioma-de-la-aplicacion')}}</ion-label>
+      <ion-select [(ngModel)]="selectedLanguage" (ionChange)="onLanguageChange($event)">
+        <ion-select-option value="es">
+          <img src="../../assets/flags/MX - Mexico.png" alt="Español" class="flag-icon"> {{translate('español')}}
+        </ion-select-option>
+        <ion-select-option value="en">
+          <img src="../../assets/flags/US - United States.png" alt="Inglés" class="flag-icon"> {{translate('ingles')}}
+        </ion-select-option>
+        <ion-select-option value="fr">
+          <img src="../../assets/flags/FR - France.png" alt="Francés" class="flag-icon"> {{translate('frances')}}
+        </ion-select-option>
+        <ion-select-option value="de">
+            <img src="../../assets/flags/DE - Germany.png" alt="Alemán" class="flag-icon"> {{translate('aleman')}}
+        </ion-select-option>
+      </ion-select>
+    </div>
+  </div>
+
+  <ion-button expand="full" color="primary" class="create-meeting-button" (click)="acceptChanges()">{{translate('aceptar')}}</ion-button>
+</ion-content>

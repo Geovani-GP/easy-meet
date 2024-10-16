@@ -4,23 +4,23 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/tab3"></ion-back-button>
     </ion-buttons>
-    <ion-title>Registrarme</ion-title>
+    <ion-title>{{translate('registrarme')}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <form (ngSubmit)="register()">
     <ion-item>
-      <ion-label position="floating">Nombre</ion-label>
+      <ion-label position="floating">{{translate('nombre')}}</ion-label>
       <ion-input [(ngModel)]="nombre" name="nombre" required></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Correo Electrónico</ion-label>
+      <ion-label position="floating">{{translate('correo-electronico')}}</ion-label>
       <ion-input [(ngModel)]="email" name="email" type="email" required></ion-input>
     </ion-item>
     <div style="display: flex; justify-content: space-between;">
       <ion-item style="flex-direction: column;">
-        <ion-label position="floating">Teléfono</ion-label>
+        <ion-label position="floating">{{translate('telefono')}}</ion-label>
         <div style="display: flex; justify-content: space-between;flex-direction: row;">
           <ion-select [(ngModel)]="pais" name="pais" interface="popover">
           <ion-select-option value="52" selected>🇲🇽</ion-select-option>
@@ -35,19 +35,19 @@
       </ion-item>
     </div>
     <ion-item>
-      <ion-label position="floating">Contraseña</ion-label>
+      <ion-label position="floating">{{translate('contrasena')}}</ion-label>
       <ion-input [(ngModel)]="password" name="password" type="password" required></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label>Sexo</ion-label>
+      <ion-label>{{translate('sexo')}}</ion-label>
       <ion-select [(ngModel)]="sexo" name="sexo">
-        <ion-select-option value="M">Masculino</ion-select-option>
-        <ion-select-option value="F">Femenino</ion-select-option>
+        <ion-select-option value="M">{{translate('masculino')}}</ion-select-option>
+        <ion-select-option value="F">{{translate('femenino')}}</ion-select-option>
       </ion-select>
     </ion-item>
 
     <div class="fecha">
-      <h2 class="easy-meet-title">Fecha de Nacimiento</h2>
+      <h2 class="easy-meet-title">{{translate('fecha-de-nacimiento')}}</h2>
       <p (click)="showDatePicker()">{{ selectedDate | date: 'dd MMMM yyyy' }}</p>
       <div class="modal" *ngIf="isDatePickerVisible">
         <ion-datetime 
@@ -57,18 +57,18 @@
           pickerFormat="MMM DD YYYY"
           name="fecha">
         </ion-datetime>
-        <ion-button expand="full" (click)="isDatePickerVisible = false">Cerrar</ion-button>
+        <ion-button expand="full" (click)="isDatePickerVisible = false">{{translate('cerrar')}}</ion-button>
       </div>
     </div>
 
-    <ion-button expand="full" type="submit">Registrar</ion-button>
+    <ion-button expand="full" type="submit">{{translate('registrarme')}}</ion-button>
   </form>
 
   <div class="divider">o</div>
 
   <div class="login-container">
-    <p class="easy-meet-container">¿Ya tienes una cuenta?</p>
-    <a style="text-decoration: none;text-align: center;" href="/tabs/tab3" class="easy-meet-title">Iniciar sesión</a>
+    <p class="easy-meet-container">{{translate('ya-tienes-una-cuenta')}}</p>
+      <a style="text-decoration: none;text-align: center;" href="/tabs/tab3" class="easy-meet-title">{{translate('iniciar-sesion')}}</a>
   </div>
 
 

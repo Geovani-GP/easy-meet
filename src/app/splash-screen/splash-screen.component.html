@@ -20,23 +20,31 @@
       </div>
       <br>
       <ion-item class="checkbox-container">
-        <ion-checkbox class="checkbox" [(ngModel)]="skipSplash" (ionChange)="onCheckboxChange($event)">No mostrar
-          nuevamente</ion-checkbox>
+        <ion-checkbox class="checkbox" [(ngModel)]="skipSplash" (ionChange)="onCheckboxChange($event)">{{ translate('skip-text') }}</ion-checkbox>
         <!--   <ion-label></ion-label> -->
       </ion-item>
       <br>
-      <p class="skip-button" expand="full" (click)="continue()">Saltar introducción</p>
-      <br>
-    
+      <p class="skip-button" expand="full" (click)="continue()">{{ translate('skip-button') }}</p>
+      
+      <div class="language-container">
+        <ion-item class="language-selection">
+          <img *ngIf="selectedLanguage === 'es'" src="../../assets/flags/MX - Mexico.png" alt="Español" width="30" />
+          <img *ngIf="selectedLanguage === 'en'" src="../../assets/flags/US - United States.png" alt="Inglés" width="30" />
+          <ion-select [(ngModel)]="selectedLanguage" (ionChange)="onLanguageChange($event)">
+            <ion-select-option value="es"> &nbsp;{{ translate('es') }}</ion-select-option>
+            <ion-select-option value="en"> &nbsp;{{ translate('en') }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+       <br>
+      </div>
     </div>
   </div>
   <div *ngIf="isDesktop" class="qr-section">
     <div class="app-promotion">
       <ion-card class="app-promotion-card">
         <img src="./assets/info_3.png" alt="image promotion" width="50%" srcset="">
-        <p class="title">¡Conéctate, organiza y disfruta!</p>
-        <p class="description">Descubre EasyMeet, la nueva plataforma para hacer realidad tus reuniones sociales. Ya sea para eventos,
-          citas, festejos o simplemente para conocer gente nueva, ¡todo es posible!</p>
+        <p class="title">{{ translate('Welcome-desktop') }}</p>
+        <p class="description">{{ translate('Message-desktop') }}</p>
         <div class="app-links">
           <a href="https://play.google.com" target="_blank">
             <img src="./assets/googleplay.png" alt="Google Play" />
@@ -45,15 +53,25 @@
             <img src="./assets/appstore.png" alt="App Store" />
           </a>
         </div>
-        <p class="description">¡Descárgala ahora y empieza a crear experiencias inolvidables!</p>
+        <p class="description">{{ translate('Download-app-desktop') }}</p>
       </ion-card>
     </div>
     <div class="qr-container">
-      <p class="qr-title">¿Prefieres la versión web?</p>
-      <p class="qr-description">¡Escanea el código QR y accede a nuestra plataforma desde cualquier dispositivo!</p>
+      <p class="qr-title">{{ translate('title-desktop') }}</p>
+      <p class="qr-description">{{ translate('Message-desktop-2') }}</p>
       <img src="./assets/qr-code.png" alt="Código QR" class="qr-image" />
-      <p class="qr-description">¡Es hora de comenzar nuevas aventuras sociales con</p> 
-      <p class="qr-description" style="color:rgb(153, 150, 239); font-weight: 500;">¡EasyMeet!</p>
+      <p class="qr-description">{{ translate('Message-desktop-3') }}</p> 
+      <p class="qr-description" style="color:rgb(153, 150, 239); font-weight: 500;">{{ translate('EasyMeet') }}</p>
+      <div class="language-container">
+        <ion-item class="language-selection">
+          <img *ngIf="selectedLanguage === 'es'" src="../../assets/flags/MX - Mexico.png" alt="Español" width="30" />
+          <img *ngIf="selectedLanguage === 'en'" src="../../assets/flags/US - United States.png" alt="Inglés" width="30" />
+          <ion-select [(ngModel)]="selectedLanguage" (ionChange)="onLanguageChange($event)">
+            <ion-select-option value="es"> &nbsp;{{ translate('es') }}</ion-select-option>
+            <ion-select-option value="en"> &nbsp;{{ translate('en') }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
      <p class="footer-text">Powered by:  Neural Network Initiative (nni.ai) https://nni.ai</p>
     </div>
   </div>

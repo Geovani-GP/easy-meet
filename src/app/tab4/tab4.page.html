@@ -1,24 +1,26 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Perfil</ion-title>
+    <ion-title>{{translate('perfil')}}</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content [fullscreen]="true" class="content">
   <div class="content-container">
   <div class="profile">
-    <img src="{{userData.photoURL}}" alt="Perfil" class="profile-picture">
+    <div class="profile-picture-container" (click)="navigateToUserProperties()">
+      <img src="{{userData.photoURL}}" alt="Perfil" class="profile-picture">
+      <ion-icon name="create"></ion-icon>
+    </div>
     <h2 class="easy-meet-title">{{userData.displayName}}</h2>
     <p class="easy-meet-subtitle">{{userData.email}}</p>
     <p class="easy-meet-subtitle">{{userData.createdAt}}</p>
     <div class="logout-button-container">
-      <ion-button color="warning" size="small" (click)="payment()">Premium</ion-button>
-      <ion-button color="danger" size="small" (click)="logout()">Cerrar sesión</ion-button>
+     <!--  <ion-button color="warning" size="small" (click)="payment()">{{translate('premium')}}</ion-button> -->
+      <ion-button color="danger" size="small" (click)="logout()">{{translate('cerrar-sesion')}}</ion-button>
     </div>
   </div>
 
   <div class="interests">
-    <h3 class="easy-meet-title">Intereses</h3>
+    <h3 class="easy-meet-title">{{translate('intereses')}}</h3>
     <ion-button fill="outline" icon-only (click)="navigateToCreateInterests()">
       <ion-icon name="create"></ion-icon>
     </ion-button>
@@ -29,12 +31,12 @@
 
   
   <div class="assistance">
-    <h3 class="easy-meet-title">Mis asistencias</h3>
+    <h3 class="easy-meet-title">{{translate('mis-asistencias')}}</h3>
     <div class="assistance-scroll">
       <ion-grid>
         <ion-row class="assistance-row">
           <ion-col size="6" *ngFor="let assist of myAssists"> <!-- Usar *ngFor para iterar sobre las asistencias -->
-            <ion-card style="height: 200px;" (click)="navigateToAssistanceDetail()">
+            <ion-card style="height: 200px;" (click)="navigateToAssistanceDetail(assist)">
               <img src="{{ assist.img ? assist.img : 'assets/no_image.png' }}" alt="Asistencia">
               <ion-card-header>
                 <ion-card-title class="easy-meet-subtitle">{{ assist.titulo }}</ion-card-title> <!-- Asumiendo que cada asistencia tiene un título -->
@@ -47,12 +49,12 @@
   </div>
 
   <div class="meetings">
-    <h3 class="easy-meet-title">Mis reuniones</h3>
+    <h3 class="easy-meet-title">{{translate('mis-reuniones')}}</h3>
     <div class="assistance-scroll">
       <ion-grid>
         <ion-row class="assistance-row">
           <ion-col size="6" *ngFor="let meeting of myMeetings"> 
-            <ion-card style="height: 200px;" (click)="navigateToMeetingDetail()">
+            <ion-card style="height: 200px;" (click)="navigateToMeetingDetail(meeting)">
               <img src="{{ meeting.img ? meeting.img : 'assets/no_image.png' }}" alt="Reunión">
               <ion-card-header>
                 <ion-card-title class="easy-meet-subtitle">{{ meeting.titulo }}</ion-card-title> 
@@ -64,6 +66,6 @@
     </div>
   </div>
 
-  <ion-button expand="full" color="primary" class="create-meeting-button" (click)="navigateToCreateMeeting()">Crear reunión</ion-button>
+  <ion-button expand="full" color="primary" class="create-meeting-button" (click)="navigateToCreateMeeting()">{{translate('crear-reunion')}}</ion-button>
 </div>
 </ion-content>

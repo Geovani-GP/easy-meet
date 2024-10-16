@@ -50,6 +50,10 @@ const routes: Routes = [
     path: 'register-user',
     loadChildren: () => import('./register-user/register-user.module').then( m => m.RegisterUserPageModule)
   },
+  {
+    path: 'user-properties',
+    loadChildren: () => import('./user-properties/user-properties.module').then( m => m.UserPropertiesPageModule)
+  },
 
 ];
 
