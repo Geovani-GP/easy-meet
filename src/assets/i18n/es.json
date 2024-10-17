@@ -113,5 +113,14 @@
      "tema":"Tema",
      "subir-imagen":"Subir imagen",
      "registrar":"Registrar",
-     "escribe-la-direccion":"Escribe la dirección"
+     "escribe-la-direccion":"Escribe la dirección",
+     "selecciona-un-tipo":"Selecciona un tipo",
+     "selecciona-un-tema":"Selecciona un tema",
+     "comercial":"Comercial",
+     "cultural":"Cultural",
+     "festejo":"Festejo",
+     "recreativo":"Recreativo",
+     "Reunión creada exitosamente.":"Reunión creada exitosamente.",
+     "Error al crear la reunión. Inténtalo de nuevo.":"Error al crear la reunión. Inténtalo de nuevo."
+     
 }

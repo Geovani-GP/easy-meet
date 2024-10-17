@@ -21,16 +21,17 @@
 
     <div class="fecha">
       <h2 class="easy-meet-title">{{translate('fecha')}}</h2>
-      <p (click)="showDatePicker()">{{ selectedDate | date: 'dd MMMM yyyy' }}</p>
+      <p (click)="showDatePicker()">{{ selectedDate | date: 'dd MMMM yyyy HH:mm ' }}</p>
       <div class="modal" *ngIf="isDatePickerVisible">
         <ion-datetime 
           [(ngModel)]="selectedDate" 
           (ionChange)="onDateChange($event)"
-          displayFormat="MMM DD YYYY"
-          pickerFormat="MMM DD YYYY"
-          name="fecha"> <!-- Asegúrate de agregar el name aquí -->
+          displayFormat="MMM DD YYYY HH:mm"
+          pickerFormat="MMM DD YYYY HH:mm"
+          name="fecha">
         </ion-datetime>
-        <ion-button expand="full" (click)="isDatePickerVisible = false">{{translate('cerrar')}}</ion-button>
+        <!-- Botón para aceptar la selección -->
+        <ion-button expand="full" (click)="acceptDate()">{{translate('aceptar')}}</ion-button>
       </div>
     </div>
 
@@ -41,17 +42,18 @@
 
     <ion-item>
       <ion-label>{{translate('tipo')}}</ion-label>
-      <ion-select [(ngModel)]="tipo" name="tipo" placeholder="Selecciona un tipo" required>
-        <ion-select-option value="tipo1">{{translate('tipo1')}}</ion-select-option>
-        <ion-select-option value="tipo2">{{translate('tipo2')}}</ion-select-option>
+      <ion-select [(ngModel)]="tipo" name="tipo" placeholder="{{translate('selecciona-un-tipo')}}" required>
+        <ion-select-option value="1">{{translate('comercial')}}</ion-select-option>
+        <ion-select-option value="2">{{translate('cultural')}}</ion-select-option>
+        <ion-select-option value="3">{{translate('festejo')}}</ion-select-option>
+        <ion-select-option value="4">{{translate('recreativo')}}</ion-select-option>
       </ion-select>
     </ion-item>
 
     <ion-item>
       <ion-label>{{translate('tema')}}</ion-label>
-      <ion-select [(ngModel)]="tema" name="tema" placeholder="Selecciona un tema" required>
-        <ion-select-option value="tema1">{{translate('tema1')}}</ion-select-option>
-        <ion-select-option value="tema2">{{translate('tema2')}}</ion-select-option>
+      <ion-select [(ngModel)]="tema" name="tema" placeholder="{{translate('selecciona-un-tema')}}" required>
+        <ion-select-option *ngFor="let interes of intereses" [value]="interes.id">{{interes.name}}</ion-select-option>
       </ion-select>
     </ion-item>
 
@@ -76,7 +78,7 @@
     <ion-item>
       <ion-label position="floating" class="easy-meet-title">{{translate('direccion')}}</ion-label>
       <br>
-      <p (click)="showMapModal()">{{ translate('direccion') || translate('selecciona-una-direccion') }}</p>
+      <p (click)="showMapModal()">{{ direccion || translate('selecciona-una-direccion') }}</p>
     </ion-item>
 
     <ion-button expand="full" color="primary" type="submit">{{translate('registrar')}}</ion-button>

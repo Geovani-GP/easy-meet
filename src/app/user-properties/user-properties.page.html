@@ -10,13 +10,16 @@
 <ion-content [fullscreen]="true">
   <div class="profile">
     <div class="profile-picture-container">
-      <img src="{{userData.photoURL}}" alt="Perfil" class="profile-picture">
-      <ion-icon name="create"></ion-icon>
+      <img [src]="userData.payload.uri_foto" alt="Perfil" class="profile-picture" (click)="fileInput.click()">
+      <span class="edit-icon">
+        <ion-icon name="brush"></ion-icon>
+      </span>
+      <input type="file" #fileInput (change)="loadImage($event)" accept="image/*" class="hidden-input"> <!-- Clase para ocultar el input -->
     </div>
-    <h2 class="easy-meet-title">{{userData.displayName}}</h2>
-    <p class="easy-meet-subtitle">{{userData.email}}</p>
-    <p class="easy-meet-subtitle">{{userData.createdAt}}</p>
-  </div>
+    <h2 class="easy-meet-title">{{userData.payload.nombre}}</h2>
+    <p class="easy-meet-subtitle">{{userData.payload.alias}}</p>
+    <p class="easy-meet-subtitle">{{userData.payload.telefono}}</p>
+  </div>  
 
 
   <div class="properties-container">

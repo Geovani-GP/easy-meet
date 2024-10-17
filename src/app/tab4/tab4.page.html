@@ -7,12 +7,14 @@
   <div class="content-container">
   <div class="profile">
     <div class="profile-picture-container" (click)="navigateToUserProperties()">
-      <img src="{{userData.photoURL}}" alt="Perfil" class="profile-picture">
+      <img src="{{userData.payload.uri_foto}}" alt="Perfil" class="profile-picture" style="width: 100px; height: 100px;">
       <ion-icon name="create"></ion-icon>
     </div>
-    <h2 class="easy-meet-title">{{userData.displayName}}</h2>
-    <p class="easy-meet-subtitle">{{userData.email}}</p>
-    <p class="easy-meet-subtitle">{{userData.createdAt}}</p>
+    <h2 class="easy-meet-title">{{userData.payload.nombre}}</h2>
+    <p class="easy-meet-subtitle">{{userData.payload.alias}}</p>
+    <p class="easy-meet-subtitle">{{userData.payload.email}}</p>
+    <p class="easy-meet-subtitle">{{userData.payload.telefono}}</p>
+    <p class="easy-meet-subtitle">{{userData.payload.uid}}</p>
     <div class="logout-button-container">
      <!--  <ion-button color="warning" size="small" (click)="payment()">{{translate('premium')}}</ion-button> -->
       <ion-button color="danger" size="small" (click)="logout()">{{translate('cerrar-sesion')}}</ion-button>

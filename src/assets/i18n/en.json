@@ -113,5 +113,13 @@
     "tema":"Theme",
     "subir-imagen":"Upload image",
     "registrar":"Register",
-    "escribe-la-direccion":"Write the address"
+    "escribe-la-direccion":"Write the address",
+    "selecciona-un-tipo":"Select a type",
+    "selecciona-un-tema":"Select a theme",
+    "comercial":"Commercial",
+    "cultural":"Cultural",
+    "festejo":"Party",
+    "recreativo":"Recreational",
+    "Reunión creada exitosamente.":"Meeting created successfully.",
+    "Error al crear la reunión. Inténtalo de nuevo.":"Error creating meeting. Try again."
 }

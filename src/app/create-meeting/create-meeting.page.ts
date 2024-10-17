@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { environment } from '../../environments/environment'; 
 import { TranslationService } from '../services/translation.service';
+import { ServicesService } from '../services/services.service';
+import { ToastController } from '@ionic/angular';
+import { SpinnerService } from '../services/spinner.service';
+import { CompressImageService } from '../services/compress-image.service';
 
 declare const google: any; 
 
@@ -28,14 +32,18 @@ export class CreateMeetingPage implements OnInit {
   currentLocation: { lat: number; lng: number } | null = null; 
   sugerencias: any[] = [];
   marker: any; 
-
-  constructor(private translationService: TranslationService) { 
+  intereses: any[] = [];
+  usuario: any;
+  constructor(private translationService: TranslationService, private servicesService: ServicesService, private toastController: ToastController, private spinnerService: SpinnerService, private compressImageService: CompressImageService) { 
     
     (window as any).initMap = this.initMap.bind(this);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.usuario =await JSON.parse(localStorage.getItem('EMUser') || '{}');
+    console.log(this.usuario);
     this.loadGoogleMaps();
+    this.loadInterests();
   }
 
   loadGoogleMaps() {
@@ -95,20 +103,54 @@ export class CreateMeetingPage implements OnInit {
   
   
   onSubmit() {
-    
+    console.log(this.formatDate(this.fecha));
     const meetingData = {
+      usuario: this.usuario.payload.uid,
+      interes: parseInt(this.tema), 
+      tipo: parseInt(this.tipo),
+      audicencia:"A", //
+      cp: "00000", //
+      lugar: this.direccion, 
       titulo: this.titulo,
-      descripcion: this.descripcion,
-      fecha: this.fecha,
+      fec_hora: this.formatDate(this.fecha),
       costo: this.costo,
-      tipo: this.tipo,
-      tema: this.tema,
-      edad: this.rangeValues,
-      direccion: this.direccion, 
+      eda_ini: this.rangeValues.lower,
+      eda_fin: this.rangeValues.upper, 
+      descripcion: this.descripcion,
+      latitud: this.currentLocation?.lat, // Añadido: latitud
+      longitud: this.currentLocation?.lng  // Añadido: longitud
     };
 
     console.log('Datos de la reunión:', meetingData);
     
+    // Llamar al servicio para crear la reunión
+    this.servicesService.crearMeeting(meetingData).subscribe({
+      next: async (response) => {
+        console.log('Reunión creada exitosamente:', response);
+
+        // Cargar la imagen después de crear la reunión
+        if (this.imagen) {
+          const uid = response.payload.uid; // Asegúrate de que el UID esté en la respuesta
+          const imageBase64 = this.imagen; // La imagen en base64
+          await this.servicesService.uploadImage(uid, imageBase64).toPromise();
+          console.log('Imagen cargada exitosamente.');
+        }
+
+        this.toastController.create({
+          message: this.translate('Reunión creada exitosamente.'),
+          duration: 2000,
+          position: 'bottom'
+        }).then(toast => toast.present());
+      },
+      error: (error) => {
+        console.error('Error al crear la reunión:', error);
+        this.toastController.create({
+          message: this.translate('Error al crear la reunión. Inténtalo de nuevo.'),
+          duration: 2000,
+          position: 'bottom'
+        }).then(toast => toast.present());
+      }
+    });
   }
 
   selectedDate: string = new Date().toISOString(); 
@@ -121,8 +163,14 @@ export class CreateMeetingPage implements OnInit {
   }
   
   onDateChange(event: any) {
-    this.selectedDate = event.detail.value; 
-    this.isDatePickerVisible = false; 
+    this.selectedDate = event.detail.value;
+    this.fecha = this.selectedDate;
+  }
+
+  acceptDate() {
+    this.isDatePickerVisible = false; // Oculta el modal
+    console.log('Fecha y hora seleccionadas:', this.selectedDate); // Muestra la fecha seleccionada en la consola
+    // Aquí puedes agregar cualquier lógica adicional que necesites
   }
 
   
@@ -147,9 +195,17 @@ export class CreateMeetingPage implements OnInit {
       allowEditing: false,
       resultType: CameraResultType.DataUrl, 
     });
-
-    this.imagen = image.dataUrl ?? null; 
-    console.log('Imagen seleccionada:', this.imagen);
+  
+    
+    if (image.dataUrl) { 
+        const response = await fetch(image.dataUrl);
+        const blob = await response.blob(); 
+        const file = new File([blob], 'imagen_comprimida.jpg', { type: blob.type }); 
+        this.imagen = await this.compressImageService.compress(file, 600, 800); 
+        console.log('Imagen seleccionada y comprimida:', this.imagen);
+    } else {
+        console.error('No se pudo obtener la imagen.');
+    }
   }
 
   onMapModalDidPresent() {
@@ -267,7 +323,7 @@ export class CreateMeetingPage implements OnInit {
         }
       });
     } else {
-      console.error('Por favor, ingresa una dirección.');
+      console.error('Por favor, ingresa una direccn.');
     }
   }
 
@@ -279,5 +335,43 @@ export class CreateMeetingPage implements OnInit {
     return key;
   }
 
-}
+  
+  loadInterests() {
+    this.spinnerService.show();  // Mostrar spinner
+    this.servicesService.getInterests().subscribe(
+      (response) => {
+         this.spinnerService.hide(); // Ocultar spinner
+        if (response.payload && Array.isArray(response.payload)) {
+          this.intereses = response.payload.map((interest: any) => ({
+            id: interest.id,
+            name: this.translate(interest.interes),  // Traducir el nombre del interés
+            selected: false
+          }));
+        }
+      },
+      (error) => {
+         this.spinnerService.hide(); // Ocultar spinner
+        console.error('Error al cargar intereses:', error);
+      }
+    );
+  }
 
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false // Cambia a true si deseas formato de 12 horas
+    };
+    const formattedDate = date.toLocaleString('es-ES', options).replace(',', '');
+    
+    // Formato deseado "YYYY-MM-DD HH:mm:ss"
+    const [datePart, timePart] = formattedDate.split(' ');
+    const [day, month, year] = datePart.split('/');
+    return `${year}-${month}-${day} ${timePart}`; // Retorna en el formato requerido
+  }
+
+}

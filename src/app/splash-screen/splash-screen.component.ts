@@ -15,11 +15,8 @@ export class SplashScreenComponent implements OnInit {
   async ngAfterViewInit() {
     const items = document.querySelectorAll('.item-native');
     items.forEach(item => {
-        item.classList.remove('item-native'); // Elimina la clase
+        item.classList.remove('item-native'); 
     });
-   /*  await this.storage.create();
-    this.selectedLanguage = await this.storage.get('selectedLanguage') || 'en';
-    this.updateImageDescriptions(); */
   }
 
   private touchStartX: number = 0;
@@ -62,8 +59,6 @@ export class SplashScreenComponent implements OnInit {
     try {
       await this.storage.create();
       this.skipSplash = await this.storage.get('skipSplash') || false;
-
-      // Verifica si el idioma ya está guardado, si no, establece el inglés como predeterminado
       this.selectedLanguage = await this.storage.get('selectedLanguage') || 'en';
       await this.storage.set('selectedLanguage', this.selectedLanguage);
       this.isLanguageSelected = !!this.selectedLanguage;
@@ -75,10 +70,10 @@ export class SplashScreenComponent implements OnInit {
       this.startAutoSlide();
       this.desktop();
 
-      // Asegúrate de que se espera a que se establezca el idioma
+     
       await this.translationService.setLanguage(this.selectedLanguage);
       
-      // Espera a que se actualicen las descripciones
+      
       await this.updateImageDescriptions(); 
     } catch (error) {
       console.error('Error al inicializar:', error);
@@ -90,7 +85,7 @@ export class SplashScreenComponent implements OnInit {
     await this.storage.set('selectedLanguage', this.selectedLanguage);
     this.translationService.setLanguage(this.selectedLanguage);
     console.log('Idioma seleccionado:', this.selectedLanguage);
-    this.updateImageDescriptions(); // Actualiza las descripciones al cambiar el idioma
+    this.updateImageDescriptions();
   }
 
   private async updateImageDescriptions() {
@@ -110,7 +105,7 @@ export class SplashScreenComponent implements OnInit {
 
         console.log('Descripciones de imágenes actualizadas:', this.imageDescriptionsTitle, this.imageDescriptions);
         resolve();
-      }, 100); // Pequeño retraso para asegurar que las traducciones estén listas
+      }, 100);
     });
   }
 

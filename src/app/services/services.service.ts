@@ -491,4 +491,53 @@ registerUser(data: any): Observable<any> {
     return this.http.get(`${this.apiUrl}/meet/listings?uid=${uuid}`, { headers });
   }
 
+  uploadAvatar(uid: string, avatarBase64: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'ApiKey': '_$4DM1N$_',
+    });
+
+    const body = {
+      uid: uid,
+      avatar_base64: avatarBase64
+    };
+
+    return this.http.patch(`${this.apiUrl}/usuarios/avatar_base64`, body, { headers }).pipe(
+      map(response => response),
+      catchError(error => {
+        console.error('Error al subir el avatar:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  crearMeeting(meetingData: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'ApiKey': '_$4DM1N$_',
+    });
+
+    return this.http.post(`${this.apiUrl}/meet/registro`, meetingData, { headers });
+  }
+
+  uploadImage(uid: string, imageBase64: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'ApiKey': '_$4DM1N$_',
+    });
+
+    const body = {
+      uid: uid,
+      portada_base64: imageBase64
+    };
+
+    return this.http.patch(`${this.apiUrl}/meet/portada_base64`, body, { headers }).pipe(
+      map(response => response),
+      catchError(error => {
+        console.error('Error al subir la imagen:', error);
+        return throwError(error);
+      })
+    );
+  }
+
 }

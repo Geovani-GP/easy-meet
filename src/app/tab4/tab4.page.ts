@@ -2,21 +2,34 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServicesService } from '../services/services.service';
 import { TranslationService } from '../services/translation.service';
-
+import { ViewWillEnter } from '@ionic/angular';
+import { UserService } from '../services/user.service';
 @Component({
   selector: 'app-tab4',
   templateUrl: './tab4.page.html',
   styleUrls: ['./tab4.page.scss'],
 })
-export class Tab4Page implements OnInit {
+export class Tab4Page implements OnInit, ViewWillEnter {
   userData: any;
   myAssists: any[] = [];
   myMeetings: any[] = []; 
 
-  constructor(private router: Router, private servicesService: ServicesService, private translationService: TranslationService) { }
+  constructor(private router: Router, private servicesService: ServicesService, private translationService: TranslationService, private userService: UserService) { }
 
   ngOnInit() {
-    const userData = localStorage.getItem('userData');
+    this.userService.userData$.subscribe(data => {
+      this.userData = data;
+      this.loadMyAssists();
+      this.loadMyMeetings();
+    });
+  }
+
+  ionViewWillEnter() {
+    this.loadUserData(); 
+  }
+
+  loadUserData() {
+    const userData = localStorage.getItem('EMUser');
     if (userData) {
       this.userData = JSON.parse(userData);
       this.loadMyAssists();
