@@ -6,6 +6,9 @@ import { ServicesService } from '../services/services.service';
 import { ToastController } from '@ionic/angular';
 import { SpinnerService } from '../services/spinner.service';
 import { CompressImageService } from '../services/compress-image.service';
+import { Router } from '@angular/router';
+import { Observable, of, BehaviorSubject } from 'rxjs';
+import { catchError, finalize } from 'rxjs/operators';
 
 declare const google: any; 
 
@@ -32,11 +35,20 @@ export class CreateMeetingPage implements OnInit {
   currentLocation: { lat: number; lng: number } | null = null; 
   sugerencias: any[] = [];
   marker: any; 
+  
   intereses: any[] = [];
   usuario: any;
-  constructor(private translationService: TranslationService, private servicesService: ServicesService, private toastController: ToastController, private spinnerService: SpinnerService, private compressImageService: CompressImageService) { 
+
+  selectedFile: File | null = null; // Asegúrate de inicializar selectedFile
+  downloadURL: string | null = null; // Inicializa como null o una cadena vacía
+  imageUrl: string = ''; // Asegúrate de tener esta propiedad y asegúrate de inicializarla
+  isLoading = new BehaviorSubject<boolean>(false);
+  myObservable$: Observable<string | null>;
+
+  constructor(private translationService: TranslationService, private servicesService: ServicesService, private toastController: ToastController, private spinnerService: SpinnerService, private compressImageService: CompressImageService, private router: Router) { 
     
     (window as any).initMap = this.initMap.bind(this);
+    this.myObservable$ = of(null);
   }
 
   async ngOnInit() {
@@ -129,10 +141,10 @@ export class CreateMeetingPage implements OnInit {
         console.log('Reunión creada exitosamente:', response);
 
         // Cargar la imagen después de crear la reunión
-        if (this.imagen) {
+        if (this.imageUrl) {
           const uid = response.payload.uid; // Asegúrate de que el UID esté en la respuesta
           const imageBase64 = this.imagen; // La imagen en base64
-          await this.servicesService.uploadImage(uid, imageBase64).toPromise();
+          await this.servicesService.uploadImage(uid, this.imageUrl).toPromise();
           console.log('Imagen cargada exitosamente.');
         }
 
@@ -141,6 +153,7 @@ export class CreateMeetingPage implements OnInit {
           duration: 2000,
           position: 'bottom'
         }).then(toast => toast.present());
+        this.router.navigate(['/tabs/tab2']);
       },
       error: (error) => {
         console.error('Error al crear la reunión:', error);
@@ -372,6 +385,80 @@ export class CreateMeetingPage implements OnInit {
     const [datePart, timePart] = formattedDate.split(' ');
     const [day, month, year] = datePart.split('/');
     return `${year}-${month}-${day} ${timePart}`; // Retorna en el formato requerido
+  }
+
+  async onFileSelected(file: File) {
+    this.isLoading.next(true);
+    this.spinnerService.show();
+
+    try {
+      const imageUrl = await this.uploadImage(file);
+      if (imageUrl) {
+        console.log('URL de la imagen cargada:', imageUrl);
+        this.downloadURL = imageUrl;
+        this.myObservable$ = of(imageUrl);
+      }
+    } catch (error) {
+      console.error('Error al subir la imagen:', error);
+      this.downloadURL = null;
+      this.myObservable$ = of(null);
+    } finally {
+      this.isLoading.next(false);
+      this.spinnerService.hide();
+    }
+  }
+
+  private async uploadImage(file: File): Promise<string | null> {
+    const maxRetries = 3;
+    let attempts = 0;
+
+    while (attempts < maxRetries) {
+      try {
+        const uploadTask = await this.servicesService.uploadImageFirebase(file).toPromise();
+        if (uploadTask && uploadTask.ref) {
+          return await uploadTask.ref.getDownloadURL();
+        }
+      } catch (error) {
+        attempts++;
+        console.error(`Error al subir la imagen, reintentando... (${attempts})`, error);
+      }
+    }
+
+    console.error('No se pudo obtener la URL de la imagen después de varios intentos.');
+    return null;
+  }
+
+  async openCamera() {
+    try {
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.Uri,
+      });
+
+      if (image && image.webPath) {
+        const response = await fetch(image.webPath);
+        const blob = await response.blob();
+        const file = new File([blob], 'imagen.jpg', { type: blob.type });
+        await this.onFileSelected(file);
+      }
+    } catch (error) {
+      console.error('Error al abrir la cámara:', error);
+    }
+  }
+
+  viewImage(url: string) {
+    // Lógica para ver la imagen, por ejemplo, abrirla en un modal o en una nueva ventana
+    console.log('Ver imagen:', url);
+    // Aquí puedes implementar la lógica que desees para mostrar la imagen
+  }
+
+  previewImage(url: string) {
+    const imagePreview = document.getElementById('image-preview'); // Asegúrate de tener un elemento con este ID en tu HTML
+    if (imagePreview) {
+      imagePreview.setAttribute('src', url); // Establece la URL de la imagen como fuente
+      imagePreview.style.display = 'block'; // Muestra la imagen
+    }
   }
 
 }

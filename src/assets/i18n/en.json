@@ -121,5 +121,7 @@
     "festejo":"Party",
     "recreativo":"Recreational",
     "Reunión creada exitosamente.":"Meeting created successfully.",
-    "Error al crear la reunión. Inténtalo de nuevo.":"Error creating meeting. Try again."
+    "Error al crear la reunión. Inténtalo de nuevo.":"Error creating meeting. Try again.",
+    "imagen-subida":"Image uploaded",
+    "no-hay-imagen":"No image"
 }

@@ -10,6 +10,7 @@ import { TranslationService } from '../services/translation.service';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page implements OnInit {
+  
   trends: any[] = []; 
   currentPage: number = 1; 
   hasMoreData: boolean = true; 
@@ -20,6 +21,15 @@ export class Tab2Page implements OnInit {
     private translationService: TranslationService
   ) {}
 
+  async ionViewWillEnter() {
+    await this.loadTrends(); 
+  }
+
+  async refreshData(event: any) {
+    this.currentPage = 1; 
+    await this.loadTrends(); 
+    event.target.complete(); 
+  }
   async ngOnInit() { 
     this.loadTrends(); 
   }

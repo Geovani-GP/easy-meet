@@ -17,10 +17,17 @@ export class Tab4Page implements OnInit, ViewWillEnter {
   constructor(private router: Router, private servicesService: ServicesService, private translationService: TranslationService, private userService: UserService) { }
 
   ngOnInit() {
+    console.log('Tab4Page - ngOnInit');
     this.userService.userData$.subscribe(data => {
-      this.userData = data;
-      this.loadMyAssists();
-      this.loadMyMeetings();
+      console.log('UserData recibido en tab4:', data);
+      if (data) {
+        this.userData = data;
+        this.loadMyAssists();
+        this.loadMyMeetings();
+      } else {
+        console.log('No hay datos de usuario, cargando desde localStorage');
+        this.loadUserData();
+      }
     });
   }
 
@@ -30,11 +37,15 @@ export class Tab4Page implements OnInit, ViewWillEnter {
 
   loadUserData() {
     const userData = localStorage.getItem('EMUser');
+    console.log('Datos del usuario en localStorage:', userData);
     if (userData) {
-      this.userData = JSON.parse(userData);
+      const parsedData = JSON.parse(userData);
+      this.userData = parsedData;
+      this.userService.updateUserData(parsedData);
       this.loadMyAssists();
-      this.loadMyMeetings(); 
+      this.loadMyMeetings();
     } else {
+      console.warn('No hay datos de usuario en localStorage');
       this.router.navigate(['/tabs/tab3']);
     }
   }
@@ -44,11 +55,12 @@ export class Tab4Page implements OnInit, ViewWillEnter {
     if (uid) {
       this.servicesService.getMyAssists(uid, 1).subscribe(
         (response) => {
-          this.myAssists = response.payload || []; // Asegúrate de que sea un array
+         
+          this.myAssists = response && response.payload ? response.payload : []; 
         },
         (error) => {
           console.error('Error al cargar mis asistencias:', error);
-          this.myAssists = []; // Asegúrate de que no se mantenga un estado anterior
+          this.myAssists = []; 
         }
       );
     }
@@ -59,11 +71,10 @@ export class Tab4Page implements OnInit, ViewWillEnter {
     if (uid) {
       this.servicesService.getMyMeetings(uid, 1).subscribe(
         (response) => {
-          this.myMeetings = response.payload || []; // Asegúrate de que sea un array
+          this.myMeetings = response && response.payload ? response.payload : [];
         },
         (error) => {
           console.error('Error al cargar mis reuniones:', error);
-          this.myMeetings = []; // Asegúrate de que no se mantenga un estado anterior
         }
       );
     }
@@ -92,9 +103,7 @@ export class Tab4Page implements OnInit, ViewWillEnter {
 
 
   logout() {
-    localStorage.removeItem('oauth');
-    localStorage.removeItem('uid');
-    localStorage.removeItem('userData');
+    localStorage.clear();
     this.router.navigate(['/tabs/tab3']);
   }
 

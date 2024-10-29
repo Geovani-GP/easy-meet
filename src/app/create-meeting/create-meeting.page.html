@@ -1,10 +1,12 @@
 <ion-header>
+  <app-spinner></app-spinner>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/tab1"></ion-back-button>
     </ion-buttons>
     <ion-title>{{translate('crear-reunion')}}</ion-title>
   </ion-toolbar>
+  <ion-spinner></ion-spinner> 
 </ion-header>
 
 <ion-content>
@@ -70,10 +72,40 @@
 
     <ion-item>
       <ion-label>{{translate('subir-imagen')}}</ion-label>
-      <ion-button fill="outline" slot="end" (click)="subirImagen()">
+      <ion-button fill="outline" slot="end" (click)="openCamera()">
         <ion-icon name="camera"></ion-icon>
       </ion-button>
     </ion-item>
+
+    <ng-container *ngIf="isLoading | async">
+      <app-spinner></app-spinner>
+    </ng-container>
+
+    <ng-container *ngIf="myObservable$ | async as imageUrl">
+      <div *ngIf="imageUrl; else noImage">
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <img [src]="imageUrl" alt="Imagen subida" (click)="viewImage(imageUrl)">
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{translate('imagen-subida')}}</h2>
+          </ion-label>
+        </ion-item>
+       <!--  <div class="preview-container">
+          <img [src]="imageUrl" alt="Vista previa" style="max-width: 100%; height: auto;">
+        </div> -->
+      </div>
+      <ng-template #noImage>
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <img src="../../assets/no-image.png" alt="No hay imagen">
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{translate('no-hay-imagen')}}</h2>
+          </ion-label>
+        </ion-item>
+      </ng-template>
+    </ng-container>
 
     <ion-item>
       <ion-label position="floating" class="easy-meet-title">{{translate('direccion')}}</ion-label>
@@ -110,4 +142,6 @@
     </ng-template>
   </ion-modal>
   
+ 
+
 </ion-content>

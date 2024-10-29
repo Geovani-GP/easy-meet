@@ -12,8 +12,9 @@ export class UserService {
     this.loadUserData();
   }
 
-  loadUserData() {
+  async loadUserData(): Promise<void> {
     const userData = localStorage.getItem('EMUser');
+    console.log("US", userData);
     if (userData) {
       this.userDataSubject.next(JSON.parse(userData));
     } else {
@@ -21,10 +22,10 @@ export class UserService {
     }
   }
 
-  updateUserData(newData: any) {
+  async updateUserData(newData: any) {
     const currentData = this.userDataSubject.getValue();
     const updatedData = { ...currentData, ...newData };
-    localStorage.setItem('EMUser', JSON.stringify(updatedData));
+    await localStorage.setItem('EMUser', JSON.stringify(updatedData));
     this.userDataSubject.next(updatedData);
   }
 

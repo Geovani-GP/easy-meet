@@ -121,6 +121,7 @@
      "festejo":"Festejo",
      "recreativo":"Recreativo",
      "Reunión creada exitosamente.":"Reunión creada exitosamente.",
-     "Error al crear la reunión. Inténtalo de nuevo.":"Error al crear la reunión. Inténtalo de nuevo."
-     
+     "Error al crear la reunión. Inténtalo de nuevo.":"Error al crear la reunión. Inténtalo de nuevo.",
+     "imagen-subida":"Imagen subida",
+     "no-hay-imagen":"No hay imagen"
 }

@@ -11,6 +11,15 @@ ion-content .item-native {
   background: none !important;
 }
 
+ion-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; 
+  align-items: center;
+  min-height: 100vh; // Cambiado de height a min-height
+  overflow: auto; // Asegúrate de que el contenido pueda desplazarse
+}
+
 .background-content{
   background:rgb(153, 150, 239) !important;
 }
@@ -118,7 +127,7 @@ img {
 }
 
 .full-screen-image {
-  max-width: 100%;
+  max-width: 80%;
   max-height: 100%; 
   object-fit: cover; 
 }

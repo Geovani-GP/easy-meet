@@ -16,6 +16,12 @@ export class Tab1Page implements OnInit {
 
   constructor(private router: Router,private spinnerService: SpinnerService, private servicesService: ServicesService, private translationService: TranslationService) {}
 
+
+  ionViewWillEnter() {
+   this.spinnerService.show();
+    this.loadInterests();
+    this.spinnerService.hide();
+  }
   ngOnInit() {
     this.loadInterests();
   }

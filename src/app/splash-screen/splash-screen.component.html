@@ -24,15 +24,19 @@
         <!--   <ion-label></ion-label> -->
       </ion-item>
       <br>
-      <p class="skip-button" expand="full" (click)="continue()">{{ translate('skip-button') }}</p>
+      <ion-button class="skip-button" expand="full" (click)="continue()">{{ translate('skip-button') }}</ion-button>
       
       <div class="language-container">
         <ion-item class="language-selection">
           <img *ngIf="selectedLanguage === 'es'" src="../../assets/flags/MX - Mexico.png" alt="Español" width="30" />
           <img *ngIf="selectedLanguage === 'en'" src="../../assets/flags/US - United States.png" alt="Inglés" width="30" />
+          <img *ngIf="selectedLanguage === 'fr'" src="../../assets/flags/FR - France.png" alt="Francés" width="30" />
+          <img *ngIf="selectedLanguage === 'de'" src="../../assets/flags/DE - Germany.png" alt="Alemán" width="30" />
           <ion-select [(ngModel)]="selectedLanguage" (ionChange)="onLanguageChange($event)">
             <ion-select-option value="es"> &nbsp;{{ translate('es') }}</ion-select-option>
             <ion-select-option value="en"> &nbsp;{{ translate('en') }}</ion-select-option>
+            <ion-select-option value="fr"> &nbsp;{{ translate('fr') }}</ion-select-option>
+            <ion-select-option value="de"> &nbsp;{{ translate('de') }}</ion-select-option>
           </ion-select>
         </ion-item>
        <br>

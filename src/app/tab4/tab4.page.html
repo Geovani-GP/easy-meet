@@ -7,7 +7,7 @@
   <div class="content-container">
   <div class="profile">
     <div class="profile-picture-container" (click)="navigateToUserProperties()">
-      <img src="{{userData.payload.uri_foto}}" alt="Perfil" class="profile-picture" style="width: 100px; height: 100px;">
+      <img src="{{userData.payload.uri_foto ? userData.payload.uri_foto : '../../../../assets/profile.jpg'}}" alt="Perfil" class="profile-picture" style="width: 100px; height: 100px;">
       <ion-icon name="create"></ion-icon>
     </div>
     <h2 class="easy-meet-title">{{userData.payload.nombre}}</h2>
@@ -39,7 +39,7 @@
         <ion-row class="assistance-row">
           <ion-col size="6" *ngFor="let assist of myAssists"> <!-- Usar *ngFor para iterar sobre las asistencias -->
             <ion-card style="height: 200px;" (click)="navigateToAssistanceDetail(assist)">
-              <img src="{{ assist.img ? assist.img : 'assets/no_image.png' }}" alt="Asistencia">
+              <img src="{{ assist.enc_img ? assist.enc_img : 'assets/no_image.png' }}" alt="Asistencia">
               <ion-card-header>
                 <ion-card-title class="easy-meet-subtitle">{{ assist.titulo }}</ion-card-title> <!-- Asumiendo que cada asistencia tiene un título -->
               </ion-card-header>
@@ -57,7 +57,7 @@
         <ion-row class="assistance-row">
           <ion-col size="6" *ngFor="let meeting of myMeetings"> 
             <ion-card style="height: 200px;" (click)="navigateToMeetingDetail(meeting)">
-              <img src="{{ meeting.img ? meeting.img : 'assets/no_image.png' }}" alt="Reunión">
+              <img src="{{ meeting.enc_img ? meeting.enc_img : 'assets/no_image.png' }}" alt="Reunión">
               <ion-card-header>
                 <ion-card-title class="easy-meet-subtitle">{{ meeting.titulo }}</ion-card-title> 
               </ion-card-header>

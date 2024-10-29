@@ -47,7 +47,7 @@
     </ion-item>
 
     <div class="fecha">
-      <h2 class="easy-meet-title">{{translate('fecha-de-nacimiento')}}</h2>
+      <h2 class="easy-meet-title">{{translate('fecha')}}</h2>
       <p (click)="showDatePicker()">{{ selectedDate | date: 'dd MMMM yyyy' }}</p>
       <div class="modal" *ngIf="isDatePickerVisible">
         <ion-datetime 
@@ -57,7 +57,7 @@
           pickerFormat="MMM DD YYYY"
           name="fecha">
         </ion-datetime>
-        <ion-button expand="full" (click)="isDatePickerVisible = false">{{translate('cerrar')}}</ion-button>
+        <ion-button expand="full" (click)="acceptDate()">{{translate('aceptar')}}</ion-button>
       </div>
     </div>
 

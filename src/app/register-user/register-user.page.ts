@@ -41,27 +41,29 @@ export class RegisterUserPage implements OnInit {
       proveedor: 'email',
       sexo: this.sexo,
       fec_nacimiento: this.selectedDate,
-      telefono: this.pais + this.telefono,
-      dispositivo: {
-        marca: 'google',
-        modelo: 'Android SDK built for x86',
-        veros: '8.0.0',
-        versdk: 26,
-        verapp: '4.0.0',
-        token: localStorage.getItem('deviceToken') || ''
-      }
+      telefono: this.pais + this.telefono
     };
 
-    this.servicesService.registerUser(data).subscribe({
+    this.servicesService.registerUser2(data).subscribe({
       next: async (response) => {
         this.spinnerService.hide();
-        const toast = await this.toastController.create({
-          message: 'Registro exitoso!',
-          duration: 2000,
-          color: 'success'
-        });
-        await toast.present();
-        this.router.navigate(['/login']);
+        // Verifica que la respuesta sea exitosa
+        if (response.success) {
+          const toast = await this.toastController.create({
+            message: 'Registro exitoso!',
+            duration: 2000,
+            color: 'success'
+          });
+          await toast.present();
+          this.router.navigate(['/tabs/tab3']); // Redirige solo si la respuesta es exitosa
+        } else {
+          const toast = await this.toastController.create({
+            message: 'Error en el registro: ' + response.message,
+            duration: 2000,
+            color: 'danger'
+          });
+          await toast.present();
+        }
       },
       error: async (error) => {
         this.spinnerService.hide();
@@ -82,6 +84,12 @@ export class RegisterUserPage implements OnInit {
 
   onDateChange(event: any) {
     this.selectedDate = event.detail.value;
-    this.isDatePickerVisible = false;
+    // this.isDatePickerVisible = false; // Eliminar esta línea
+  }
+
+  acceptDate() {
+    this.isDatePickerVisible = false; // Oculta el modal
+    console.log('Fecha seleccionada:', this.selectedDate); // Muestra la fecha seleccionada en la consola
+    // Aquí puedes agregar cualquier lógica adicional que necesites
   }
 }

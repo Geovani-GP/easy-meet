@@ -10,7 +10,7 @@
 <ion-content [fullscreen]="true">
   <div class="profile">
     <div class="profile-picture-container">
-      <img [src]="userData.payload.uri_foto" alt="Perfil" class="profile-picture" (click)="fileInput.click()">
+      <img [src]="userData.payload.uri_foto ? userData.payload.uri_foto : '../../assets/profile.jpg'" alt="Perfil" class="profile-picture" (click)="fileInput.click()">
       <span class="edit-icon">
         <ion-icon name="brush"></ion-icon>
       </span>

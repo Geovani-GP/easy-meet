@@ -6,6 +6,7 @@ import { ToastController } from '@ionic/angular';
 import { AuthServiceService } from '../services/auth-service.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { TranslationService } from '../services/translation.service';
+import { UserService } from '../services/user.service';
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
@@ -34,7 +35,8 @@ export class Tab3Page implements OnInit {
     private servicesService: ServicesService,
     private toastController: ToastController,
     public authService: AuthServiceService,
-    private translationService: TranslationService
+    private translationService: TranslationService,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -47,10 +49,12 @@ export class Tab3Page implements OnInit {
     this.checkAuthAndRedirect();
   }
 
-  private checkAuthAndRedirect() {
+  private async checkAuthAndRedirect() {
+    console.log('Verificando autenticación...');
     if (this.authService.isAuthenticated()) {
       console.log('Usuario autenticado en tab3, redirigiendo al área de usuario...');
-      this.router.navigate(['/tabs/tab4']);
+      await this.router.navigate(['/tabs/tab4']);
+      console.log('Redirección a tab4 completada');
     } else {
       console.log('Usuario no autenticado en tab3, permaneciendo en la página');
     }
@@ -77,12 +81,28 @@ export class Tab3Page implements OnInit {
   async login() {
     this.spinnerService.show();
     try {
-      const user = await this.servicesService.loginWithEmail(this.email, this.password).toPromise();
-      console.log('Inicio de sesión exitoso', user);
-      localStorage.setItem('oauth', 'true');
-      this.checkAuthAndRedirect();
+      if (!this.email || !this.password) {
+        this.showToast('Por favor, ingresa tu correo electrónico y contraseña.', 'warning');
+        return;
+      }
+
+      const response = await this.servicesService.loginWithEmail2(this.email, this.password).toPromise();
+      console.log('Respuesta de inicio de sesión:', response);
+
+      if (response && response.payload) {
+        // Actualizar los datos del usuario en el servicio
+        this.userService.updateUserData(response);
+        
+        // Guardar el estado de autenticación
+        localStorage.setItem('oauth', 'true');
+        
+        // Navegar al tab4
+        await this.router.navigate(['/tabs/tab4'], { replaceUrl: true });
+      } else {
+        this.showToast('Error al obtener los datos del usuario', 'danger');
+      }
     } catch (error) {
-      console.error('Error en el inicio de sesión', error);
+      console.error('Error en el inicio de sesión:', error);
       this.showToast('Error al iniciar sesión. Inténtalo de nuevo.', 'danger');
     } finally {
       this.spinnerService.hide();
@@ -100,6 +120,7 @@ export class Tab3Page implements OnInit {
         console.log('Inicio de sesión con Google exitoso');
         this.checkAuthAndRedirect();
       } else {
+        this.spinnerService.hide();
         console.error('La respuesta no contiene la información del usuario esperada');
         this.showToast('Error en el inicio de sesión. Datos de usuario incompletos.', 'danger');
       }

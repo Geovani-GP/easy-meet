@@ -1,11 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map, retry } from 'rxjs/operators';
+import { catchError, finalize, map, retry } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'; 
 import * as firebase from 'firebase/compat';
 import { AngularFireMessaging } from '@angular/fire/compat/messaging';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +16,9 @@ export class ServicesService {
   private http = inject(HttpClient);
   private afAuth = inject(AngularFireAuth);
   private afMessaging = inject(AngularFireMessaging);
-
-   private apiUrl = 'https://nni-easyment-agbuhma0gcetb4e0.canadacentral-01.azurewebsites.net'
+  private storage = inject(AngularFireStorage);
+   //private apiUrl = 'https://nni-easyment-agbuhma0gcetb4e0.canadacentral-01.azurewebsites.net'
+   private apiUrl = 'https://em1-gmbwh0hqa0gceedw.canadaeast-01.azurewebsites.net';
   
  
 
@@ -196,6 +199,63 @@ loginWithEmail(email: string, password: string): Observable<any> {
     });
   }
 
+  loginWithEmail2(email: string, password: string): Observable<any> {
+    return new Observable(observer => {
+      this.afAuth.signInWithEmailAndPassword(email, password)
+        .then(async userCredential => {
+          if (userCredential.user) {
+            const user = userCredential.user;
+            console.log('Usuario autenticado:', user);
+            
+            try {
+              const loginResponse = await this.loginEM(user.uid).toPromise();
+              console.log('Respuesta de loginEM:', loginResponse);
+              
+              if (loginResponse && loginResponse.payload) {
+                // Guardar los datos en localStorage
+                localStorage.setItem('EMUser', JSON.stringify(loginResponse));
+                localStorage.setItem('uid', loginResponse.payload.uid);
+                
+                // Emitir la respuesta completa
+                observer.next(loginResponse);
+                observer.complete();
+              } else {
+                observer.error('Respuesta inválida del servidor');
+              }
+            } catch (error) {
+              console.error('Error en loginEM:', error);
+              observer.error(error);
+            }
+          }
+        })
+        .catch(error => {
+          console.error('Error en el inicio de sesión:', error);
+          observer.error(error);
+        });
+    });
+  }
+
+loginEM(localId: string): Observable<any> {
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'ApiKey': '_$4DM1N$_',
+  });
+  const body = {
+    uid: localId
+  };
+  return this.http.post(`${this.apiUrl}/usuarios/loginf`, body, { headers }).pipe(
+    map((response: any) => {
+      console.log("services: ", response);
+      localStorage.setItem('uid', response.payload.uid);
+      localStorage.setItem('EMUser', JSON.stringify(response)); // Guardar la respuesta en localStorage
+      return response; // Retornar la respuesta
+    }),
+    catchError(error => {
+      console.error('Error al realizar el loginEM:', error);
+      return throwError(error);
+    })
+  );
+}
 
 loginWithGoogle(): Observable<any> {
   return new Observable(observer => {
@@ -203,46 +263,27 @@ loginWithGoogle(): Observable<any> {
     const provider = new GoogleAuthProvider(); 
     signInWithPopup(auth, provider) 
       .then(async result => {
-        const user = result.user;
-        const identificador = user.email;
-        localStorage.setItem('uid', user.uid); 
-        localStorage.setItem('userData', JSON.stringify({
-          email: user.email,
-          displayName: user.displayName,
-          photoURL: user.photoURL
-        }));
-        localStorage.setItem('oauth', 'true'); 
-        
-        const deviceToken = localStorage.getItem('deviceToken') || '';
-        
-        if (deviceToken && identificador) {
-          this.sendDeviceToken(identificador, deviceToken).pipe(
-            retry(3),
-            catchError(error => {
-              console.error("Error al enviar el token del dispositivo:", error);
-              return throwError(() => new Error('Error al enviar el token del dispositivo'));
-            })
-          ).subscribe({
-            next: (response) => {
-              console.log("Respuesta de la API:", response);
-              if (response && response.payload) {
-                console.log("UID:", response.payload.uid);
-                localStorage.setItem('uid', response.payload.uid); 
+        if (result.user) {
+          const user = result.user;
+          if (user && user.email) {
+            console.log(user);
+            this.loginEM(user.uid).subscribe(response => {
+              if(response.statusCode === 409){
+                console.error('Error en el inicio de sesión: usuario no encontrado.');
+                observer.error('Usuario no encontrado.'); // Mensaje de error específico
               } else {
-                console.warn("Respuesta inesperada:", response);
+                console.log('Respuesta de loginEM:', response);
+                localStorage.setItem('oauth', 'true');
+                observer.next(result);
+                observer.complete();
               }
-              observer.next(result);
-              observer.complete();
-            },
-            error: (err) => {
-              console.error("Error al procesar la respuesta de la API:", err);
-              observer.error(err);
-            }
-          });
-        } else {
-          console.warn('Token del dispositivo o identificador no disponible.');
-          observer.next(result);
-          observer.complete();
+            }, error => {
+              console.error('Error al realizar el loginEM:', error);
+              observer.error('Error al realizar el loginEM: ' + error.message); // Mensaje de error específico
+            });
+          } else {
+            console.error('Usuario o correo electrónico no disponibles.');
+          }
         }
       }).catch(error => {
         console.error('Error en el inicio de sesión con Google:', error);
@@ -250,6 +291,7 @@ loginWithGoogle(): Observable<any> {
       });
   });
 }
+
 
 
 private sendIdentificadorToApi(uid: string, token: string): Observable<any> {
@@ -414,6 +456,21 @@ registerUser(data: any): Observable<any> {
   );
 }
 
+registerUser2(data: any): Observable<any> {
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'ApiKey': '_$4DM1N$_',
+  });
+
+  return this.http.post(`${this.apiUrl}/usuarios/registro3`, data, { headers }).pipe(
+    map(response => response),
+    catchError(error => {
+      console.error('Error en el registro:', error);
+      return throwError(error);
+    })
+  );
+}
+
   saveInterests(uid: string, selectedInterestsIds: string[]): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -535,9 +592,29 @@ registerUser(data: any): Observable<any> {
       map(response => response),
       catchError(error => {
         console.error('Error al subir la imagen:', error);
-        return throwError(error);
+        return throwError(() => new Error('Error al subir la imagen'));
       })
     );
   }
+  
 
+  uploadImageFirebase(file: File) {
+    const filePath = `images/${Date.now()}_${file.name}`;
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(filePath, file);
+    let urlImage = '';
+    return task.snapshotChanges().pipe(
+      finalize(() => {
+        // Obtener el enlace de descarga pública
+        fileRef.getDownloadURL().toPromise().then(url => {
+          console.log("Enlace de descarga:", url); // Agregado para mostrar el enlace en consola
+          urlImage = url;
+        });
+        return urlImage;
+       // return fileRef.getDownloadURL().toPromise(); // Cambiado para devolver una promesa
+      })
+    );
+  }
 }
+
+
