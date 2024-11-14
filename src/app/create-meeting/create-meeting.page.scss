@@ -59,3 +59,13 @@ ion-item {
 ion-button {
     margin-top: 20px; /* Espaciado superior para el botón de registrar */
 }
+
+.error {
+    border: 1px solid red; /* Cambia el borde a rojo */
+}
+
+.error-message {
+    color: red; /* Color del mensaje de error */
+    font-size: 12px; /* Tamaño de fuente para el mensaje */
+    margin-top: 4px; /* Espaciado superior */
+}

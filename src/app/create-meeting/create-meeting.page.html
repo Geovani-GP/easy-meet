@@ -10,16 +10,18 @@
 </ion-header>
 
 <ion-content>
-  <form (ngSubmit)="onSubmit()">
-    <ion-item>
+  <form (ngSubmit)="onSubmit()" #meetingForm="ngForm">
+    <ion-item [class.error]="!titulo">
       <ion-label position="floating">{{translate('titulo')}}</ion-label>
       <ion-input [(ngModel)]="titulo" name="titulo" required></ion-input>
     </ion-item>
+    <div *ngIf="!titulo" class="error-message">{{translate('titulo-requerido')}}</div>
 
-    <ion-item>
+    <ion-item [class.error]="!descripcion">
       <ion-label position="floating">{{translate('descripcion')}}</ion-label>
       <ion-textarea [(ngModel)]="descripcion" name="descripcion" required></ion-textarea>
     </ion-item>
+    <div *ngIf="!descripcion" class="error-message">{{translate('descripcion-requerida')}}</div>
 
     <div class="fecha">
       <h2 class="easy-meet-title">{{translate('fecha')}}</h2>
@@ -32,17 +34,17 @@
           pickerFormat="MMM DD YYYY HH:mm"
           name="fecha">
         </ion-datetime>
-        <!-- Botón para aceptar la selección -->
         <ion-button expand="full" (click)="acceptDate()">{{translate('aceptar')}}</ion-button>
       </div>
     </div>
 
-    <ion-item>
+    <ion-item [class.error]="!costo">
       <ion-label position="floating">{{translate('costo')}}</ion-label>
       <ion-input type="number" [(ngModel)]="costo" name="costo" required></ion-input>
     </ion-item>
+    <div *ngIf="!costo" class="error-message">{{translate('costo-requerido')}}</div>
 
-    <ion-item>
+    <ion-item [class.error]="!tipo">
       <ion-label>{{translate('tipo')}}</ion-label>
       <ion-select [(ngModel)]="tipo" name="tipo" placeholder="{{translate('selecciona-un-tipo')}}" required>
         <ion-select-option value="1">{{translate('comercial')}}</ion-select-option>
@@ -51,13 +53,15 @@
         <ion-select-option value="4">{{translate('recreativo')}}</ion-select-option>
       </ion-select>
     </ion-item>
+    <div *ngIf="!tipo" class="error-message">{{translate('tipo-requerido')}}</div>
 
-    <ion-item>
+    <ion-item [class.error]="!tema">
       <ion-label>{{translate('tema')}}</ion-label>
       <ion-select [(ngModel)]="tema" name="tema" placeholder="{{translate('selecciona-un-tema')}}" required>
         <ion-select-option *ngFor="let interes of intereses" [value]="interes.id">{{interes.name}}</ion-select-option>
       </ion-select>
     </ion-item>
+    <div *ngIf="!tema" class="error-message">{{translate('tema-requerido')}}</div>
 
     <ion-item>
       <h1 class="easy-meet-title">{{translate('edad')}}: {{ rangeValues.lower }} - {{ rangeValues.upper }}</h1>
@@ -70,48 +74,20 @@
       </ion-range>
     </ion-item>
 
-    <ion-item>
+    <ion-item [class.error]="!imageUrl">
       <ion-label>{{translate('subir-imagen')}}</ion-label>
       <ion-button fill="outline" slot="end" (click)="openCamera()">
         <ion-icon name="camera"></ion-icon>
       </ion-button>
     </ion-item>
+    <div *ngIf="!imageUrl" class="error-message">{{translate('imagen-requerida')}}</div>
 
-    <ng-container *ngIf="isLoading | async">
-      <app-spinner></app-spinner>
-    </ng-container>
-
-    <ng-container *ngIf="myObservable$ | async as imageUrl">
-      <div *ngIf="imageUrl; else noImage">
-        <ion-item>
-          <ion-thumbnail slot="start">
-            <img [src]="imageUrl" alt="Imagen subida" (click)="viewImage(imageUrl)">
-          </ion-thumbnail>
-          <ion-label>
-            <h2>{{translate('imagen-subida')}}</h2>
-          </ion-label>
-        </ion-item>
-       <!--  <div class="preview-container">
-          <img [src]="imageUrl" alt="Vista previa" style="max-width: 100%; height: auto;">
-        </div> -->
-      </div>
-      <ng-template #noImage>
-        <ion-item>
-          <ion-thumbnail slot="start">
-            <img src="../../assets/no-image.png" alt="No hay imagen">
-          </ion-thumbnail>
-          <ion-label>
-            <h2>{{translate('no-hay-imagen')}}</h2>
-          </ion-label>
-        </ion-item>
-      </ng-template>
-    </ng-container>
-
-    <ion-item>
+    <ion-item [class.error]="!direccion">
       <ion-label position="floating" class="easy-meet-title">{{translate('direccion')}}</ion-label>
       <br>
-      <p (click)="showMapModal()">{{ direccion || translate('selecciona-una-direccion') }}</p>
+      <p (click)="showMapModal()">{{ direccion || translate('escribe-la-direccion') }}</p>
     </ion-item>
+    <div *ngIf="!direccion" class="error-message">{{translate('direccion-requerida')}}</div>
 
     <ion-button expand="full" color="primary" type="submit">{{translate('registrar')}}</ion-button>
   </form>
@@ -136,12 +112,9 @@
             {{ sugerencia.description }}
           </ion-item>
         </ion-list>
-        <div id="map" style="height: 70vh; width: 100%;"></div>
+        <div id="map" style="height: 50vh; width: 100%;"></div>
         <ion-button expand="full" (click)="guardarDireccion()">{{translate('guardar-direccion')}}</ion-button>
       </ion-content>
     </ng-template>
   </ion-modal>
-  
- 
-
 </ion-content>

@@ -134,21 +134,28 @@ export class Tab3Page implements OnInit {
 
   recoverPassword() {
     if (this.email) {
-        this.spinnerService.show();
-        this.servicesService.recoverPassword(this.email).subscribe(
-            response => {
-                console.log(response);
-                    this.showToast(response, 'success'); 
-                this.spinnerService.hide();
-            },
-            error => {
-                console.error('Error en la recuperación de contraseña', error);
-                this.showToast(error, 'danger'); 
-                this.spinnerService.hide();
-            }
-        );
+      // Verificar si el formato del correo electrónico es válido
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(this.email)) {
+        this.showToast('Por favor, ingresa un correo electrónico válido.', 'warning');
+        return;
+      }
+
+      this.spinnerService.show();
+      this.servicesService.recoverPassword(this.email).subscribe(
+        response => {
+          console.log(response);
+          this.showToast(response, 'success'); 
+          this.spinnerService.hide();
+        },
+        error => {
+          console.error('Error en la recuperación de contraseña', error);
+          this.showToast(error, 'danger'); 
+          this.spinnerService.hide();
+        }
+      );
     } else {
-        this.showToast('Por favor, ingresa tu correo electrónico.', 'warning');
+      this.showToast('Por favor, ingresa tu correo electrónico.', 'warning');
     }
   }
 

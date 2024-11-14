@@ -4,6 +4,7 @@ import { SpinnerService } from '../services/spinner.service';
 import { ServicesService } from '../services/services.service';
 import { ToastController } from '@ionic/angular'; // Importar ToastController
 import { TranslationService } from '../services/translation.service';
+import { Share } from '@capacitor/share';
 
 @Component({
   selector: 'app-details-thrends',
@@ -22,6 +23,7 @@ export class DetailsThrendsPage implements OnInit {
     private spinnerService: SpinnerService,
     private toastController: ToastController,
     private translationService: TranslationService) { // Inyectar ToastController
+    
     this.trend = JSON.parse(localStorage.getItem('selectedTrend') || '{}');
   }
   ngOnInit() {
@@ -30,8 +32,25 @@ export class DetailsThrendsPage implements OnInit {
   }
 
   loadTrendDetails() {
-    this.spinnerService.show(); 
+    this.spinnerService.show();
+    const trendId = this.route.snapshot.paramMap.get('id'); // Obtener el ID de la URL
+    if (trendId) {
+      this.apiService.getTrendDetails(trendId).subscribe( // Usar trendId en lugar de this.trend.uid
+        (response) => {
+          this.trendDetails = response.payload; 
+          console.log('Detalles del trend:', this.trendDetails); 
+          this.isLoading = false; 
+          this.spinnerService.hide(); 
+      },
+      (error) => {
+        console.error('Error al obtener detalles del trend:', error); 
+        this.isLoading = false; 
+        this.spinnerService.hide(); 
+      }
+    );
+  }else
     if (this.trend) {
+      console.log('Trend:', this.trend);
       console.log(this.trend)
       this.apiService.getTrendDetails(this.trend.uid).subscribe(
         (response) => {
@@ -49,6 +68,20 @@ export class DetailsThrendsPage implements OnInit {
   }
 }
 
+
+
+shareTrend() {
+  const message = this.trendDetails.descripcion; // Mensaje a compartir
+  const title = this.trend.titulo; // Título a compartir
+  const url = 'URL_DE_TU_TENDENCIA'; // Reemplaza con la URL real que deseas compartir
+
+  Share.share({
+      title: title,
+      text: message,
+      url: url,
+  }).then(() => console.log('Compartido con éxito'))
+    .catch((error) => console.error('Error al compartir:', error));
+}
 
 translate(key: string): string {
   if (this.translationService && this.translationService.translate) {

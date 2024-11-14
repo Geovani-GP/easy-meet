@@ -11,10 +11,25 @@
   }
   
   .profile-picture {
-    width: 100px;
-    height: 100px;
+    width: 75px;
+    height: 75px;
     border-radius: 50%;
     margin-bottom: 10px;
+    border: white solid 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.7);
+  }
+
+  .background-shape { 
+    position: absolute; /* Para que esté detrás de la imagen */
+    top: 0;
+    width: 93%; /* Ajustar al tamaño del contenedor */
+    height: 375px; /* Ajustar al tamaño del contenedor */
+    background-color: #7b66ff; /* Color de fondo blanco si no se encuentra la imagen */
+    background-image: url('../../assets/background.png');
+    background-size: auto;
+    border-radius: 10%; /* Para que tenga forma circular */
+    z-index: -1; 
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
   }
   
   .interests, .assistance, .meetings {

@@ -24,6 +24,10 @@ const routes: Routes = [
     loadChildren: () => import('./create-meeting/create-meeting.module').then( m => m.CreateMeetingPageModule)
   },
   {
+    path: 'details-thrends/:id', // Modificado para aceptar un parámetro 'id'
+    loadChildren: () => import('./details-thrends/details-thrends.module').then( m => m.DetailsThrendsPageModule)
+  },
+  {
     path: 'details-thrends',
     loadChildren: () => import('./details-thrends/details-thrends.module').then( m => m.DetailsThrendsPageModule)
   },
@@ -46,7 +50,8 @@ const routes: Routes = [
   {
     path: 'payment',
     loadChildren: () => import('./payment/payment.module').then( m => m.PaymentPageModule)
-  },  {
+  },
+  {
     path: 'register-user',
     loadChildren: () => import('./register-user/register-user.module').then( m => m.RegisterUserPageModule)
   },

@@ -120,8 +120,17 @@
      "cultural":"Kulturell",
      "festejo":"Feierlich",
      "recreativo":"Rekreativ",
-     "Reunión creada exitosamente.":"Treffen erfolgreich erstellt.",
-     "Error al crear la reunión. Inténtalo de nuevo.":"Fehler beim Erstellen des Treffens. Versuchen Sie es erneut.",
+     "reunion-creada-exitosamente.":"Treffen erfolgreich erstellt.",
      "imagen-subida":"Bild hochgeladen",
-     "no-hay-imagen":"Kein Bild"
+     "no-hay-imagen":"Kein Bild",
+     "titulo-requerido": "Titel ist erforderlich.",
+     "descripcion-requerida": "Beschreibung ist erforderlich.",
+     "costo-requerido": "Kosten sind erforderlich.",
+     "tipo-requerido": "Typ ist erforderlich.",
+     "tema-requerido": "Thema ist erforderlich.",
+     "selecciona-una-direccion": "Wählen Sie eine Adresse.",
+     "completa-todos-los-campos": "Bitte füllen Sie alle erforderlichen Felder aus.",
+     "error-al-crear-la-reunion": "Fehler beim Erstellen des Treffens. Überprüfen Sie die Daten.",
+     "imagen-requerida": "Die Bild ist erforderlich.",
+     "direccion-requerida": "Die Adresse ist erforderlich."
 }

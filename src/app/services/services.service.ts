@@ -525,6 +525,25 @@ registerUser2(data: any): Observable<any> {
     );
   }
 
+  confirmarContacto(usuario: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'ApiKey': '_$4DM1N$_',
+    });
+
+    const body = {
+      solicitud: usuario
+    };
+
+    return this.http.put(`${this.apiUrl}/meet/confirmacion`, body, { headers }).pipe(
+      map(response => response),
+      catchError(error => {
+        console.error('Error al solicitar contacto:', error);
+        return throwError(error);
+      })
+    );
+  }
+
   cancelAssistance(data: { solicitud: string; motivo: string }): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

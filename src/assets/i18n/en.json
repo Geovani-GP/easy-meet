@@ -120,8 +120,17 @@
     "cultural":"Cultural",
     "festejo":"Party",
     "recreativo":"Recreational",
-    "Reunión creada exitosamente.":"Meeting created successfully.",
-    "Error al crear la reunión. Inténtalo de nuevo.":"Error creating meeting. Try again.",
+    "reunion-creada-exitosamente.":"Meeting created successfully.",
     "imagen-subida":"Image uploaded",
-    "no-hay-imagen":"No image"
+    "no-hay-imagen":"No image",
+    "titulo-requerido": "Title is required.",
+    "descripcion-requerida": "Description is required.",
+    "costo-requerido": "Cost is required.",
+    "tipo-requerido": "Type is required.",
+    "tema-requerido": "Theme is required.",
+    "selecciona-una-direccion": "Select an address.",
+    "completa-todos-los-campos": "Please complete all required fields.",
+    "error-al-crear-la-reunion": "Error creating meeting. Check the data.",
+    "imagen-requerida": "The image is required.",
+    "direccion-requerida": "The address is required."
 }

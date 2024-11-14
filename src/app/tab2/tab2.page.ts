@@ -80,7 +80,14 @@ export class Tab2Page implements OnInit {
   }
 
   navigateToDetails(trend: any) {
+    if (!trend) {
+      console.warn('Trend no está definido'); // Manejo de caso undefined
+      return; // Salir de la función si trend es undefined
+    }
+    console.log('Trend:', trend);
     localStorage.setItem('selectedTrend', JSON.stringify(trend)); 
-    this.router.navigate(['/details-thrends']); 
+    const shareLink = `https://localhost:8100/details-thrends;id=${trend.uid}`; // Asegúrate de que 'id' sea la propiedad correcta
+    console.log('Enlace para compartir:', shareLink); // Muestra el enlace en la consola
+    this.router.navigate(['/details-thrends', { id: trend.uid }]); // Pasar el ID como parámetro
   }
 }

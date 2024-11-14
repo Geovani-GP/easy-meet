@@ -5,42 +5,47 @@
 </ion-header> -->
 
 <ion-content class="full-screen">
-  <div id="background-content" style="background: rgb(153, 150, 239) !important; left: auto !important; right: auto !important; top: auto !important; bottom: auto !important; position: static !important;">
-    <div class="slider-container-wrapper">
+  <div id="background-content">
+
+    <div class="slider-container-wrapper"
+      style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <ion-item class="language-selection">
+        <img *ngIf="selectedLanguage === 'es'" src="../../assets/flags/MX - Mexico.png" alt="Español" width="30" />
+        <img *ngIf="selectedLanguage === 'en'" src="../../assets/flags/US - United States.png" alt="Inglés"
+          width="30" />
+        <img *ngIf="selectedLanguage === 'fr'" src="../../assets/flags/FR - France.png" alt="Francés" width="30" />
+        <img *ngIf="selectedLanguage === 'de'" src="../../assets/flags/DE - Germany.png" alt="Alemán" width="30" />
+        <ion-select [(ngModel)]="selectedLanguage" (ionChange)="onLanguageChange($event)">
+          <ion-select-option value="es"> &nbsp;{{ translate('es') }}</ion-select-option>
+          <ion-select-option value="en"> &nbsp;{{ translate('en') }}</ion-select-option>
+          <ion-select-option value="fr"> &nbsp;{{ translate('fr') }}</ion-select-option>
+          <ion-select-option value="de"> &nbsp;{{ translate('de') }}</ion-select-option>
+        </ion-select>
+      </ion-item>
       <div class="slider-container" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)">
         <div class="image-wrapper">
           <img [src]="images[currentIndex]" class="full-screen-image" />
           <p class="image-description-title">{{ imageDescriptionsTitle[currentIndex] }}</p>
           <p class="image-description">{{ imageDescriptions[currentIndex] }}</p> <!-- Texto descriptivo -->
+          <div class="dots-container">
+            <span *ngFor="let image of images; let i = index" [class.active]="i === currentIndex"
+              (click)="onImageClick(i)"></span>
+          </div>
+          <div style="display: flex;flex-direction: column; justify-content: center; align-items: center;width: 100%;">
+            <ion-item class="checkbox-container">
+              <ion-checkbox class="checkbox" [(ngModel)]="skipSplash" (ionChange)="onCheckboxChange($event)">{{
+                translate('skip-text') }}</ion-checkbox>
+    
+            </ion-item>
+            <ion-item>
+              <ion-button class="skip-button" expand="full" (click)="continue()">{{ translate('skip-button')
+                }}</ion-button>
+            </ion-item>
+          </div>
         </div>
+       
       </div>
-      <div class="dots-container">
-        <span *ngFor="let image of images; let i = index" [class.active]="i === currentIndex"
-          (click)="onImageClick(i)"></span>
-      </div>
-      <br>
-      <ion-item class="checkbox-container">
-        <ion-checkbox class="checkbox" [(ngModel)]="skipSplash" (ionChange)="onCheckboxChange($event)">{{ translate('skip-text') }}</ion-checkbox>
-        <!--   <ion-label></ion-label> -->
-      </ion-item>
-      <br>
-      <ion-button class="skip-button" expand="full" (click)="continue()">{{ translate('skip-button') }}</ion-button>
-      
-      <div class="language-container">
-        <ion-item class="language-selection">
-          <img *ngIf="selectedLanguage === 'es'" src="../../assets/flags/MX - Mexico.png" alt="Español" width="30" />
-          <img *ngIf="selectedLanguage === 'en'" src="../../assets/flags/US - United States.png" alt="Inglés" width="30" />
-          <img *ngIf="selectedLanguage === 'fr'" src="../../assets/flags/FR - France.png" alt="Francés" width="30" />
-          <img *ngIf="selectedLanguage === 'de'" src="../../assets/flags/DE - Germany.png" alt="Alemán" width="30" />
-          <ion-select [(ngModel)]="selectedLanguage" (ionChange)="onLanguageChange($event)">
-            <ion-select-option value="es"> &nbsp;{{ translate('es') }}</ion-select-option>
-            <ion-select-option value="en"> &nbsp;{{ translate('en') }}</ion-select-option>
-            <ion-select-option value="fr"> &nbsp;{{ translate('fr') }}</ion-select-option>
-            <ion-select-option value="de"> &nbsp;{{ translate('de') }}</ion-select-option>
-          </ion-select>
-        </ion-item>
-       <br>
-      </div>
+     
     </div>
   </div>
   <div *ngIf="isDesktop" class="qr-section">
@@ -64,19 +69,20 @@
       <p class="qr-title">{{ translate('title-desktop') }}</p>
       <p class="qr-description">{{ translate('Message-desktop-2') }}</p>
       <img src="./assets/qr-code.png" alt="Código QR" class="qr-image" />
-      <p class="qr-description">{{ translate('Message-desktop-3') }}</p> 
+      <p class="qr-description">{{ translate('Message-desktop-3') }}</p>
       <p class="qr-description" style="color:rgb(153, 150, 239); font-weight: 500;">{{ translate('EasyMeet') }}</p>
       <div class="language-container">
         <ion-item class="language-selection">
           <img *ngIf="selectedLanguage === 'es'" src="../../assets/flags/MX - Mexico.png" alt="Español" width="30" />
-          <img *ngIf="selectedLanguage === 'en'" src="../../assets/flags/US - United States.png" alt="Inglés" width="30" />
+          <img *ngIf="selectedLanguage === 'en'" src="../../assets/flags/US - United States.png" alt="Inglés"
+            width="30" />
           <ion-select [(ngModel)]="selectedLanguage" (ionChange)="onLanguageChange($event)">
             <ion-select-option value="es"> &nbsp;{{ translate('es') }}</ion-select-option>
             <ion-select-option value="en"> &nbsp;{{ translate('en') }}</ion-select-option>
           </ion-select>
         </ion-item>
       </div>
-     <p class="footer-text">Powered by:  Neural Network Initiative (nni.ai) https://nni.ai</p>
+      <p class="footer-text">Powered by: Neural Network Initiative (nni.ai) https://nni.ai</p>
     </div>
   </div>
 </ion-content>

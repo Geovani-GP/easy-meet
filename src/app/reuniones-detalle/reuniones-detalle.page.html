@@ -46,10 +46,10 @@
   <div class="asistentes">
     <div *ngIf="selectedTab === 'pendientes'">
       <ng-container *ngFor="let evento of eventos">
-        <div *ngIf="evento.estatus === 'P'" class="user-card" (click)="openModal(evento.alias, evento.image, 'pendiente')">
-          <img [src]="evento.image" alt="Perfil" class="user-image" />
+        <div *ngIf="evento.estatus === 'P'" class="user-card" (click)="openModal(evento.solicitud)">
+          <img [src]="evento.usuario.avatar ? evento.usuario.avatar : '../../assets/profile.jpg'" alt="Perfil" class="user-image" />
           <div class="user-info">
-            <p class="user-alias">{{ evento.alias }}</p>
+            <p class="user-alias">{{ evento.usuario.alias }}</p>
           </div>
         </div>
       </ng-container>
@@ -57,10 +57,10 @@
 
     <div *ngIf="selectedTab === 'confirmados'">
       <ng-container *ngFor="let evento of eventos">
-        <div *ngIf="evento.estatus === 'A'" class="user-card" (click)="openModal(evento.alias, evento.image, 'confirmado')">
-          <img [src]="evento.image" alt="Perfil" class="user-image" />
+        <div *ngIf="evento.estatus === 'A'" class="user-card" (click)="openModal(evento.solicitud)">
+          <img [src]="evento.usuario.avatar ? evento.usuario.avatar : '../../assets/profile.jpg'" alt="Perfil" class="user-image" />
           <div class="user-info">
-            <p class="user-alias">{{ evento.alias }}</p>
+            <p class="user-alias">{{ evento.usuario.alias }}</p>
           </div>
         </div>
       </ng-container>
@@ -68,10 +68,10 @@
 
     <div *ngIf="selectedTab === 'cancelados'">
       <ng-container *ngFor="let evento of eventos">
-        <div *ngIf="evento.estatus === 'C'" class="user-card" (click)="openModal(evento.alias, evento.image, 'cancelado')">
-          <img [src]="evento.image" alt="Perfil" class="user-image" />
+        <div *ngIf="evento.estatus === 'C'" class="user-card" (click)="openModal(evento.solicitud)">
+          <img [src]="evento.usuario.avatar ? evento.usuario.avatar : '../../assets/profile.jpg'" alt="Perfil" class="user-image" />
           <div class="user-info">
-            <p class="user-alias">{{ evento.alias }}</p>
+            <p class="user-alias">{{ evento.usuario.alias }}</p>
           </div>
         </div>
       </ng-container>
@@ -80,11 +80,11 @@
 </ion-content>
 
 <!-- Modal -->
-<ion-modal [isOpen]="isModalOpen" (ionModalDidClose)="isModalOpen = false">
+<ion-modal [isOpen]="isModalOpen" (ionModalDidClose)="resetModal()" backdropDismiss="false">
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-title>{{ modalUser?.alias }}</ion-title> <!-- Cambiar a modalUser -->
+        <ion-title>{{ modalUser.usuario.alias }}</ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="isModalOpen = false">{{translate('cerrar')}}</ion-button>
         </ion-buttons>
@@ -92,13 +92,14 @@
     </ion-header>
     <ion-content>
       <div class="user-card">
-        <img [src]="modalUser?.image" alt="Perfil" class="user-image" /> <!-- Cambiar a modalUser -->
-        <p class="user-alias">{{ modalUser?.alias }}</p> <!-- Cambiar a modalUser -->
+        <img [src]="modalUser.usuario.avatar ? modalUser.usuario.avatar : '../../assets/profile.jpg'" alt="Perfil" class="user-image" />
+        <p class="user-alias">{{ modalUser.usuario.alias }}</p>
       </div>
-      <ion-button *ngIf="modalUser?.status === 'pendiente'" expand="full" color="danger" (click)="cancelar()">Cancelar</ion-button>
-      <ion-button *ngIf="modalUser?.status === 'pendiente'" expand="full" color="primary" (click)="confirmar()">Confirmar</ion-button>
-      
-      <ion-button *ngIf="modalUser?.status === 'confirmado'" expand="full" color="success" (click)="contactar()">Contactar</ion-button>
+      <ion-button *ngIf="modalUser.estatus === 'P'" expand="full" color="danger" (click)="mostrarMotivoCancelacion = true">Cancelar</ion-button>
+      <ion-textarea *ngIf="mostrarMotivoCancelacion" [(ngModel)]="motivoCancelacion" placeholder="Escribe el motivo de la cancelación"></ion-textarea>
+      <ion-button *ngIf="mostrarMotivoCancelacion" expand="full" color="danger" (click)="cancelar(modalUser.solicitud, motivoCancelacion)">Confirmar Cancelación</ion-button>
+      <ion-button *ngIf="modalUser.estatus === 'P'" expand="full" color="primary" (click)="confirmar(modalUser.solicitud)">Confirmar</ion-button>
+      <ion-button *ngIf="modalUser.estatus === 'confirmado'" expand="full" color="success" (click)="contactar(modalUser.usuario.alias)">Contactar</ion-button>
     </ion-content>
   </ng-template>
 </ion-modal>

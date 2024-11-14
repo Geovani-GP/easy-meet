@@ -120,8 +120,17 @@
      "cultural":"Culturel",
      "festejo":"Fête",
      "recreativo":"Récréatif",
-     "Reunión creada exitosamente.":"Réunion créée avec succès.",
-     "Error al crear la reunión. Inténtalo de nuevo.":"Erreur lors de la création de la réunion. Essayez à nouveau.",
+     "reunion-creada-exitosamente.":"Réunion créée avec succès.",
      "imagen-subida":"Image téléchargée",
-     "no-hay-imagen":"Aucune image"
+     "no-hay-imagen":"Aucune image",
+     "titulo-requerido": "Le titre est requis.",
+     "descripcion-requerida": "La description est requise.",
+     "costo-requerido": "Le coût est requis.",
+     "tipo-requerido": "Le type est requis.",
+     "tema-requerido": "Le thème est requis.",
+     "selecciona-una-direccion": "Sélectionnez une adresse.",
+     "completa-todos-los-campos": "Veuillez remplir tous les champs requis.",
+     "error-al-crear-la-reunion": "Erreur lors de la création de la réunion. Vérifiez les données.",
+     "imagen-requerida": "La image est requise.",
+     "direccion-requerida": "L'adresse est requise."
 }

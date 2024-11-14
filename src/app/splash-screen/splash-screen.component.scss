@@ -14,10 +14,10 @@ ion-content .item-native {
 ion-content {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; 
+  justify-content: flex-start;
   align-items: center;
-  min-height: 100vh; // Cambiado de height a min-height
-  overflow: auto; // Asegúrate de que el contenido pueda desplazarse
+  min-height: 100vh;
+  overflow: auto;
 }
 
 .background-content{
@@ -36,11 +36,25 @@ ion-content {
   position: static !important; /* Cambia la posición a estática si es necesario */
 }
 
-.slider-container-wrapper{
-  height: 100vh;
-
-  background: linear-gradient(0deg, rgb(153, 150, 239) 0%, rgba(246,197,216,1) 100%);
+@media (max-width: 667px) {
+  .slider-container-wrapper{
+    height: 90vh;
+  
+    background: linear-gradient(0deg, rgb(153, 150, 239) 0%, rgba(246,197,216,1) 100%);
+  }
 }
+
+
+@media (min-height: 667px) {
+  .slider-container-wrapper{
+    height: 100vh;
+  
+    background: linear-gradient(0deg, rgb(153, 150, 239) 0%, rgba(246,197,216,1) 100%);
+  }
+}
+
+
+
 
 ion-content {
   background-color: var(--ion-color-background) !important; 
@@ -98,8 +112,8 @@ img {
 .dots-container {
   display: flex;
   justify-content: center;
-  margin-top: 10px;
-  margin: 10px 0;
+  margin-top: 5px;
+
 
   span {
     height: 10px;
@@ -127,8 +141,7 @@ img {
 }
 
 .full-screen-image {
-  max-width: 80%;
-  max-height: 100%; 
+  max-width: 75vw;
   object-fit: cover; 
 }
 
@@ -136,8 +149,6 @@ img {
   display: flex;
   flex-direction: column; 
   align-items: center;
-  margin-top: 15%;
-  margin-bottom: 15%;
 }
 
 .image-description {

@@ -23,11 +23,12 @@
 
     <ion-chip color="primary">{{translate('edad')}}: {{trendDetails.edad_ini}} - {{trendDetails.edad_fin}} {{translate('anios')}}</ion-chip>
     <ion-chip color="success">{{translate('costo')}}: {{trendDetails.costo}}</ion-chip>
-    
+<!--     <ion-chip (click)="shareTrend()" color="secondary">{{translate('compartir')}}</ion-chip> -->
+
     <div class="user-card" *ngIf="oauth">
       <img [src]="trend.usu_img ? trend.usu_img : 'assets/profile.jpg'" alt="Perfil" class="user-image" />
       <div class="user-info">
-        <p class="user-alias">{{trendDetails.usuario}}</p>
+        <p class="user-alias">{{trend.usuario}}</p>
         <ion-button fill="outline" (click)="contactar()">{{translate('contactar')}}</ion-button>
       </div>
     </div>

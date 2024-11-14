@@ -120,8 +120,17 @@
      "cultural":"Cultural",
      "festejo":"Festejo",
      "recreativo":"Recreativo",
-     "Reunión creada exitosamente.":"Reunión creada exitosamente.",
-     "Error al crear la reunión. Inténtalo de nuevo.":"Error al crear la reunión. Inténtalo de nuevo.",
+     "reunion-creada-exitosamente.":"Reunión creada exitosamente.",
      "imagen-subida":"Imagen subida",
-     "no-hay-imagen":"No hay imagen"
+     "no-hay-imagen":"No hay imagen",
+     "titulo-requerido": "El título es requerido.",
+     "descripcion-requerida": "La descripción es requerida.",
+     "costo-requerido": "El costo es requerido.",
+     "tipo-requerido": "El tipo es requerido.",
+     "tema-requerido": "El tema es requerido.",
+     "selecciona-una-direccion": "Selecciona una dirección.",
+     "completa-todos-los-campos": "Por favor, completa todos los campos requeridos.",
+     "error-al-crear-la-reunion": "Error al crear la reunión. verifica los datos.",
+     "imagen-requerida": "La imagen es requerida.",
+     "direccion-requerida": "La dirección es requerida."
 }

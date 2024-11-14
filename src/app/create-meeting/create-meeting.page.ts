@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Camera, CameraResultType } from '@capacitor/camera';
+import { Camera, CameraOptions, CameraResultType, CameraSource } from '@capacitor/camera';
 import { environment } from '../../environments/environment'; 
 import { TranslationService } from '../services/translation.service';
 import { ServicesService } from '../services/services.service';
@@ -116,11 +116,29 @@ export class CreateMeetingPage implements OnInit {
   
   onSubmit() {
     console.log(this.formatDate(this.fecha));
+
+    // Verificar que todos los campos necesarios estén presentes
+    if (!this.usuario || !this.usuario.payload || !this.usuario.payload.uid) {
+      console.error('Usuario no válido');
+      return; // Salir si el usuario no es válido
+    }
+
+    // Validar campos requeridos
+    if (!this.tema || !this.tipo || !this.direccion || !this.titulo || !this.fecha || !this.descripcion || !this.costo || !this.imageUrl || !this.direccion || !this.tema) {
+      console.error('Faltan datos requeridos para crear la reunión');
+      this.toastController.create({
+        message: this.translate('completa-todos-los-campos'),
+        duration: 2000,
+        position: 'bottom'
+      }).then(toast => toast.present());
+      return; // Salir si faltan datos
+    }
+
     const meetingData = {
       usuario: this.usuario.payload.uid,
       interes: parseInt(this.tema), 
       tipo: parseInt(this.tipo),
-      audicencia:"A", //
+      audicencia: "A", //
       cp: "00000", //
       lugar: this.direccion, 
       titulo: this.titulo,
@@ -129,8 +147,9 @@ export class CreateMeetingPage implements OnInit {
       eda_ini: this.rangeValues.lower,
       eda_fin: this.rangeValues.upper, 
       descripcion: this.descripcion,
-      latitud: this.currentLocation?.lat, // Añadido: latitud
-      longitud: this.currentLocation?.lng  // Añadido: longitud
+      latitud: this.currentLocation?.lat,
+      longitud: this.currentLocation?.lng,
+      img: this.downloadURL
     };
 
     console.log('Datos de la reunión:', meetingData);
@@ -139,17 +158,8 @@ export class CreateMeetingPage implements OnInit {
     this.servicesService.crearMeeting(meetingData).subscribe({
       next: async (response) => {
         console.log('Reunión creada exitosamente:', response);
-
-        // Cargar la imagen después de crear la reunión
-        if (this.imageUrl) {
-          const uid = response.payload.uid; // Asegúrate de que el UID esté en la respuesta
-          const imageBase64 = this.imagen; // La imagen en base64
-          await this.servicesService.uploadImage(uid, this.imageUrl).toPromise();
-          console.log('Imagen cargada exitosamente.');
-        }
-
         this.toastController.create({
-          message: this.translate('Reunión creada exitosamente.'),
+          message: this.translate('reunion-creada-exitosamente.'),
           duration: 2000,
           position: 'bottom'
         }).then(toast => toast.present());
@@ -158,7 +168,7 @@ export class CreateMeetingPage implements OnInit {
       error: (error) => {
         console.error('Error al crear la reunión:', error);
         this.toastController.create({
-          message: this.translate('Error al crear la reunión. Inténtalo de nuevo.'),
+          message: this.translate('error-al-crear-la-reunion'),
           duration: 2000,
           position: 'bottom'
         }).then(toast => toast.present());
@@ -341,6 +351,7 @@ export class CreateMeetingPage implements OnInit {
   }
 
   translate(key: string): string {
+    console.log('Traduciendo clave:', key);
     if (this.translationService && this.translationService.translate) {
       return this.translationService.translate(key);
     }
@@ -430,17 +441,23 @@ export class CreateMeetingPage implements OnInit {
 
   async openCamera() {
     try {
-      const image = await Camera.getPhoto({
-        quality: 90,
-        allowEditing: false,
-        resultType: CameraResultType.Uri,
-      });
-
-      if (image && image.webPath) {
-        const response = await fetch(image.webPath);
-        const blob = await response.blob();
-        const file = new File([blob], 'imagen.jpg', { type: blob.type });
-        await this.onFileSelected(file);
+      const options: CameraOptions = {
+        quality: 100,
+        resultType: CameraResultType.DataUrl,
+        source: CameraSource.Photos, 
+      };
+      console.log(options);
+      
+      if (options) {
+        const imageData = await Camera.getPhoto(options); 
+        if (imageData.dataUrl) { 
+            const response = await fetch(imageData.dataUrl); 
+            const blob = await response.blob(); 
+            const file = new File([blob], 'imagen.jpg', { type: blob.type });
+            await this.onFileSelected(file);
+        } else {
+            console.error('No se pudo obtener la URL de la imagen.');
+        }
       }
     } catch (error) {
       console.error('Error al abrir la cámara:', error);

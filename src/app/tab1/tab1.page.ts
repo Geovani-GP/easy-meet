@@ -18,9 +18,9 @@ export class Tab1Page implements OnInit {
 
 
   ionViewWillEnter() {
-   this.spinnerService.show();
+   
     this.loadInterests();
-    this.spinnerService.hide();
+   
   }
   ngOnInit() {
     this.loadInterests();
