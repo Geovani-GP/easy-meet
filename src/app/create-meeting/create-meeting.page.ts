@@ -22,7 +22,7 @@ export class CreateMeetingPage implements OnInit {
   titulo: string = '';
   descripcion: string = '';
   fecha: string = '';
-  costo: number | null = null; 
+  costo: number = 0; 
   tipo: string = '';
   tema: string = '';
   rangeValues: { lower: number; upper: number } = { lower: 18, upper: 60 }; 
@@ -116,7 +116,7 @@ export class CreateMeetingPage implements OnInit {
   
   onSubmit() {
     console.log(this.formatDate(this.fecha));
-
+    console.log(this.imageUrl);
     // Verificar que todos los campos necesarios estén presentes
     if (!this.usuario || !this.usuario.payload || !this.usuario.payload.uid) {
       console.error('Usuario no válido');
@@ -124,7 +124,7 @@ export class CreateMeetingPage implements OnInit {
     }
 
     // Validar campos requeridos
-    if (!this.tema || !this.tipo || !this.direccion || !this.titulo || !this.fecha || !this.descripcion || !this.costo || !this.imageUrl || !this.direccion || !this.tema) {
+    if (!this.tema || !this.tipo || !this.direccion || !this.titulo || !this.fecha || !this.descripcion || !this.downloadURL || !this.direccion || !this.tema) {
       console.error('Faltan datos requeridos para crear la reunión');
       this.toastController.create({
         message: this.translate('completa-todos-los-campos'),
@@ -351,7 +351,6 @@ export class CreateMeetingPage implements OnInit {
   }
 
   translate(key: string): string {
-    console.log('Traduciendo clave:', key);
     if (this.translationService && this.translationService.translate) {
       return this.translationService.translate(key);
     }
@@ -408,6 +407,7 @@ export class CreateMeetingPage implements OnInit {
         console.log('URL de la imagen cargada:', imageUrl);
         this.downloadURL = imageUrl;
         this.myObservable$ = of(imageUrl);
+        
       }
     } catch (error) {
       console.error('Error al subir la imagen:', error);

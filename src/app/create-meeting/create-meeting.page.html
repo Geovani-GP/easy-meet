@@ -38,11 +38,11 @@
       </div>
     </div>
 
-    <ion-item [class.error]="!costo">
+    <ion-item>
       <ion-label position="floating">{{translate('costo')}}</ion-label>
       <ion-input type="number" [(ngModel)]="costo" name="costo" required></ion-input>
     </ion-item>
-    <div *ngIf="!costo" class="error-message">{{translate('costo-requerido')}}</div>
+<!--     <div *ngIf="!costo" class="error-message">{{translate('costo-requerido')}}</div> -->
 
     <ion-item [class.error]="!tipo">
       <ion-label>{{translate('tipo')}}</ion-label>
@@ -74,13 +74,13 @@
       </ion-range>
     </ion-item>
 
-    <ion-item [class.error]="!imageUrl">
+    <ion-item [class.error]="!downloadURL">
       <ion-label>{{translate('subir-imagen')}}</ion-label>
       <ion-button fill="outline" slot="end" (click)="openCamera()">
         <ion-icon name="camera"></ion-icon>
       </ion-button>
     </ion-item>
-    <div *ngIf="!imageUrl" class="error-message">{{translate('imagen-requerida')}}</div>
+    <div *ngIf="!downloadURL" class="error-message">{{translate('imagen-requerida')}}</div>
 
     <ion-item [class.error]="!direccion">
       <ion-label position="floating" class="easy-meet-title">{{translate('direccion')}}</ion-label>
