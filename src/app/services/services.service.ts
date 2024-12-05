@@ -270,7 +270,7 @@ loginWithGoogle(): Observable<any> {
             this.loginEM(user.uid).subscribe(response => {
               if(response.statusCode === 409){
                 console.error('Error en el inicio de sesión: usuario no encontrado.');
-                observer.error('Usuario no encontrado.'); // Mensaje de error específico
+                observer.error('Usuario no encontrado.');
               } else {
                 console.log('Respuesta de loginEM:', response);
                 localStorage.setItem('oauth', 'true');
@@ -279,15 +279,16 @@ loginWithGoogle(): Observable<any> {
               }
             }, error => {
               console.error('Error al realizar el loginEM:', error);
-              observer.error('Error al realizar el loginEM: ' + error.message); // Mensaje de error específico
+              observer.error('Error al realizar el loginEM: ' + error.message);
             });
           } else {
             console.error('Usuario o correo electrónico no disponibles.');
+            observer.error('Usuario o correo electrónico no disponibles.'); 
           }
         }
       }).catch(error => {
         console.error('Error en el inicio de sesión con Google:', error);
-        observer.error(error);
+        observer.error('Error en el inicio de sesión con Google: ' + error.message);
       });
   });
 }
