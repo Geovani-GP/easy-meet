@@ -14,13 +14,12 @@
       <span class="edit-icon">
         <ion-icon name="brush"></ion-icon>
       </span>
-      <input type="file" #fileInput (change)="loadImage($event)" accept="image/*" class="hidden-input"> <!-- Clase para ocultar el input -->
+      <input type="file" #fileInput (change)="loadImage($event)" accept="image/*" class="hidden-input">
     </div>
     <h2 class="easy-meet-title">{{userData.payload.nombre}}</h2>
     <p class="easy-meet-subtitle">{{userData.payload.alias}}</p>
     <p class="easy-meet-subtitle">{{userData.payload.telefono}}</p>
-  </div>  
-
+  </div>
 
   <div class="properties-container">
     <hr style="border-top: 1px solid #ccc; width: 100%; margin: 20px 0;">
@@ -44,4 +43,46 @@
   </div>
 
   <ion-button expand="full" color="primary" class="create-meeting-button" (click)="acceptChanges()">{{translate('aceptar')}}</ion-button>
+
+  <ion-modal [isOpen]="isCropperOpen" (didDismiss)="isCropperOpen = false">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="isCropperOpen = false">{{translate('cancelar')}}</ion-button>
+          </ion-buttons>
+          <ion-title>{{translate('recortar-imagen')}}</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div class="crop-container">
+          <div class="crop-area">
+            <div class="crop-frame"></div>
+            <canvas #canvas 
+              (touchstart)="startMoving($event)"
+              (touchmove)="moveImage($event)"
+              (touchend)="stopMoving()"
+              (mousedown)="startMoving($event)"
+              (mousemove)="moveImage($event)"
+              (mouseup)="stopMoving()"
+              (mouseleave)="stopMoving()">
+            </canvas>
+          </div>
+          <div class="crop-controls">
+            <ion-range min="100" max="200" [(ngModel)]="zoomLevel" (ionChange)="updateZoom()">
+              <ion-label slot="start">
+                <ion-icon name="remove-outline"></ion-icon>
+              </ion-label>
+              <ion-label slot="end">
+                <ion-icon name="add-outline"></ion-icon>
+              </ion-label>
+            </ion-range>
+          </div>
+          <ion-button expand="full" (click)="cropAndSave()">
+            {{translate('aceptar')}}
+          </ion-button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

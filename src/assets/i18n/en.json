@@ -132,5 +132,10 @@
     "completa-todos-los-campos": "Please complete all required fields.",
     "error-al-crear-la-reunion": "Error creating meeting. Check the data.",
     "imagen-requerida": "The image is required.",
-    "direccion-requerida": "The address is required."
+    "direccion-requerida": "The address is required.",
+    "recortar-imagen":"Crop image",
+    "cancelar":"Cancel",
+    "error_verifica_datos":"Error verifying data.",
+    "registro_exitoso":"Registration successful",
+    "error_registro":"Error registering"
 }

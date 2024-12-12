@@ -132,5 +132,10 @@
      "completa-todos-los-campos": "Veuillez remplir tous les champs requis.",
      "error-al-crear-la-reunion": "Erreur lors de la création de la réunion. Vérifiez les données.",
      "imagen-requerida": "La image est requise.",
-     "direccion-requerida": "L'adresse est requise."
+     "direccion-requerida": "L'adresse est requise.",
+     "recortar-imagen":"Recortar image",
+     "cancelar":"Annuler",
+     "error_verifica_datos":"Erreur lors de la vérification des données.",
+     "registro_exitoso":"Inscription réussie",
+     "error_registro":"Erreur lors de l'inscription"
 }

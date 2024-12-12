@@ -132,5 +132,10 @@
      "completa-todos-los-campos": "Por favor, completa todos los campos requeridos.",
      "error-al-crear-la-reunion": "Error al crear la reunión. verifica los datos.",
      "imagen-requerida": "La imagen es requerida.",
-     "direccion-requerida": "La dirección es requerida."
+     "direccion-requerida": "La dirección es requerida.",
+     "recortar-imagen":"Recortar imagen",
+     "cancelar":"Cancelar",
+     "error_verifica_datos":"Error al verificar los datos.",
+     "registro_exitoso":"Registro exitoso",
+     "error_registro":"Error al registrar"
 }

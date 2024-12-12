@@ -44,6 +44,7 @@
     "cordova-plugin-x-socialsharing": "^6.0.4",
     "firebase": "^10.14.0",
     "ionicons": "^7.4.0",
+    "ngx-image-cropper": "^9.0.0",
     "ngx-stripe": "^18.1.0",
     "ngx-toastr": "^19.0.0",
     "nodemon": "^3.1.4",

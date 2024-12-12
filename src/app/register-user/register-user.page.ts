@@ -47,18 +47,17 @@ export class RegisterUserPage implements OnInit {
     this.servicesService.registerUser2(data).subscribe({
       next: async (response) => {
         this.spinnerService.hide();
-        // Verifica que la respuesta sea exitosa
         if (response.success) {
           const toast = await this.toastController.create({
-            message: 'Registro exitoso!',
+            message: this.translate('registro_exitoso'),
             duration: 2000,
             color: 'success'
           });
           await toast.present();
-          this.router.navigate(['/tabs/tab3']); // Redirige solo si la respuesta es exitosa
+          this.router.navigate(['/tabs/tab3']);
         } else {
           const toast = await this.toastController.create({
-            message: 'Error en el registro: ' + response.message,
+            message: this.translate('error_registro') + ': ' + response.message,
             duration: 2000,
             color: 'danger'
           });
@@ -69,7 +68,7 @@ export class RegisterUserPage implements OnInit {
         this.spinnerService.hide();
         console.log(error.message);
         const toast = await this.toastController.create({
-          message: 'Error en el registro: verifica los datos',
+          message: this.translate('error_verifica_datos'),
           duration: 2000,
           color: 'danger'
         });

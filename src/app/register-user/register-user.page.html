@@ -9,7 +9,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <form (ngSubmit)="register()">
+  <form (ngSubmit)="register()" #registerForm="ngForm">
     <ion-item>
       <ion-label position="floating">{{translate('nombre')}}</ion-label>
       <ion-input [(ngModel)]="nombre" name="nombre" required></ion-input>
@@ -62,6 +62,10 @@
     </div>
 
     <ion-button expand="full" type="submit">{{translate('registrarme')}}</ion-button>
+    
+    <div *ngIf="registerForm.invalid && (registerForm.dirty || registerForm.touched)" class="error-message">
+      <p>Por favor, completa todos los campos requeridos.</p>
+    </div>
   </form>
 
   <div class="divider">o</div>

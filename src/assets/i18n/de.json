@@ -132,5 +132,10 @@
      "completa-todos-los-campos": "Bitte füllen Sie alle erforderlichen Felder aus.",
      "error-al-crear-la-reunion": "Fehler beim Erstellen des Treffens. Überprüfen Sie die Daten.",
      "imagen-requerida": "Die Bild ist erforderlich.",
-     "direccion-requerida": "Die Adresse ist erforderlich."
+     "direccion-requerida": "Die Adresse ist erforderlich.",
+     "recortar-imagen":"Bild zuschneiden",
+     "cancelar":"Abbrechen",
+     "error_verifica_datos":"Fehler beim Überprüfen der Daten.",
+     "registro_exitoso":"Registrierung erfolgreich",
+     "error_registro":"Fehler beim Registrieren"
 }

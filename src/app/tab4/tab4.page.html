@@ -8,7 +8,9 @@
   <div class="profile">
     <div class="profile-picture-container" (click)="navigateToUserProperties()">
       <div class="background-shape"></div>
-      <img src="{{userData.payload.uri_foto ? userData.payload.uri_foto : '../../../../assets/profile.jpg'}}" alt="Perfil" class="profile-picture" style="width: 250px; height: 250px;">
+      <div class="profile-picture-container-2">
+        <img src="{{userData.payload.uri_foto ? userData.payload.uri_foto : '../../../../assets/profile.jpg'}}" alt="Perfil" class="profile-picture">
+    </div>
       <ion-icon name="create"></ion-icon>
     </div>
     <h2 class="easy-meet-title" style="color: white !important;font-size: 20px !important;margin-bottom: 30px; text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);">{{userData.payload.nombre}}</h2>

@@ -10,14 +10,21 @@
     margin-bottom: 20px;
   }
   
-  .profile-picture {
-    width: 75px;
-    height: 75px;
-    border-radius: 50%;
-    margin-bottom: 10px;
-    border: white solid 10px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.7);
-  }
+  .profile-picture-container-2 {
+    width: 250px;
+    height: 250px; 
+    border-radius: 50%; 
+    overflow: hidden;
+    border: white solid 10px; 
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.7); 
+    margin: 0 auto;
+}
+
+.profile-picture {
+    width: 100%; 
+    height: auto; 
+    object-fit: cover; 
+}
 
   .btn {
     position: relative;
@@ -34,14 +41,14 @@
 
 
   .background-shape { 
-    position: absolute; /* Para que esté detrás de la imagen */
+    position: absolute; 
     top: 0;
-    width: 93%; /* Ajustar al tamaño del contenedor */
-    height: 375px; /* Ajustar al tamaño del contenedor */
-    background-color: #7b66ff; /* Color de fondo blanco si no se encuentra la imagen */
+    width: 93%;
+    height: 375px; 
+    background-color: #7b66ff;
     background-image: url('../../assets/background.png');
     background-size: auto;
-    border-radius: 10%; /* Para que tenga forma circular */
+    border-radius: 10%;
     z-index: -1; 
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
   }
