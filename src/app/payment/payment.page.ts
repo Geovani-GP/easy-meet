@@ -61,8 +61,12 @@ export class PaymentPage implements OnInit, AfterViewInit, AfterViewChecked {
         }
       };
       this.cardElement = elements.create('card', { style });
-      this.cardElement.mount(this.cardElementRef.nativeElement);
-      console.log('initializeStripe: Elemento de tarjeta montado correctamente.');
+      try {
+        this.cardElement.mount(this.cardElementRef.nativeElement);
+        console.log('initializeStripe: Elemento de tarjeta montado correctamente.');
+      } catch (mountError) {
+        console.error('initializeStripe: Error al montar el elemento de tarjeta:', mountError);
+      }
     } else {
       console.error('initializeStripe: Stripe o cardElementRef no están inicializados');
     }

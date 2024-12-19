@@ -1,7 +1,7 @@
 {
     "Welcome-desktop": "Connect, organize, and enjoy!",
     "Message-desktop": "Discover EasyMeet, the new platform to make your social gatherings a reality. Whether it's for events, dates, celebrations, or simply to meet new people, everything is possible!",
-    "Download-app-desktop": "Download it now and start creating unforgettable experiences!",
+    "Download-app-desktop": "Download it now! Explore here",
     "title-desktop": "Do you prefer the web version?",
     "Message-desktop-2": "Scan the QR code and access our platform from any device!",
     "Message-desktop-3": "It's time to start new social adventures with",
@@ -101,7 +101,7 @@
     "nombre-del-banco":"Bank name",
     "numero-de-cuenta":"Account number",
     "pagar":"Pay",
-    "tarjeta-de-credito-stripe":"Credit card (Stripe)",
+    "tarjeta-de-credito-stripe":"Credit card",
     "deposito":"Deposit",
     "transferencia":"Transfer",
     "guardar-direccion":"Save address",
@@ -137,5 +137,7 @@
     "cancelar":"Cancel",
     "error_verifica_datos":"Error verifying data.",
     "registro_exitoso":"Registration successful",
-    "error_registro":"Error registering"
+    "error_registro":"Error registering",
+    "agrandar-o-reducir-imagen":"Zoom in or out",
+    "rotar-imagen":"Rotate image"
 }

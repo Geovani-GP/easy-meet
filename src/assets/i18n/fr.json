@@ -1,7 +1,7 @@
 {
     "Welcome-desktop": "Connecte-toi, organise et amuse-toi !",
     "Message-desktop": "Découvrez EasyMeet, la nouvelle plateforme pour rendre vos réunions sociales réelles. Que ce soit pour des événements, des rendez-vous, des fêtes ou simplement pour rencontrer de nouvelles personnes, tout est possible !",
-    "Download-app-desktop": "Téléchargez-la maintenant et commencez à créer des expériences inoubliables !",
+    "Download-app-desktop": "Téléchargez-la maintenant ! Découvrez le tutoriel",
     "title-desktop": "Préférez-vous la version web ?",
     "Message-desktop-2": "Scannez le code QR et accédez à notre plateforme depuis n'importe quel appareil !",
     "Message-desktop-3": "Il est temps de commencer de nouvelles aventures sociales avec",
@@ -101,7 +101,7 @@
      "nombre-del-banco":"Nom de la banque",
      "numero-de-cuenta":"Numéro de compte",
      "pagar":"Payer",
-     "tarjeta-de-credito-stripe":"Carte de Crédit (Stripe)",
+     "tarjeta-de-credito-stripe":"Carte de Crédit",
      "deposito":"Dépôt",
      "transferencia":"Transfert",
      "guardar-direccion":"Enregistrer l'adresse",
@@ -137,5 +137,7 @@
      "cancelar":"Annuler",
      "error_verifica_datos":"Erreur lors de la vérification des données.",
      "registro_exitoso":"Inscription réussie",
-     "error_registro":"Erreur lors de l'inscription"
+     "error_registro":"Erreur lors de l'inscription",
+     "agrandar-o-reducir-imagen":"Agrandir ou réduire l'image",
+     "rotar-imagen":"Tourner l'image"
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 import { NavController } from '@ionic/angular';
 import { TranslationService } from '../services/translation.service';
@@ -11,6 +11,8 @@ import { TranslationService } from '../services/translation.service';
 })
 
 export class SplashScreenComponent implements OnInit {
+
+  @ViewChild('videoPlayer') videoPlayer!: ElementRef;
 
   async ngAfterViewInit() {
     const items = document.querySelectorAll('.item-native');
@@ -181,5 +183,52 @@ export class SplashScreenComponent implements OnInit {
 
   translate(key: string): string {
     return this.translationService.translate(key);
+  }
+
+  toggleFullScreen() {
+    const video = this.videoPlayer.nativeElement as any;
+    video.style.display = 'block';
+    video.play();
+
+    if (video.requestFullscreen) {
+      video.requestFullscreen();
+    } else if (video.webkitRequestFullscreen) {
+      video.webkitRequestFullscreen();
+    } else if (video.msRequestFullscreen) {
+      video.msRequestFullscreen();
+    }
+
+    video.onended = () => {
+      this.hideVideo();
+    };
+
+    video.onfullscreenchange = () => {
+      if (!document.fullscreenElement) {
+        this.hideVideo();
+      }
+    };
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.keyCode === 27 || event.key === 'Escape' || event.key === 'Esc' || event.charCode === 27) {
+      this.hideVideo();
+    }
+  this.hideVideo();
+  }
+
+  hideVideo() {
+    const video: HTMLVideoElement = this.videoPlayer.nativeElement;
+    video.style.display = 'none';
+    video.pause();
+    video.currentTime = 0;
+
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    }
+
+    setTimeout(() => {
+      video.style.display = 'none';
+    }, 100);
   }
 }

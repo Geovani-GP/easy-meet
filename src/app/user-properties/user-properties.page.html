@@ -69,6 +69,7 @@
             </canvas>
           </div>
           <div class="crop-controls">
+            <ion-label>{{translate('agrandar-o-reducir-imagen')}}</ion-label>
             <ion-range min="100" max="200" [(ngModel)]="zoomLevel" (ionChange)="updateZoom()">
               <ion-label slot="start">
                 <ion-icon name="remove-outline"></ion-icon>
@@ -77,6 +78,14 @@
                 <ion-icon name="add-outline"></ion-icon>
               </ion-label>
             </ion-range>
+            <ion-label>{{translate('rotar-imagen')}}</ion-label>
+            <ion-range min="0" max="360" [(ngModel)]="rotation" (ionChange)="drawImage()">
+              <ion-label slot="start">0°</ion-label>
+              <ion-label slot="end">360°</ion-label>
+            </ion-range>
+            
+            
+           
           </div>
           <ion-button expand="full" (click)="cropAndSave()">
             {{translate('aceptar')}}

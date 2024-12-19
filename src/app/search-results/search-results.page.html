@@ -12,7 +12,7 @@
       <p>{{translate('no-datos-disponibles')}}</p>
     </div>
     <div *ngFor="let trend of trends">
-      <mat-card class="card" appearance="outlined">
+      <mat-card class="card" appearance="outlined" (click)="navigateToDetails(trend)">
         <mat-card-header>
           <div mat-card-avatar class="header-image" 
           [ngStyle]="{'background-image': 'url(' + (trend.usu_img ? trend.usu_img : 'assets/profile.jpg') + ')'}">

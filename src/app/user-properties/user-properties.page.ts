@@ -27,8 +27,9 @@ export class UserPropertiesPage implements OnInit {
   private lastY: number = 0;
   private imageX: number = 0;
   private imageY: number = 0;
-  zoomLevel: number = 20;
+  zoomLevel: number = 100;
   private originalImage: HTMLImageElement | null = null;
+  rotation: number = 0;
   
   constructor(
     private router: Router,
@@ -80,7 +81,7 @@ export class UserPropertiesPage implements OnInit {
     this.isMoving = false;
     this.imageX = 0;
     this.imageY = 0;
-    this.zoomLevel = 20;
+    this.zoomLevel = 100;
     this.originalImage = null;
   }
 
@@ -145,7 +146,7 @@ export class UserPropertiesPage implements OnInit {
     this.drawImage();
   }
 
-  private drawImage() {
+  public drawImage() {
     const canvas = this.canvas?.nativeElement;
     if (!canvas || !this.originalImage) return;
 
@@ -158,13 +159,22 @@ export class UserPropertiesPage implements OnInit {
     const scaledWidth = this.originalImage.width * scale;
     const scaledHeight = this.originalImage.height * scale;
 
+    ctx.save();
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate(this.rotation * Math.PI / 180);
     ctx.drawImage(
       this.originalImage,
-      this.imageX - scaledWidth / 2 + canvas.width / 2,
-      this.imageY - scaledHeight / 2 + canvas.height / 2,
+      this.imageX - scaledWidth / 2,
+      this.imageY - scaledHeight / 2,
       scaledWidth,
       scaledHeight
     );
+    ctx.restore();
+  }
+
+  rotateImage(direction: 'left' | 'right') {
+    this.rotation += direction === 'left' ? -90 : 90;
+    this.drawImage();
   }
 
   async cropAndSave() {

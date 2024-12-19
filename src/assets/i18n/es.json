@@ -1,7 +1,7 @@
 {
     "Welcome-desktop": "¡Conéctate, organiza y disfruta!",
     "Message-desktop": "¡Descubre EasyMeet, la nueva plataforma para hacer realidad tus reuniones sociales. Ya sea para eventos, citas, festejos o simplemente para conocer gente nueva, ¡todo es posible!",
-    "Download-app-desktop": "¡Descárgala ahora y empieza a crear experiencias inolvidables!",
+    "Download-app-desktop": "¡Descárgala ahora! Explora el tutorial",
     "title-desktop": "¿Prefieres la versión web?",
     "Message-desktop-2": "¡Escanea el código QR y accede a nuestra plataforma desde cualquier dispositivo!",
     "Message-desktop-3": "¡Es hora de comenzar nuevas aventuras sociales con",
@@ -23,7 +23,7 @@
     "Buscar-eventos":"Buscar eventos",
     "edad":"Edad",
     "intereses":"Intereses",
-    "fecha":"Fecha",
+    "fecha":"Fecha de nacimiento",
     "cerrar":"Cerrar",
     "buscar":"Buscar",
     "Arte Y Manualidades": "Arte y Manualidades",
@@ -101,7 +101,7 @@
      "nombre-del-banco":"Nombre del banco",
      "numero-de-cuenta":"Número de cuenta",
      "pagar":"Pagar",
-     "tarjeta-de-credito-stripe":"Tarjeta de Crédito (Stripe)",
+     "tarjeta-de-credito-stripe":"Tarjeta de Crédito",
      "deposito":"Depósito",
      "transferencia":"Transferencia",
      "guardar-direccion":"Guardar dirección",
@@ -137,5 +137,7 @@
      "cancelar":"Cancelar",
      "error_verifica_datos":"Error al verificar los datos.",
      "registro_exitoso":"Registro exitoso",
-     "error_registro":"Error al registrar"
+     "error_registro":"Error al registrar",
+     "agrandar-o-reducir-imagen":"Agrandar o reducir imagen",
+     "rotar-imagen":"Rotar imagen"
 }
