@@ -15,6 +15,7 @@ import { SplashScreenModule } from './splash-screen/splash-screen.module';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxStripeModule } from 'ngx-stripe';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,6 +31,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SplashScreenModule,
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
+    NgxStripeModule.forRoot('tu_clave_publica_de_stripe'),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
