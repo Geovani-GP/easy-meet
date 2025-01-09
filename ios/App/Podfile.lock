@@ -1,31 +1,40 @@
 PODS:
-  - Capacitor (5.7.8):
+  - Capacitor (6.1.2):
     - CapacitorCordova
-  - CapacitorApp (5.0.6):
+  - CapacitorApp (6.0.1):
     - Capacitor
-  - CapacitorCamera (5.0.7):
+  - CapacitorAppTrackingTransparency (2.0.1):
     - Capacitor
-  - CapacitorCordova (5.7.8)
-  - CapacitorHaptics (5.0.6):
+  - CapacitorCamera (6.1.0):
     - Capacitor
-  - CapacitorKeyboard (5.0.6):
+  - CapacitorCordova (6.1.2)
+  - CapacitorDevice (6.0.2):
     - Capacitor
-  - CapacitorShare (5.0.6):
+  - CapacitorHaptics (6.0.1):
     - Capacitor
-  - CapacitorSplashScreen (5.0.6):
+  - CapacitorKeyboard (6.0.2):
     - Capacitor
-  - CapacitorStatusBar (5.0.6):
+  - CapacitorPushNotifications (6.0.3):
     - Capacitor
-  - CordovaPlugins (5.7.8):
+  - CapacitorShare (6.0.2):
+    - Capacitor
+  - CapacitorSplashScreen (6.0.2):
+    - Capacitor
+  - CapacitorStatusBar (6.0.1):
+    - Capacitor
+  - CordovaPlugins (6.1.2):
     - CapacitorCordova
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
+  - CapacitorAppTrackingTransparency (from `../../node_modules/capacitor-app-tracking-transparency`)
   - "CapacitorCamera (from `../../node_modules/@capacitor/camera`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorDevice (from `../../node_modules/@capacitor/device`)"
   - "CapacitorHaptics (from `../../node_modules/@capacitor/haptics`)"
   - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
+  - "CapacitorPushNotifications (from `../../node_modules/@capacitor/push-notifications`)"
   - "CapacitorShare (from `../../node_modules/@capacitor/share`)"
   - "CapacitorSplashScreen (from `../../node_modules/@capacitor/splash-screen`)"
   - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
@@ -36,14 +45,20 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorApp:
     :path: "../../node_modules/@capacitor/app"
+  CapacitorAppTrackingTransparency:
+    :path: "../../node_modules/capacitor-app-tracking-transparency"
   CapacitorCamera:
     :path: "../../node_modules/@capacitor/camera"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
+  CapacitorDevice:
+    :path: "../../node_modules/@capacitor/device"
   CapacitorHaptics:
     :path: "../../node_modules/@capacitor/haptics"
   CapacitorKeyboard:
     :path: "../../node_modules/@capacitor/keyboard"
+  CapacitorPushNotifications:
+    :path: "../../node_modules/@capacitor/push-notifications"
   CapacitorShare:
     :path: "../../node_modules/@capacitor/share"
   CapacitorSplashScreen:
@@ -54,17 +69,20 @@ EXTERNAL SOURCES:
     :path: "../capacitor-cordova-ios-plugins"
 
 SPEC CHECKSUMS:
-  Capacitor: 747aadb4fa786f460d8cd9d0557cb81440a13747
-  CapacitorApp: 024e1b1bea5f883d79f6330d309bc441c88ad04a
-  CapacitorCamera: 084b0b228bba7d00587910337b1c89e93b1d32ab
-  CapacitorCordova: 31ab98dca2ddcee051027a1afe7e8c85c82f7297
-  CapacitorHaptics: 1fffc1217c7e64a472d7845be50fb0c2f7d4204c
-  CapacitorKeyboard: b978154b024a5f65e044908e37d15b7de58b9d12
-  CapacitorShare: cd41743331cb71d217c029de54b681cbd91e0fcc
-  CapacitorSplashScreen: 5fa2ab5e46cf5cc530cf16a51c80c7a986579ccd
-  CapacitorStatusBar: 565c0a1ebd79bb40d797606a8992b4a105885309
-  CordovaPlugins: 0a0a573cd331049283323ab019418d89827cdbd9
+  Capacitor: 679f9673fdf30597493a6362a5d5bf233d46abc2
+  CapacitorApp: 0bc633b4eae40a1f32cd2834788fad3bc42da6a1
+  CapacitorAppTrackingTransparency: 3734ede692f13cbc95f8eab0d5e8b2091dfb8a40
+  CapacitorCamera: 81ce64062cd82b82cc75a79616fda4bd09d7f643
+  CapacitorCordova: f48c89f96c319101cd2f0ce8a2b7449b5fb8b3dd
+  CapacitorDevice: 1a215717f0b5061503b21a03508b0ec458a57d78
+  CapacitorHaptics: fe689ade56ef20ec9b041a753c6da70c5d8ec9a9
+  CapacitorKeyboard: 2700f9b18687be021e28b5a09b59eb151a46d5e0
+  CapacitorPushNotifications: 2912e63470b895aefadff55c49f1fb8d82769423
+  CapacitorShare: 591ae4693d85686ceb590db8e8b44aa014ec6490
+  CapacitorSplashScreen: 250df9ef8014fac5c7c1fd231f0f8b1d8f0b5624
+  CapacitorStatusBar: b81d4fb5d4e0064c712018071b3ab4b810b39a63
+  CordovaPlugins: 659d45036de94cf0a5a714aef344acea92027cf5
 
-PODFILE CHECKSUM: 25e167e9796227596e9dd4b23ca24b7cf8ba2931
+PODFILE CHECKSUM: 66d56ddce1bc42c57bc585aa14b7a900855e2f6e
 
 COCOAPODS: 1.16.2

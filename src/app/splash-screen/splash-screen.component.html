@@ -15,6 +15,7 @@
           width="30" />
         <img *ngIf="selectedLanguage === 'fr'" src="../../assets/flags/FR - France.png" alt="Francés" width="30" />
         <img *ngIf="selectedLanguage === 'de'" src="../../assets/flags/DE - Germany.png" alt="Alemán" width="30" />
+        <br><br><br><br><br><br><br><br>
         <ion-select [(ngModel)]="selectedLanguage" (ionChange)="onLanguageChange($event)">
           <ion-select-option value="es"> &nbsp;{{ translate('es') }}</ion-select-option>
           <ion-select-option value="en"> &nbsp;{{ translate('en') }}</ion-select-option>

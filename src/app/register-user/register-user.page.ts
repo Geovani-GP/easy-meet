@@ -16,7 +16,7 @@ export class RegisterUserPage implements OnInit {
   password: string = '';
   nombre: string = '';
   telefono: string = '';
-  sexo: string = 'M';
+  sexo: string = 'X';
   pais: string = '52'; 
 
   constructor(private spinnerService: SpinnerService, private servicesService: ServicesService, private toastController: ToastController, private router: Router, private translationService: TranslationService) { }
@@ -39,7 +39,7 @@ export class RegisterUserPage implements OnInit {
       password: this.password,
       nombre: this.nombre,
       proveedor: 'email',
-      sexo: this.sexo,
+      sexo: this.sexo || 'X',
       fec_nacimiento: this.selectedDate,
       telefono: this.pais + this.telefono
     };

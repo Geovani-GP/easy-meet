@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
-import { Plugins } from '@capacitor/core';
-
-const { PushNotifications } = Plugins;
+import { Device } from '@capacitor/device';
+import { PushNotifications } from '@capacitor/push-notifications';
 
 @Component({
   selector: 'app-root',
@@ -19,23 +18,50 @@ export class AppComponent {
 
   initializeApp() {
     document.body.setAttribute('color-mode', 'light');
-    const oauthValue = localStorage.getItem('oauth');
-    if (oauthValue === 'true') {
-      this.router.navigate(['/tabs/tab4']); 
-    } else {
-      this.router.navigate(['/tabs/tab3']); 
-    }
+    this.handleOAuth();
     this.platform.ready().then(() => {
       this.requestPushNotificationPermission();
+      this.requestTrackingPermission(); // Llamada a la función de tracking
     });
   }
 
+  handleOAuth() {
+    const oauthValue = localStorage.getItem('oauth');
+    const targetRoute = oauthValue === 'true' ? '/tabs/tab4' : '/tabs/tab3';
+    this.router.navigate([targetRoute]);
+  }
+
   async requestPushNotificationPermission() {
-    if (this.platform.is('cordova')) {
-      const result = await PushNotifications['requestPermission'](); // Cambiado para acceder con corchetes
-      if (result.granted) {
-        await PushNotifications['register'](); // Acceso corregido con corchetes
+    try {
+      if (this.platform.is('cordova')) {
+        const result = await PushNotifications.requestPermissions();
+        if (result.receive === 'granted') {
+          await PushNotifications.register();
+          console.log('Permisos de notificaciones concedidos y registro completado');
+        } else {
+          console.warn('Permisos de notificaciones no concedidos');
+        }
       }
+    } catch (error) {
+      console.error('Error al solicitar permisos de notificaciones:', error);
+    }
+  }
+
+  async requestTrackingPermission() {
+    try {
+      const info = await Device.getInfo();
+      if (info.platform === 'ios') {
+        console.log('Verificando permisos de seguimiento en iOS');
+        // El usuario debe habilitar manualmente el tracking en la configuración de iOS
+        console.warn(
+          'El tracking en iOS debe activarse manualmente por el usuario en Configuración.'
+        );
+      } else {
+        // En Android, no se requiere permiso explícito para el tracking
+        console.log('Tracking habilitado automáticamente en Android.');
+      }
+    } catch (error) {
+      console.error('Error al verificar plataforma y tracking:', error);
     }
   }
 }

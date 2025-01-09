@@ -267,7 +267,7 @@ background: linear-gradient(131deg, rgb(74 61 153 / 35%) 0%, rgb(123, 102, 255) 
   margin-right: 27px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1025px) {
   .qr-section {
     display: none;
   }
@@ -276,7 +276,7 @@ background: linear-gradient(131deg, rgb(74 61 153 / 35%) 0%, rgb(123, 102, 255) 
     display: flex;
   }
 }
-@media (min-width: 768px) {
+@media (min-width: 1025px) {
   .qr-section {
     display: flex;
   }

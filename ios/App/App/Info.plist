@@ -30,6 +30,14 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIDeviceFamily</key>
+    <array>
+    <integer>1</integer>
+    </array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library so you can upload images and personalize your experience in EasyMeet.</string>
+	<key>NSUserTrackingUsageDescription</key>
+    <string>La aplicación solicita este permiso para mejorar la experiencia personalizada.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
