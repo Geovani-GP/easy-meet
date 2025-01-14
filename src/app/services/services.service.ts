@@ -635,6 +635,26 @@ registerUser2(data: any): Observable<any> {
       })
     );
   }
+
+  cerrarUsuario(uid: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'ApiKey': '_$4DM1N$_',
+    });
+  
+    const body = {
+      uid: uid
+    };
+  
+    return this.http.delete(`${this.apiUrl}/usuarios/cerrar`, { headers, body }).pipe(
+      map(response => response),
+      catchError(error => {
+        console.error('Error al cerrar el usuario:', error);
+        return throwError(error);
+      })
+    );
+  }
+
 }
 
 

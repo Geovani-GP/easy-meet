@@ -140,5 +140,9 @@
     "registro_exitoso":"Registration successful",
     "error_registro":"Error registering",
     "agrandar-o-reducir-imagen":"Zoom in or out",
-    "rotar-imagen":"Rotate image"
+    "rotar-imagen":"Rotate image",
+    "eliminar-cuenta":"Delete account",
+    "escribe-borrar-o-delete-para-confirmar": "Type 'BORRAR' or 'DELETE' to confirm account deletion.",
+    "escribe-aqui": "Type here",
+    "confirmar-eliminacion": "Confirm deletion"
 }

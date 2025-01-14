@@ -3,6 +3,10 @@ import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { Device } from '@capacitor/device';
 import { PushNotifications } from '@capacitor/push-notifications';
+import { 
+  AppTrackingTransparency, 
+  AppTrackingStatusResponse 
+} from 'capacitor-plugin-app-tracking-transparency';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +25,7 @@ export class AppComponent {
     this.handleOAuth();
     this.platform.ready().then(() => {
       this.requestPushNotificationPermission();
-      this.requestTrackingPermission(); // Llamada a la función de tracking
+      this.handleTrackingTransparency(); // Solicitar permisos de tracking
     });
   }
 
@@ -47,21 +51,37 @@ export class AppComponent {
     }
   }
 
-  async requestTrackingPermission() {
+  async handleTrackingTransparency() {
     try {
-      const info = await Device.getInfo();
-      if (info.platform === 'ios') {
-        console.log('Verificando permisos de seguimiento en iOS');
-        // El usuario debe habilitar manualmente el tracking en la configuración de iOS
-        console.warn(
-          'El tracking en iOS debe activarse manualmente por el usuario en Configuración.'
-        );
+      const deviceInfo = await Device.getInfo();
+
+      if (deviceInfo.platform === 'ios') {
+        console.log('Verificando estado de App Tracking Transparency en iOS');
+        const statusResponse: AppTrackingStatusResponse = await this.getTrackingStatus();
+
+        if (statusResponse.status === 'notDetermined') {
+          console.log('El usuario aún no ha decidido. Solicitando permiso...');
+          await this.requestTrackingPermission();
+        } else {
+          console.log('Estado actual del permiso:', statusResponse.status);
+        }
       } else {
-        // En Android, no se requiere permiso explícito para el tracking
-        console.log('Tracking habilitado automáticamente en Android.');
+        console.log('Tracking no requiere permisos explícitos en esta plataforma.');
       }
     } catch (error) {
-      console.error('Error al verificar plataforma y tracking:', error);
+      console.error('Error al manejar el estado de tracking transparency:', error);
     }
+  }
+
+  async getTrackingStatus(): Promise<AppTrackingStatusResponse> {
+    const response = await AppTrackingTransparency.getStatus();
+    console.log('Estado del permiso de seguimiento:', response);
+    return response;
+  }
+
+  async requestTrackingPermission(): Promise<AppTrackingStatusResponse> {
+    const response = await AppTrackingTransparency.requestPermission();
+    console.log('Resultado de la solicitud de permiso de seguimiento:', response);
+    return response;
   }
 }

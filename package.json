@@ -44,6 +44,7 @@
     "@stripe/stripe-js": "^4.10.0",
     "@types/stripe-v3": "^3.1.33",
     "capacitor-app-tracking-transparency": "^2.0.1",
+    "capacitor-plugin-app-tracking-transparency": "^2.0.5",
     "cordova-plugin-x-socialsharing": "^6.0.4",
     "firebase": "^10.14.0",
     "ionicons": "^7.4.0",

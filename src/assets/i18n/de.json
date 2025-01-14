@@ -140,5 +140,9 @@
      "registro_exitoso":"Registrierung erfolgreich",
      "error_registro":"Fehler beim Registrieren",
      "agrandar-o-reducir-imagen":"Vergrößern oder verkleinern",
-     "rotar-imagen":"Bild drehen"
+     "rotar-imagen":"Bild drehen",
+     "eliminar-cuenta":"Konto löschen",
+     "escribe-borrar-o-delete-para-confirmar": "Geben Sie 'BORRAR' oder 'DELETE' ein, um die Kontolöschung zu bestätigen.",
+     "escribe-aqui": "Hier eingeben",
+     "confirmar-eliminacion": "Löschung bestätigen"
 }

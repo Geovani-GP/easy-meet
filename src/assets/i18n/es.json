@@ -140,5 +140,9 @@
      "registro_exitoso":"Registro exitoso",
      "error_registro":"Error al registrar",
      "agrandar-o-reducir-imagen":"Agrandar o reducir imagen",
-     "rotar-imagen":"Rotar imagen"
+     "rotar-imagen":"Rotar imagen",
+     "eliminar-cuenta":"Eliminar cuenta",
+     "escribe-borrar-o-delete-para-confirmar":"Escribe 'BORRAR' o 'DELETE' para confirmar la eliminación de tu cuenta.",
+     "escribe-aqui":"Escribe aquí",
+     "confirmar-eliminacion":"Confirmar eliminación"
 }

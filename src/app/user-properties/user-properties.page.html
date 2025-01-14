@@ -42,7 +42,14 @@
     </div>
   </div>
 
+
+
   <ion-button expand="full" color="primary" class="create-meeting-button" (click)="acceptChanges()">{{translate('aceptar')}}</ion-button>
+          <br>
+          <ion-button expand="full" color="danger" (click)="openDeleteConfirmationModal()">
+            {{translate('eliminar-cuenta')}}
+          </ion-button>
+        
 
   <ion-modal [isOpen]="isCropperOpen" (didDismiss)="isCropperOpen = false">
     <ng-template>
@@ -90,7 +97,27 @@
           <ion-button expand="full" (click)="cropAndSave()">
             {{translate('aceptar')}}
           </ion-button>
-        </div>
+          </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal [isOpen]="isDeleteModalOpen" (didDismiss)="isDeleteModalOpen = false">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="isDeleteModalOpen = false">{{translate('cancelar')}}</ion-button>
+          </ion-buttons>
+          <ion-title>{{translate('confirmar-eliminacion')}}</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <p>{{translate('escribe-borrar-o-delete-para-confirmar')}}</p>
+        <ion-input [(ngModel)]="confirmationText" placeholder="{{translate('escribe-aqui')}}"></ion-input>
+        <ion-button expand="full" color="danger" (click)="deleteAccount()" [disabled]="confirmationText !== 'BORRAR' && confirmationText !== 'DELETE'">
+          {{translate('eliminar-cuenta')}}
+        </ion-button>
       </ion-content>
     </ng-template>
   </ion-modal>

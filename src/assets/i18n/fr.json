@@ -140,5 +140,9 @@
      "registro_exitoso":"Inscription réussie",
      "error_registro":"Erreur lors de l'inscription",
      "agrandar-o-reducir-imagen":"Agrandir ou réduire l'image",
-     "rotar-imagen":"Tourner l'image"
+     "rotar-imagen":"Tourner l'image",
+     "eliminar-cuenta":"Supprimer le compte",
+     "escribe-borrar-o-delete-para-confirmar": "Tapez 'BORRAR' ou 'DELETE' pour confirmer la suppression de votre compte.",
+     "escribe-aqui": "Tapez ici",
+     "confirmar-eliminacion": "Confirmer la suppression"
 }

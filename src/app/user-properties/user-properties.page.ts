@@ -27,7 +27,9 @@ export class UserPropertiesPage implements OnInit {
   private lastY: number = 0;
   private imageX: number = 0;
   private imageY: number = 0;
+  confirmationText: string = '';
   zoomLevel: number = 100;
+  isDeleteModalOpen: boolean = false;
   private originalImage: HTMLImageElement | null = null;
   rotation: number = 0;
   
@@ -285,7 +287,30 @@ export class UserPropertiesPage implements OnInit {
     this.router.navigate(['/tabs/tab4']);
   }
 
+  openDeleteConfirmationModal() {
+    this.isDeleteModalOpen = true; // Abrir el modal
+    this.confirmationText = ''; // Reiniciar el texto de confirmación
+  }
 
+  async deleteAccount() {
+    if (this.confirmationText !== 'BORRAR' && this.confirmationText !== 'DELETE') {
+      console.warn('Confirmación incorrecta');
+      return;
+    }
+
+    const uid = this.userData.payload.uid;
+    try {
+      const response = await this.servicesService.cerrarUsuario(uid).toPromise();
+      console.log('Cuenta eliminada:', response);
+      localStorage.removeItem('EMUser'); 
+      this.router.navigate(['/login']); 
+    } catch (error) {
+      console.error('Error al eliminar la cuenta:', error);
+      
+    } finally {
+      this.isDeleteModalOpen = false; 
+    }
+  }
   translate(key: string): string {
     if (this.translationService && this.translationService.translate) {
       return this.translationService.translate(key);
