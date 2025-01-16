@@ -1,14 +1,16 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
   
-    <ion-title>{{ translate('Buscar-eventos') }}</ion-title>
+    <ion-title>
+      <ion-icon name="search" slot="start"></ion-icon> {{ translate('Buscar-eventos') }}
+    </ion-title>
     
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <app-spinner></app-spinner>
-  <div class="content-container" *ngIf="!isLoading">
+  <!-- <app-spinner></app-spinner> -->
+  <div class="content-container">
     <h1 class="easy-meet-title">{{ translate('edad') }}: {{ lowerValue }} - {{ upperValue }}</h1>
     <ion-range 
       aria-label="Dual Knobs Range" 

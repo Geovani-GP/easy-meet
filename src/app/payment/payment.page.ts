@@ -83,9 +83,17 @@ export class PaymentPage implements OnInit, AfterViewInit, AfterViewChecked {
     if (error) {
       console.error('processStripePayment: Error creando el token:', error);
     } else {
-      console.log('processStripePayment: Token creado:', token);
-      // Aquí puedes enviar el token a tu servidor para procesar el pago
+      console.log('processStripePayment: Token creado:', token.id);
+
+      await this.sendPaymentToServer(token.id, this.amount);
     }
+  }
+
+  async sendPaymentToServer(token: string, amount: number) {
+   
+    console.log('sendPaymentToServer: Enviando token y monto al servidor', { token, amount });
+    // Ejemplo de llamada a un servicio HTTP
+    // await this.http.post('tu_api_endpoint', { token, amount }).toPromise();
   }
 
   processPayment() {
