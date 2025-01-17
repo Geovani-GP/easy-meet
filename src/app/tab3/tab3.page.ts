@@ -75,6 +75,12 @@ export class Tab3Page implements OnInit {
   
       const identityToken = response.response.identityToken;
       const userEmail = response.response.email;
+
+      if (!userEmail) {
+        console.warn('El correo electrónico no está disponible. Asegúrate de que el usuario haya permitido compartir su correo electrónico.');
+        this.showToast('No se pudo obtener el correo electrónico. Asegúrate de que has permitido compartirlo.', 'warning');
+      }
+
       console.log('Identity Token:', identityToken);
       console.log('User Email:', userEmail);
   
