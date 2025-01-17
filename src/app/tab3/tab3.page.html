@@ -39,6 +39,9 @@
        <!--  <ion-button expand="full" color="light" class="social-button" fill="clear">
             <img src="assets/facebook.png" alt="Facebook">
         </ion-button> -->
+        <ion-button *ngIf="isIOS()" (click)="signInWithApple()" expand="full" color="light" class="social-button" fill="clear">
+          <img src="assets/apple.svg" alt="Apple logo">
+          {{translate('iniciar-apple')}}</ion-button>
     </div>
     
     <div class="easy-meet-container">

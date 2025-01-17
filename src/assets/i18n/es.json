@@ -144,5 +144,6 @@
      "eliminar-cuenta":"Eliminar cuenta",
      "escribe-borrar-o-delete-para-confirmar":"Escribe 'BORRAR' o 'DELETE' para confirmar la eliminación de tu cuenta.",
      "escribe-aqui":"Escribe aquí",
-     "confirmar-eliminacion":"Confirmar eliminación"
+     "confirmar-eliminacion":"Confirmar eliminación",
+     "iniciar-apple": "Iniciar sesión con Apple"
 }

@@ -7,6 +7,8 @@ import { AuthServiceService } from '../services/auth-service.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { TranslationService } from '../services/translation.service';
 import { UserService } from '../services/user.service';
+import { SignInWithApple } from '@capacitor-community/apple-sign-in';
+import { App } from '@capacitor/app';
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
@@ -37,26 +39,51 @@ export class Tab3Page implements OnInit {
     public authService: AuthServiceService,
     private translationService: TranslationService,
     private userService: UserService
-  ) {}
+  ) {
+    App.addListener('appUrlOpen', (data: any) => {
+      if (data.url && data.url.startsWith('easymeet://callback')) {
+        console.log('Redirect URL:', data.url);
+      }
+    });
+  }
 
   ngOnInit() {
-    console.log('Tab3Page ngOnInit');
     this.checkAuthAndRedirect();
   }
 
   ionViewWillEnter() {
-    console.log('Tab3Page ionViewWillEnter');
     this.checkAuthAndRedirect();
   }
 
   private async checkAuthAndRedirect() {
-    console.log('Verificando autenticación...');
     if (this.authService.isAuthenticated()) {
-      console.log('Usuario autenticado en tab3, redirigiendo al área de usuario...');
       await this.router.navigate(['/tabs/tab4']);
-      console.log('Redirección a tab4 completada');
     } else {
-      console.log('Usuario no autenticado en tab3, permaneciendo en la página');
+    }
+  }
+
+  isIOS(): boolean {
+    const userAgent = window.navigator.userAgent;
+    const isStandalone = (window.navigator as any).standalone;
+    return /iPad|iPhone|iPod/.test(userAgent) && !isStandalone;
+  }
+
+  async signInWithApple() {
+    try {
+      const response = await SignInWithApple.authorize();
+      console.log('Apple Login Response:', response);
+  
+      const identityToken = response.response.identityToken;
+      const userEmail = response.response.email;
+      console.log('Identity Token:', identityToken);
+      console.log('User Email:', userEmail);
+  
+      this.userData = {
+        email: userEmail,
+        identityToken,
+      };
+    } catch (error) {
+      console.error('Error en inicio de sesión con Apple:', error);
     }
   }
 
@@ -87,22 +114,15 @@ export class Tab3Page implements OnInit {
       }
 
       const response = await this.servicesService.loginWithEmail2(this.email, this.password).toPromise();
-      console.log('Respuesta de inicio de sesión:', response);
 
       if (response && response.payload) {
-        // Actualizar los datos del usuario en el servicio
         this.userService.updateUserData(response);
-        
-        // Guardar el estado de autenticación
         localStorage.setItem('oauth', 'true');
-        
-        // Navegar al tab4
         await this.router.navigate(['/tabs/tab4'], { replaceUrl: true });
       } else {
         this.showToast('Error al obtener los datos del usuario', 'danger');
       }
     } catch (error) {
-      console.error('Error en el inicio de sesión:', error);
       this.showToast('Error al iniciar sesión. Inténtalo de nuevo.', 'danger');
     } finally {
       this.spinnerService.hide();
@@ -113,19 +133,15 @@ export class Tab3Page implements OnInit {
     this.spinnerService.show();
     try {
       const response = await this.servicesService.loginWithGoogle().toPromise();
-      console.log('Respuesta completa del inicio de sesión con Google:', response);
       
       if (response && response.user) {
         localStorage.setItem('oauth', 'true');
-        console.log('Inicio de sesión con Google exitoso');
         this.checkAuthAndRedirect();
       } else {
         this.spinnerService.hide();
-        console.error('La respuesta no contiene la información del usuario esperada');
         this.showToast('Error en el inicio de sesión. Datos de usuario incompletos.', 'danger');
       }
     } catch (error) {
-      console.error('Error en el inicio de sesión con Google', error);
       this.showToast('Error al iniciar sesión. Inténtalo de nuevo.', 'danger');
     } finally {
       this.spinnerService.hide();
@@ -134,7 +150,6 @@ export class Tab3Page implements OnInit {
 
   recoverPassword() {
     if (this.email) {
-      // Verificar si el formato del correo electrónico es válido
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailPattern.test(this.email)) {
         this.showToast('Por favor, ingresa un correo electrónico válido.', 'warning');
@@ -144,12 +159,10 @@ export class Tab3Page implements OnInit {
       this.spinnerService.show();
       this.servicesService.recoverPassword(this.email).subscribe(
         response => {
-          console.log(response);
           this.showToast(response, 'success'); 
           this.spinnerService.hide();
         },
         error => {
-          console.error('Error en la recuperación de contraseña', error);
           this.showToast(error, 'danger'); 
           this.spinnerService.hide();
         }
@@ -204,7 +217,6 @@ export class Tab3Page implements OnInit {
     if (this.translationService && this.translationService.translate) {
       return this.translationService.translate(key);
     }
-    console.warn('Translation service is not available');
     return key;
   }
 }

@@ -31,13 +31,28 @@
 		<string>armv7</string>
 	</array>
 	<key>UIDeviceFamily</key>
-    <array>
-    <integer>1</integer>
-    </array>
+	<array>
+		<integer>1</integer>
+	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need access to your photo library so you can upload images and personalize your experience in EasyMeet.</string>
 	<key>NSUserTrackingUsageDescription</key>
-    <string>La aplicación solicita este permiso para mejorar la experiencia personalizada.</string>
+	<string>La aplicación solicita este permiso para mejorar la experiencia personalizada.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Necesitamos acceso a la cámara para tomar fotos.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Necesitamos acceso a la biblioteca de fotos para guardar imágenes.</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>easymeet.nni.ai</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>easymeet</string>
+			</array>
+		</dict>
+	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

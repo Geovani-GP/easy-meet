@@ -216,7 +216,8 @@ export class CreateMeetingPage implements OnInit {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
-      resultType: CameraResultType.DataUrl, 
+      resultType: CameraResultType.DataUrl,
+           source: CameraSource.Photos,
     });
   
     

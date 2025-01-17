@@ -144,5 +144,6 @@
     "eliminar-cuenta":"Delete account",
     "escribe-borrar-o-delete-para-confirmar": "Type 'BORRAR' or 'DELETE' to confirm account deletion.",
     "escribe-aqui": "Type here",
-    "confirmar-eliminacion": "Confirm deletion"
+    "confirmar-eliminacion": "Confirm deletion",
+    "iniciar-apple": "Sign in with Apple"
 }

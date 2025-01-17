@@ -144,5 +144,6 @@
      "eliminar-cuenta":"Konto löschen",
      "escribe-borrar-o-delete-para-confirmar": "Geben Sie 'BORRAR' oder 'DELETE' ein, um die Kontolöschung zu bestätigen.",
      "escribe-aqui": "Hier eingeben",
-     "confirmar-eliminacion": "Löschung bestätigen"
+     "confirmar-eliminacion": "Löschung bestätigen",
+     "iniciar-apple": "Mit Apple anmelden"
 }

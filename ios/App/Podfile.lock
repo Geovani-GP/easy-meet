@@ -5,7 +5,9 @@ PODS:
     - Capacitor
   - CapacitorAppTrackingTransparency (2.0.1):
     - Capacitor
-  - CapacitorCamera (6.1.0):
+  - CapacitorCamera (6.1.2):
+    - Capacitor
+  - CapacitorCommunityAppleSignIn (6.0.0):
     - Capacitor
   - CapacitorCordova (6.1.2)
   - CapacitorDevice (6.0.2):
@@ -32,6 +34,7 @@ DEPENDENCIES:
   - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
   - CapacitorAppTrackingTransparency (from `../../node_modules/capacitor-app-tracking-transparency`)
   - "CapacitorCamera (from `../../node_modules/@capacitor/camera`)"
+  - "CapacitorCommunityAppleSignIn (from `../../node_modules/@capacitor-community/apple-sign-in`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorDevice (from `../../node_modules/@capacitor/device`)"
   - "CapacitorHaptics (from `../../node_modules/@capacitor/haptics`)"
@@ -52,6 +55,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/capacitor-app-tracking-transparency"
   CapacitorCamera:
     :path: "../../node_modules/@capacitor/camera"
+  CapacitorCommunityAppleSignIn:
+    :path: "../../node_modules/@capacitor-community/apple-sign-in"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorDevice:
@@ -77,7 +82,8 @@ SPEC CHECKSUMS:
   Capacitor: 679f9673fdf30597493a6362a5d5bf233d46abc2
   CapacitorApp: 0bc633b4eae40a1f32cd2834788fad3bc42da6a1
   CapacitorAppTrackingTransparency: 3734ede692f13cbc95f8eab0d5e8b2091dfb8a40
-  CapacitorCamera: 81ce64062cd82b82cc75a79616fda4bd09d7f643
+  CapacitorCamera: 9052bd3f464f135ba983feccd8ac1266272f0549
+  CapacitorCommunityAppleSignIn: c8bba4ca8ff6ff843367ece13ee8af24e9266eb9
   CapacitorCordova: f48c89f96c319101cd2f0ce8a2b7449b5fb8b3dd
   CapacitorDevice: 1a215717f0b5061503b21a03508b0ec458a57d78
   CapacitorHaptics: fe689ade56ef20ec9b041a753c6da70c5d8ec9a9
@@ -89,6 +95,6 @@ SPEC CHECKSUMS:
   CapacitorStatusBar: b81d4fb5d4e0064c712018071b3ab4b810b39a63
   CordovaPlugins: 659d45036de94cf0a5a714aef344acea92027cf5
 
-PODFILE CHECKSUM: 9c019db7d7ef7de7a93e01756b8e5b896e7ec194
+PODFILE CHECKSUM: b1181dac05c064726e8f7124359b5cce36011602
 
 COCOAPODS: 1.16.2
