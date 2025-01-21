@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SpinnerService } from '../services/spinner.service';
 import { ServicesService } from '../services/services.service';
-import { ToastController } from '@ionic/angular'; // Importar ToastController
+import { ToastController } from '@ionic/angular';
 import { TranslationService } from '../services/translation.service';
 import { Share } from '@capacitor/share';
+import { ModalController } from '@ionic/angular';
+import { EmailModalComponent } from '../components/email-modal/email-modal.component';
 
 @Component({
   selector: 'app-details-thrends',
@@ -17,12 +19,13 @@ export class DetailsThrendsPage implements OnInit {
   oauth: string | undefined;
   trend: any;
   isLoading: boolean = true;
-
+  usuario:any;
   constructor(private route: ActivatedRoute,
     private apiService: ServicesService,
     private spinnerService: SpinnerService,
     private toastController: ToastController,
-    private translationService: TranslationService) { // Inyectar ToastController
+    private translationService: TranslationService,
+    private modalController: ModalController) {
     
     this.trend = JSON.parse(localStorage.getItem('selectedTrend') || '{}');
   }
@@ -33,9 +36,9 @@ export class DetailsThrendsPage implements OnInit {
 
   loadTrendDetails() {
     this.spinnerService.show();
-    const trendId = this.route.snapshot.paramMap.get('id'); // Obtener el ID de la URL
+    const trendId = this.route.snapshot.paramMap.get('id'); 
     if (trendId) {
-      this.apiService.getTrendDetails(trendId).subscribe( // Usar trendId en lugar de this.trend.uid
+      this.apiService.getTrendDetails(trendId).subscribe( 
         (response) => {
           this.trendDetails = response.payload; 
           console.log('Detalles del trend:', this.trendDetails); 
@@ -71,9 +74,9 @@ export class DetailsThrendsPage implements OnInit {
 
 
 shareTrend() {
-  const message = this.trendDetails.descripcion; // Mensaje a compartir
-  const title = this.trend.titulo; // Título a compartir
-  const url = 'URL_DE_TU_TENDENCIA'; // Reemplaza con la URL real que deseas compartir
+  const message = this.trendDetails.descripcion; 
+  const title = this.trend.titulo; 
+  const url = 'URL_DE_TU_TENDENCIA'; 
 
   Share.share({
       title: title,
@@ -92,36 +95,75 @@ translate(key: string): string {
 }
 
 async contactar() {
-  const uid = localStorage.getItem('uid') || '';
-  if (this.oauth && uid) { // Verifica si el usuario está autenticado
-    this.apiService.solicitarContacto(this.trend.uid, uid).subscribe(
-      async (response) => {
-        console.log('Solicitud de contacto enviada:', response);
-        const toast = await this.toastController.create({
-          message: 'Solicitud de contacto enviada con éxito.',
-          duration: 2000,
-          color: 'success' // Cambiado a 'success'
-        });
-        await toast.present();
-      },
-      async (error) => {
-        console.error(error);
-        const toast = await this.toastController.create({
-          message: 'La solicitud ya fue registrada.',
-          duration: 2000,
-          color: 'danger' // Cambiado a 'danger' para indicar error
-        });
-        await toast.present();
+  this.usuario = await JSON.parse(localStorage.getItem('EMUser') || '{}');
+  const uid = this.usuario.payload.uid;
+  console.log(uid);
+  this.apiService.verificaEmail(uid).subscribe(
+    async (verificacion) => {
+      console.log('verificacion de correo por servicio', verificacion);
+
+
+      const emailVerificado = verificacion.payload.email;
+      console.log('Email verificado:', emailVerificado);
+      
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+      if (emailPattern.test(emailVerificado)) {
+        const storedUid = localStorage.getItem('uid') || '';
+         if (this.oauth && storedUid) { 
+            this.apiService.solicitarContacto(this.trend.uid, storedUid).subscribe(
+              async (response) => {
+                console.log('Solicitud de contacto enviada:', response);
+                const toast = await this.toastController.create({
+                  message: 'Solicitud de contacto enviada con éxito.',
+                  duration: 2000,
+                  color: 'success' 
+                });
+                await toast.present();
+              },
+              async (error) => {
+                console.error(error);
+                const toast = await this.toastController.create({
+                  message: 'La solicitud ya fue registrada.',
+                  duration: 2000,
+                  color: 'danger' 
+                });
+                await toast.present();
+              }
+            );
+          } else {
+            console.warn('Usuario no autenticado. No se puede enviar la solicitud de contacto.');
+            const toast = await this.toastController.create({
+              message: 'Usuario no autenticado. No se puede enviar la solicitud de contacto.',
+              duration: 2000,
+              color: 'warning' 
+            });
+            await toast.present();
+          } 
+      }else{
+        this.openEmailModal(this.usuario.payload.uid);
       }
-    );
-  } else {
-    console.warn('Usuario no autenticado. No se puede enviar la solicitud de contacto.');
-    const toast = await this.toastController.create({
-      message: 'Usuario no autenticado. No se puede enviar la solicitud de contacto.',
-      duration: 2000,
-      color: 'warning' // Cambiado a 'warning' para indicar advertencia
-    });
-    await toast.present();
-  }
+      
+    },
+    async (error) => {
+      this.openEmailModal(this.usuario.payload.uid);
+      console.error('Error al verificar el correo:', error);
+      const toast = await this.toastController.create({
+        message: 'Error al verificar el correo.',
+        duration: 2000,
+        color: 'danger'
+      });
+      await toast.present();
+    }
+  );
+}
+  
+
+async openEmailModal(uuid: string) {
+  const modal = await this.modalController.create({
+      component: EmailModalComponent,
+      componentProps: { uuid },
+      cssClass: 'my-custom-class'
+  });
+  return await modal.present();
 }
 }

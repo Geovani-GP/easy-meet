@@ -145,5 +145,7 @@
      "escribe-borrar-o-delete-para-confirmar": "Tapez 'BORRAR' ou 'DELETE' pour confirmer la suppression de votre compte.",
      "escribe-aqui": "Tapez ici",
      "confirmar-eliminacion": "Confirmer la suppression",
-     "iniciar-apple": "Se connecter avec Apple"
+     "iniciar-apple": "Se connecter avec Apple",
+      "ingresar-correo-electronico": "Entrer l'email",
+    "enviar": "Envoyer"
 }

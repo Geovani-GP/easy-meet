@@ -71,23 +71,22 @@ export class Tab3Page implements OnInit {
   async signInWithApple() {
     try {
       const response = await SignInWithApple.authorize();
-      console.log('Apple Login Response:', response);
-  
-      const identityToken = response.response.identityToken;
-      const userEmail = response.response.email;
+      const userApple = response.response.user;
 
-      if (!userEmail) {
-        console.warn('El correo electrónico no está disponible. Asegúrate de que el usuario haya permitido compartir su correo electrónico.');
-        this.showToast('No se pudo obtener el correo electrónico. Asegúrate de que has permitido compartirlo.', 'warning');
+    if (userApple) {
+        const loginApple = await this.servicesService.loginApple(userApple).toPromise();
+        console.log('login apple1: ',loginApple)
+        if (loginApple && loginApple.payload) {
+          console.log('login apple2: ',loginApple)
+         // await localStorage.setItem('EMUser', JSON.stringify(loginApple));
+      //    this.userService.updateUserData(response);
+         await localStorage.setItem('oauth', 'true');
+         await this.router.navigate(['/tabs/tab4'], { replaceUrl: true });
+        } else {
+          this.showToast('Error al obtener los datos del usuario', 'danger');
+        }
       }
-
-      console.log('Identity Token:', identityToken);
-      console.log('User Email:', userEmail);
-  
-      this.userData = {
-        email: userEmail,
-        identityToken,
-      };
+     // };
     } catch (error) {
       console.error('Error en inicio de sesión con Apple:', error);
     }

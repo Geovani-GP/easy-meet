@@ -16,9 +16,11 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxStripeModule } from 'ngx-stripe';
+import { EmailModalComponent } from './components/email-modal/email-modal.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, EmailModalComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -32,6 +34,7 @@ import { NgxStripeModule } from 'ngx-stripe';
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     NgxStripeModule.forRoot('tu_clave_publica_de_stripe'),
+    FormsModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

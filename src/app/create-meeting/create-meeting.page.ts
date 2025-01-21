@@ -9,6 +9,8 @@ import { CompressImageService } from '../services/compress-image.service';
 import { Router } from '@angular/router';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
+import { ModalController } from '@ionic/angular';
+import { EmailModalComponent } from '../components/email-modal/email-modal.component';
 
 declare const google: any; 
 
@@ -39,13 +41,13 @@ export class CreateMeetingPage implements OnInit {
   intereses: any[] = [];
   usuario: any;
 
-  selectedFile: File | null = null; // Asegúrate de inicializar selectedFile
-  downloadURL: string | null = null; // Inicializa como null o una cadena vacía
-  imageUrl: string = ''; // Asegúrate de tener esta propiedad y asegúrate de inicializarla
+  selectedFile: File | null = null;
+  downloadURL: string | null = null;
+  imageUrl: string = '';
   isLoading = new BehaviorSubject<boolean>(false);
   myObservable$: Observable<string | null>;
 
-  constructor(private translationService: TranslationService, private servicesService: ServicesService, private toastController: ToastController, private spinnerService: SpinnerService, private compressImageService: CompressImageService, private router: Router) { 
+  constructor(private translationService: TranslationService, private servicesService: ServicesService, private toastController: ToastController, private spinnerService: SpinnerService, private compressImageService: CompressImageService, private router: Router, private modalController: ModalController) { 
     
     (window as any).initMap = this.initMap.bind(this);
     this.myObservable$ = of(null);
@@ -115,14 +117,17 @@ export class CreateMeetingPage implements OnInit {
   
   
   onSubmit() {
-    console.log(this.formatDate(this.fecha));
-    console.log(this.imageUrl);
-    // Verificar que todos los campos necesarios estén presentes
-    if (!this.usuario || !this.usuario.payload || !this.usuario.payload.uid) {
-      console.error('Usuario no válido');
-      return; // Salir si el usuario no es válido
-    }
 
+this.servicesService.verificaEmail(this.usuario.payload.uid).subscribe(
+  async (verificacion) => {
+      console.log('verificacion de correo por servicio', verificacion);
+
+
+      const emailVerificado = verificacion.payload.email;
+      console.log('Email verificado:', emailVerificado);
+      
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+      if (emailPattern.test(emailVerificado)) {
     // Validar campos requeridos
     if (!this.tema || !this.tipo || !this.direccion || !this.titulo || !this.fecha || !this.descripcion || !this.downloadURL || !this.direccion || !this.tema) {
       console.error('Faltan datos requeridos para crear la reunión');
@@ -152,7 +157,6 @@ export class CreateMeetingPage implements OnInit {
       img: this.downloadURL
     };
 
-    console.log('Datos de la reunión:', meetingData);
     
     // Llamar al servicio para crear la reunión
     this.servicesService.crearMeeting(meetingData).subscribe({
@@ -174,7 +178,17 @@ export class CreateMeetingPage implements OnInit {
         }).then(toast => toast.present());
       }
     });
+  } else {
+    this.openEmailModal(this.usuario.payload.uid);
   }
+  },
+  async (error) => {
+console.log('Error al validar email')
+this.openEmailModal(this.usuario.payload.uid);
+}
+);
+}
+
 
   selectedDate: string = new Date().toISOString(); 
   isDatePickerVisible: boolean = false;
@@ -191,9 +205,8 @@ export class CreateMeetingPage implements OnInit {
   }
 
   acceptDate() {
-    this.isDatePickerVisible = false; // Oculta el modal
-    console.log('Fecha y hora seleccionadas:', this.selectedDate); // Muestra la fecha seleccionada en la consola
-    // Aquí puedes agregar cualquier lógica adicional que necesites
+    this.isDatePickerVisible = false; 
+    console.log('Fecha y hora seleccionadas:', this.selectedDate); 
   }
 
   
@@ -477,6 +490,15 @@ export class CreateMeetingPage implements OnInit {
       imagePreview.setAttribute('src', url); // Establece la URL de la imagen como fuente
       imagePreview.style.display = 'block'; // Muestra la imagen
     }
+  }
+
+  async openEmailModal(uuid: string) {
+    const modal = await this.modalController.create({
+        component: EmailModalComponent,
+        componentProps: { uuid },
+        cssClass: 'my-custom-class'
+    });
+    return await modal.present();
   }
 
 }

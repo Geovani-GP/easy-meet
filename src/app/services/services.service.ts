@@ -655,6 +655,72 @@ registerUser2(data: any): Observable<any> {
     );
   }
 
+
+
+
+  loginApple(uid: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'ApiKey': '_$4DM1N$_',
+    });
+  
+    const body = {
+      "user_uid": uid
+    };
+    return this.http.post(`${this.apiUrl}/usuarios/login_apple`, body, { headers }).pipe(
+      map((response: any) => {
+        console.log("services: ", response);
+        localStorage.setItem('uid', response.payload.uid);
+        localStorage.setItem('EMUser', JSON.stringify(response)); 
+        return response; 
+      }),
+      catchError(error => {
+        return throwError(error);
+      })
+    );
+  }
+  
+  verificaEmail(uid: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'ApiKey': '_$4DM1N$_',
+    });
+  
+    const body = {
+      uid: uid
+    };
+  
+    return this.http.post(`${this.apiUrl}/usuarios/verifica_email`, body, { headers }).pipe(
+      map(response => response),
+      catchError(error => {
+        return throwError({
+          statusCode: error.status || 500,
+          error: error.error?.message || 'Error del servicio',
+          message: 'Error al verificar el email'
+        });
+      })
+    );
+  }
+
+  appleEmail(uid: string,email:string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'ApiKey': '_$4DM1N$_',
+    });
+  
+    const body = {
+      uid: uid,
+      email:email
+    };
+  
+    return this.http.patch(`${this.apiUrl}/usuarios/apple_email`, body, { headers }).pipe(
+      map(response => response),
+      catchError(error => {
+        return throwError(error);
+      })
+    );
+  }
+
 }
 
 
