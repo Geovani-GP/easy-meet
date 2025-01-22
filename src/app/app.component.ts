@@ -7,6 +7,9 @@ import {
   AppTrackingTransparency, 
   AppTrackingStatusResponse 
 } from 'capacitor-plugin-app-tracking-transparency';
+import { AuthServiceService } from './services/auth-service.service';
+import { UserService } from './services/user.service';
+
 
 @Component({
   selector: 'app-root',
@@ -16,7 +19,7 @@ import {
 export class AppComponent {
   hasSeenSplash: boolean = false;
 
-  constructor(private router: Router, private platform: Platform) {
+  constructor(private router: Router, private platform: Platform, private authService: AuthServiceService, private userServices : UserService) {
     this.initializeApp();
   }
 
@@ -26,6 +29,11 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.requestPushNotificationPermission();
       this.handleTrackingTransparency(); // Solicitar permisos de tracking
+
+      if (this.authService.isAuthenticated()) {
+        this.userServices.requestPermission();
+        this.userServices.refreshTokenFCM();
+      }
     });
   }
 

@@ -1,7 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'easymeet.nni.ai',
+  /* appId: 'easymeet.nni.ai', */
+  appId: 'com.nni.easy_meet',
   appName: 'EasyMeet',
   webDir: 'www',
   bundledWebRuntime: false,

@@ -22,6 +22,8 @@ export class Tab4Page implements OnInit, ViewWillEnter {
       console.log('UserData recibido en tab4:', data);
       if (data) {
         this.userData = data;
+        console.log("userData", this.userData);
+        
         this.loadMyAssists();
         this.loadMyMeetings();
       } else {

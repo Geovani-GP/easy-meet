@@ -278,8 +278,17 @@ loginWithGoogle(): Observable<any> {
                 observer.complete();
               }
             }, error => {
-              console.error('Error al realizar el loginEM:', error);
-              observer.error('Error al realizar el loginEM: ' + error.message);
+              this.addUserGoogle(result.user.uid,result.user.email,result.user.displayName,result.user.photoURL).subscribe(response => {
+                console.log('Respuesta de loginEM:', response);
+                  localStorage.setItem('oauth', 'true');
+                  observer.next(result);
+                  observer.complete();
+                
+              }, error=>{
+                console.error('Usuario o correo electrónico no disponibles Google.');
+                observer.error('Usuario o correo electrónico no disponibles Google.'); 
+              });
+
             });
           } else {
             console.error('Usuario o correo electrónico no disponibles.');
@@ -716,6 +725,50 @@ registerUser2(data: any): Observable<any> {
     return this.http.patch(`${this.apiUrl}/usuarios/apple_email`, body, { headers }).pipe(
       map(response => response),
       catchError(error => {
+        return throwError(error);
+      })
+    );
+  }
+
+  addUserGoogle(localId: string, identificador:any, nombre:any, avatar:any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'ApiKey': '_$4DM1N$_',
+    });
+    const body = {
+      uid: localId,
+      identificador: identificador,
+      nombre : nombre,
+      avatar:avatar
+    };
+    return this.http.post(`${this.apiUrl}/usuarios/login-google`, body, { headers }).pipe(
+      map((response: any) => {
+        console.log("services: ", response);
+        localStorage.setItem('uid', response.payload.uid);
+        localStorage.setItem('EMUser', JSON.stringify(response)); // Guardar la respuesta en localStorage
+        return response; // Retornar la respuesta
+      }),
+      catchError(error => {
+        return throwError(error);
+      })
+    );
+  }
+
+  registerTokenWithUser(token: string, uid:any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'ApiKey': '_$4DM1N$_',
+    });
+
+    const body = {
+      "uid": uid,
+      "token": token
+    }
+
+    return this.http.put(`${this.apiUrl}/usuarios/tokenonly`, body, { headers }).pipe(
+      map(response => response),
+      catchError(error => {
+        console.error('Error al solicitar contacto:', error);
         return throwError(error);
       })
     );

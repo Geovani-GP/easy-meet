@@ -25,6 +25,7 @@
     "@angular/platform-browser-dynamic": "18.2.7",
     "@angular/router": "18.2.7",
     "@capacitor-community/apple-sign-in": "^6.0.0",
+    "@capacitor-firebase/messaging": "^6.3.1",
     "@capacitor/android": "^5.5.0",
     "@capacitor/app": "^6.0.1",
     "@capacitor/camera": "^6.1.2",

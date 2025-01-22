@@ -27,8 +27,8 @@ import { App } from '@capacitor/app';
   ]
 })
 export class Tab3Page implements OnInit {
-  email: string = ''; 
-  password: string = ''; 
+  email: string = '';
+  password: string = '';
   userData: any;
 
   constructor(
@@ -57,6 +57,8 @@ export class Tab3Page implements OnInit {
 
   private async checkAuthAndRedirect() {
     if (this.authService.isAuthenticated()) {
+      this.userService.requestPermission();
+      this.userService.refreshTokenFCM();
       await this.router.navigate(['/tabs/tab4']);
     } else {
     }
@@ -73,40 +75,40 @@ export class Tab3Page implements OnInit {
       const response = await SignInWithApple.authorize();
       const userApple = response.response.user;
 
-    if (userApple) {
+      if (userApple) {
         const loginApple = await this.servicesService.loginApple(userApple).toPromise();
-        console.log('login apple1: ',loginApple)
+        console.log('login apple1: ', loginApple)
         if (loginApple && loginApple.payload) {
-          console.log('login apple2: ',loginApple)
-         // await localStorage.setItem('EMUser', JSON.stringify(loginApple));
-      //    this.userService.updateUserData(response);
-         await localStorage.setItem('oauth', 'true');
-         await this.router.navigate(['/tabs/tab4'], { replaceUrl: true });
+          console.log('login apple2: ', loginApple)
+          // await localStorage.setItem('EMUser', JSON.stringify(loginApple));
+          //    this.userService.updateUserData(response);
+          await localStorage.setItem('oauth', 'true');
+          await this.router.navigate(['/tabs/tab4'], { replaceUrl: true });
         } else {
           this.showToast('Error al obtener los datos del usuario', 'danger');
         }
       }
-     // };
+      // };
     } catch (error) {
       console.error('Error en inicio de sesión con Apple:', error);
     }
   }
 
   navigateToTab4(event: Event) {
-    event.preventDefault(); 
-    this.spinnerService.show(); 
-    
+    event.preventDefault();
+    this.spinnerService.show();
+
     setTimeout(() => {
-      this.router.navigate(['/tabs/tab4']); 
-      this.spinnerService.hide(); 
+      this.router.navigate(['/tabs/tab4']);
+      this.spinnerService.hide();
     }, 3000);
   }
 
   loadData() {
-    this.spinnerService.show(); 
-    
+    this.spinnerService.show();
+
     setTimeout(() => {
-      this.spinnerService.hide(); 
+      this.spinnerService.hide();
     }, 3000);
   }
 
@@ -124,6 +126,8 @@ export class Tab3Page implements OnInit {
         this.userService.updateUserData(response);
         localStorage.setItem('oauth', 'true');
         await this.router.navigate(['/tabs/tab4'], { replaceUrl: true });
+        this.userService.requestPermission();
+        this.userService.refreshTokenFCM();
       } else {
         this.showToast('Error al obtener los datos del usuario', 'danger');
       }
@@ -138,9 +142,10 @@ export class Tab3Page implements OnInit {
     this.spinnerService.show();
     try {
       const response = await this.servicesService.loginWithGoogle().toPromise();
-      
+
       if (response && response.user) {
         localStorage.setItem('oauth', 'true');
+        this.showToast('Inicio de sesión con Google exitoso.', 'success');
         this.checkAuthAndRedirect();
       } else {
         this.spinnerService.hide();
@@ -164,11 +169,11 @@ export class Tab3Page implements OnInit {
       this.spinnerService.show();
       this.servicesService.recoverPassword(this.email).subscribe(
         response => {
-          this.showToast(response, 'success'); 
+          this.showToast(response, 'success');
           this.spinnerService.hide();
         },
         error => {
-          this.showToast(error, 'danger'); 
+          this.showToast(error, 'danger');
           this.spinnerService.hide();
         }
       );
@@ -182,16 +187,16 @@ export class Tab3Page implements OnInit {
 
     switch (type) {
       case 'success':
-        color = 'success'; 
+        color = 'success';
         break;
       case 'warning':
-        color = 'warning'; 
+        color = 'warning';
         break;
       case 'danger':
-        color = 'danger'; 
+        color = 'danger';
         break;
       default:
-        color = 'dark'; 
+        color = 'dark';
     }
 
     this.toastController.create({
