@@ -136,7 +136,7 @@ this.servicesService.verificaEmail(this.usuario.payload.uid).subscribe(
         duration: 2000,
         position: 'bottom'
       }).then(toast => toast.present());
-      return; // Salir si faltan datos
+      return; 
     }
 
     const meetingData = {
@@ -158,7 +158,7 @@ this.servicesService.verificaEmail(this.usuario.payload.uid).subscribe(
     };
 
     
-    // Llamar al servicio para crear la reunión
+
     this.servicesService.crearMeeting(meetingData).subscribe({
       next: async (response) => {
         console.log('Reunión creada exitosamente:', response);
@@ -374,20 +374,20 @@ this.openEmailModal(this.usuario.payload.uid);
 
   
   loadInterests() {
-    this.spinnerService.show();  // Mostrar spinner
+    this.spinnerService.show();  
     this.servicesService.getInterests().subscribe(
       (response) => {
-         this.spinnerService.hide(); // Ocultar spinner
+         this.spinnerService.hide(); 
         if (response.payload && Array.isArray(response.payload)) {
           this.intereses = response.payload.map((interest: any) => ({
             id: interest.id,
-            name: this.translate(interest.interes),  // Traducir el nombre del interés
+            name: this.translate(interest.interes),  
             selected: false
           }));
         }
       },
       (error) => {
-         this.spinnerService.hide(); // Ocultar spinner
+         this.spinnerService.hide(); 
         console.error('Error al cargar intereses:', error);
       }
     );
@@ -401,14 +401,14 @@ this.openEmailModal(this.usuario.payload.uid);
       day: '2-digit',
       hour: '2-digit',
       minute: '2-digit',
-      hour12: false // Cambia a true si deseas formato de 12 horas
+      hour12: false 
     };
     const formattedDate = date.toLocaleString('es-ES', options).replace(',', '');
     
-    // Formato deseado "YYYY-MM-DD HH:mm:ss"
+    
     const [datePart, timePart] = formattedDate.split(' ');
     const [day, month, year] = datePart.split('/');
-    return `${year}-${month}-${day} ${timePart}`; // Retorna en el formato requerido
+    return `${year}-${month}-${day} ${timePart}`; 
   }
 
   async onFileSelected(file: File) {
@@ -479,16 +479,16 @@ this.openEmailModal(this.usuario.payload.uid);
   }
 
   viewImage(url: string) {
-    // Lógica para ver la imagen, por ejemplo, abrirla en un modal o en una nueva ventana
+    
     console.log('Ver imagen:', url);
-    // Aquí puedes implementar la lógica que desees para mostrar la imagen
+   
   }
 
   previewImage(url: string) {
-    const imagePreview = document.getElementById('image-preview'); // Asegúrate de tener un elemento con este ID en tu HTML
+    const imagePreview = document.getElementById('image-preview'); 
     if (imagePreview) {
-      imagePreview.setAttribute('src', url); // Establece la URL de la imagen como fuente
-      imagePreview.style.display = 'block'; // Muestra la imagen
+      imagePreview.setAttribute('src', url); 
+      imagePreview.style.display = 'block';
     }
   }
 

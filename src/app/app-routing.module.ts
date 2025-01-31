@@ -59,6 +59,10 @@ const routes: Routes = [
     path: 'user-properties',
     loadChildren: () => import('./user-properties/user-properties.module').then( m => m.UserPropertiesPageModule)
   },
+  {
+    path: 'block-users',
+    loadChildren: () => import('./block-users/block-users.module').then( m => m.BlockUsersPageModule)
+  },
 
 ];
 

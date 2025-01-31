@@ -14,7 +14,16 @@
   color: #666;
   margin: 5px 0;
 }
+ion-footer {
+  margin-top: 20px;
+}
 
+.my-custom-class {
+  // Si estás usando estilos personalizados para el modal, verifica que no estén ocultos
+  display: block;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
 .trend-date {
   font-size: 14px;
   color: #999;

@@ -18,7 +18,8 @@ export class RegisterUserPage implements OnInit {
   telefono: string = '';
   sexo: string = 'X';
   pais: string = '52'; 
-
+  isPrivacyModalOpen: boolean = false;
+  isChecked: boolean = false;
   constructor(private spinnerService: SpinnerService, private servicesService: ServicesService, private toastController: ToastController, private router: Router, private translationService: TranslationService) { }
 
   ngOnInit() {}
@@ -31,8 +32,21 @@ export class RegisterUserPage implements OnInit {
     return key;
   }
 
+  openPrivacyModal() {
+    this.isPrivacyModalOpen = true;
+  }
+
   async register() {
-    this.spinnerService.show(); // Mostrar el spinner
+    if (!this.isFormValid()) {
+      const toast = await this.toastController.create({
+        message: this.translate('por_favor_completa_todos_los_campos'),
+        duration: 2000,
+        color: 'danger'
+      });
+      await toast.present();
+      return;
+    }
+    this.spinnerService.show(); 
 
     const data = {
       identificador: this.email,
@@ -77,18 +91,24 @@ export class RegisterUserPage implements OnInit {
     });
   }
 
+  isFormValid(): boolean {
+    return this.nombre.trim() !== '' &&
+           this.email.trim() !== '' &&
+           this.telefono.trim() !== '' &&
+           this.password.trim() !== '' &&
+           this.isChecked;
+  }
+
   showDatePicker() {
     this.isDatePickerVisible = !this.isDatePickerVisible;
   }
 
   onDateChange(event: any) {
     this.selectedDate = event.detail.value;
-    // this.isDatePickerVisible = false; // Eliminar esta línea
   }
 
   acceptDate() {
-    this.isDatePickerVisible = false; // Oculta el modal
-    console.log('Fecha seleccionada:', this.selectedDate); // Muestra la fecha seleccionada en la consola
-    // Aquí puedes agregar cualquier lógica adicional que necesites
+    this.isDatePickerVisible = false;
+    console.log('Fecha seleccionada:', this.selectedDate);
   }
 }

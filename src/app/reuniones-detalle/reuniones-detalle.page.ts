@@ -12,7 +12,7 @@ export class ReunionesDetallePage {
   isModalOpen: boolean = false;
   selectedUser: any;
   modalUser: any; 
-  eventos: any[] = []; // Asegúrate de que esto sea un array
+  eventos: any[] = []; 
   mostrarMotivoCancelacion: boolean = false;
   motivoCancelacion: string = '';
 
@@ -30,8 +30,8 @@ export class ReunionesDetallePage {
   getEventDetails(uid: string) {
     this.apiService.getEventDetails(uid).subscribe(response => {
         if (response.success) {
-            this.eventos = response.payload; // Asigna el payload a eventos
-            console.log(this.eventos); // Verifica que eventos tenga los datos esperados
+            this.eventos = response.payload; 
+            console.log(this.eventos); 
         } else {
             console.error('Error en la respuesta:', response.message);
         }
@@ -51,17 +51,17 @@ export class ReunionesDetallePage {
   openModal(solicitudId: string) {
     this.resetModal();
     console.log('ID de solicitud:', solicitudId);
-    const event = this.eventos.find(e => e.solicitud === solicitudId); // Buscar el evento por solicitud
-    console.log('Evento encontrado:', event); // Verifica la estructura del evento
+    const event = this.eventos.find(e => e.solicitud === solicitudId); 
+    console.log('Evento encontrado:', event); 
 
     if (event) {
-      console.log('Usuario:', event.usuario); // Verifica si el usuario está presente
+      console.log('Usuario:', event.usuario); 
       if (event.usuario) {
-        this.modalUser = event; // Asignar el objeto de usuario a modalUser
+        this.modalUser = event; 
         console.log('Modal User:', this.modalUser);
       } else {
         console.warn('No hay usuario disponible para este evento');
-        this.modalUser = null; // Asignar null si no hay usuario
+        this.modalUser = null;
       }
     } else {
       console.error('Evento no encontrado para la solicitud:', solicitudId);

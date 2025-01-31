@@ -35,6 +35,10 @@ export class Tab4Page implements OnInit, ViewWillEnter {
     this.loadUserData(); 
   }
 
+  userBlock(){
+    this.router.navigate(['/block-users']);
+  }
+
   loadUserData() {
     const userData = localStorage.getItem('EMUser');
     console.log('Datos del usuario en localStorage:', userData);

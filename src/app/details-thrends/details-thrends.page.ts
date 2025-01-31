@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SpinnerService } from '../services/spinner.service';
 import { ServicesService } from '../services/services.service';
@@ -7,6 +7,9 @@ import { TranslationService } from '../services/translation.service';
 import { Share } from '@capacitor/share';
 import { ModalController } from '@ionic/angular';
 import { EmailModalComponent } from '../components/email-modal/email-modal.component';
+import { IonActionSheet } from '@ionic/angular';
+import { ActionSheetController, IonModal } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-details-thrends',
@@ -20,12 +23,20 @@ export class DetailsThrendsPage implements OnInit {
   trend: any;
   isLoading: boolean = true;
   usuario:any;
+  reportTypes: any[] = [];
+  @ViewChild('blockUserModal', { static: true }) blockUserModal!: IonModal;
+  @ViewChild('reportPostModal', { static: true }) reportPostModal!: IonModal;
+  reportReason: string = '';
+  reportDescription: string = '';
+  selectedReportTypeId: string = '';
+
   constructor(private route: ActivatedRoute,
     private apiService: ServicesService,
     private spinnerService: SpinnerService,
     private toastController: ToastController,
     private translationService: TranslationService,
-    private modalController: ModalController) {
+    private modalController: ModalController,
+    private router: Router) {
     
     this.trend = JSON.parse(localStorage.getItem('selectedTrend') || '{}');
   }
@@ -33,6 +44,36 @@ export class DetailsThrendsPage implements OnInit {
     this.oauth = localStorage.getItem('oauth') || '';
     this.loadTrendDetails(); 
   }
+
+  public actionSheetButtons=[
+    {
+      text:this.translate('reportar-publicacion'),
+      role:'destructive',
+      data:{
+        action:'report'
+      },
+      handler: ()=>{
+        this.openReportPostModal();
+      }
+    },
+    {
+      text:this.translate('bloquear-usuario'),
+      role:'destructive',
+      data:{
+        action: 'block',
+      },
+      handler: () => {
+        this.openBlockUserModal(); 
+      },
+    },
+    {
+      text:'Cancel',
+      role:'cancel',
+      data:{
+        action:'cancel'
+      },
+    }
+  ]
 
   loadTrendDetails() {
     this.spinnerService.show();
@@ -97,7 +138,6 @@ translate(key: string): string {
 async contactar() {
   this.usuario = await JSON.parse(localStorage.getItem('EMUser') || '{}');
   const uid = this.usuario.payload.uid;
-  console.log(uid);
   this.apiService.verificaEmail(uid).subscribe(
     async (verificacion) => {
       console.log('verificacion de correo por servicio', verificacion);
@@ -166,4 +206,144 @@ async openEmailModal(uuid: string) {
   });
   return await modal.present();
 }
+
+
+async openBlockUserModal() {
+  await this.blockUserModal.present();
+  console.log('Modal de bloqueo de usuario abierto');
+}
+
+
+closeBlockUserModal() {
+  this.blockUserModal.dismiss();
+}
+
+  async confirmBlockUser() {
+  this.usuario = await JSON.parse(localStorage.getItem('EMUser') || '{}');
+  const uid = this.usuario.payload.uid;
+  console.log('uid de usuario',uid);
+  console.log('uid del usuario a bloquear',this.trendDetails.usuario);
+  this.apiService.blockUsers(uid, this.trendDetails.usuario).subscribe(
+    async (response) => {
+      const toast = await this.toastController.create({
+        message: 'Usuario bloqueado con éxito.',
+        duration: 2000,
+        color: 'success'
+      });
+      await toast.present();
+      this.closeBlockUserModal();
+      this.spinnerService.hide();
+      this.router.navigate(['/tabs/tab2']);
+    },
+    async (error) => {
+      const toast = await this.toastController.create({
+        message: 'El usuario ya estaba bloqueado.',
+        duration: 2000,
+        color: 'warning'
+      });
+      await toast.present();
+      this.closeBlockUserModal()
+      this.spinnerService.hide();
+    }
+  );
+}
+
+
+async openReportPostModal() {
+  this.loadReportType();
+  await this.reportPostModal.present();
+  this.loadReportType();
+  console.log('Modal de reportar publicación abierto');
+  this.loadReportType();
+}
+
+closeReportPostModal() {
+  this.reportPostModal.dismiss();
+}
+
+async submitReport() {
+    this.usuario = await JSON.parse(localStorage.getItem('EMUser') || '{}');
+    const uid = this.usuario.payload.uid;
+
+    if (!uid) {
+      this.spinnerService.hide();
+      const toast = await this.toastController.create({
+        message: 'Usuario no autenticado. No se puede enviar el reporte.',
+        duration: 2000,
+        color: 'warning'
+      });
+      await toast.present();
+      return; 
+    }
+
+    if (this.reportTypes.length === 0 || !this.selectedReportTypeId) {
+      this.spinnerService.hide();
+      const toast = await this.toastController.create({
+        message: 'Por favor, seleccione un tipo de reporte.',
+        duration: 2000,
+        color: 'warning'
+      });
+      await toast.present();
+      return; 
+    }
+
+    this.spinnerService.show();
+    this.apiService.sendReport(this.trend.uid, uid, this.selectedReportTypeId, this.reportDescription).subscribe(
+      async (response) => {
+        const toast = await this.toastController.create({
+          message: 'Su reporte se mando correctamente.',
+          duration: 2000,
+          color: 'success'
+        });
+        await toast.present();
+        this.closeReportPostModal();
+        this.spinnerService.hide();
+        return;
+      },
+      async (error) => {
+        this.spinnerService.hide();
+        if (error.status === 409) {
+          const toast = await this.toastController.create({
+            message: 'Reclamación ya existe.',
+            duration: 2000,
+            color: 'warning'
+          });
+          await toast.present();
+        } else {
+          const toast = await this.toastController.create({
+            message: 'Error al enviar el reporte.',
+            duration: 2000,
+            color: 'warning'
+          });
+          await toast.present();
+        }
+      }
+    );
+}
+
+loadReportType() {
+  this.spinnerService.show();  
+  this.apiService.reportType().subscribe(
+    (response) => {
+      this.spinnerService.hide(); 
+      if (response.payload && Array.isArray(response.payload)) {
+        this.reportTypes = response.payload.map((types: any) => ({
+          id: types.id,
+          name: this.translate(types.descripcion)
+        }));
+      } else {
+        console.error('La respuesta no contiene payloads o no es un arreglo:', response);
+      }
+    },
+    (error) => {
+      this.spinnerService.hide(); 
+      console.error('Error al cargar intereses:', error);
+    }
+  );
+}
+
+onReportTypeChange(selectedId: string) {
+    this.selectedReportTypeId = selectedId;
+}
+
 }

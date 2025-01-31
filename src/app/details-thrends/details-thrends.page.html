@@ -5,7 +5,14 @@
       <ion-back-button defaultHref="/tabs/tab2"></ion-back-button>
     </ion-buttons>
     <ion-title>{{translate('detalles')}}</ion-title>
+    <ion-buttons slot="primary" *ngIf="oauth">
+      <ion-button id="open-action-sheet">
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+        <ion-action-sheet trigger="open-action-sheet" header="Actions" [buttons]="actionSheetButtons"></ion-action-sheet>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
+  
 </ion-header>
 
 <ion-content *ngIf="!isLoading">
@@ -34,5 +41,56 @@
     </div>
   </div>
 </ion-content>
+
+<ion-modal #blockUserModal>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{translate('confirmacion')}}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeBlockUserModal()">{{translate('cerrar')}}</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content style="display: flex;text-align: center;margin: 10px;">
+     <h1>¡{{translate('advertencia')}}!</h1>
+      <p> {{translate('block-user-msg')}}</p>
+      <p>{{translate('block-user-msg1')}}</p>
+      <ion-button expand="block" color="danger" (click)="confirmBlockUser()">{{translate('bloquear')}}</ion-button>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-modal #reportPostModal>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{translate('report-title')}}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeReportPostModal()">{{translate('cerrar')}}</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <p>{{translate('reportar-msg')}}</p>
+      <ion-item>
+        <ion-label>{{translate('motivo')}}</ion-label>
+        <ion-select placeholder="{{translate('selecciona-motivo')}}" [(ngModel)]="reportReason" (ionChange)="onReportTypeChange($event.detail.value)">
+          <ion-select-option *ngFor="let type of reportTypes" [value]="type.id">{{type.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">{{translate('descripcion')}}</ion-label>
+        <ion-textarea [(ngModel)]="reportDescription"></ion-textarea>
+      </ion-item>
+      <ion-footer>
+        <ion-button expand="block" color="primary" (click)="submitReport()">{{translate('enviar')}}</ion-button>
+        <ion-button expand="block" (click)="closeReportPostModal()">{{translate('cancelar')}}</ion-button>
+      </ion-footer>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+
 
 <app-spinner *ngIf="isLoading"></app-spinner> 

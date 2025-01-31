@@ -16,6 +16,34 @@
     margin-top: 16px;
 }
 
+:host(.heckbox-wrapper) .checkbox-wrapper {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+:host(#ion-checkbox){
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.checkbox-wrapper {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 8px;
+}
+
+.privacy-notice{
+  display: flex !important;
+  flex-direction: column !important;
+   align-items: center !important; 
+   justify-content: center !important;
+    width: 100%;
+}
 
 .fecha {
     margin-top: 16px; 

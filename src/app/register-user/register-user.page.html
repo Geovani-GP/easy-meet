@@ -62,9 +62,23 @@
       </div>
     </div>
 
-    <ion-button expand="full" type="submit">{{translate('registrarme')}}</ion-button>
+    <br>
+   
+    <ion-item>
+      <div class="privacy-notice" style="text-align: center;">
+      <ion-label>
+        {{translate('al-iniciar-sesion-o-registrarte-aceptas')}} 
+      </ion-label>
+      <div class="checkbox-wrapper">
+        <ion-checkbox [(ngModel)]="isChecked" name="terms" required></ion-checkbox>
+        <a class="easy-meet-title" (click)="openPrivacyModal()">{{translate('aviso-de-privacidad')}}</a>
+      </div>
+    </div>
+    </ion-item>
+
+    <ion-button expand="full" type="submit" [disabled]="!isFormValid()">{{translate('registrarme')}}</ion-button>
     
-    <div *ngIf="registerForm.invalid && (registerForm.dirty || registerForm.touched)" class="error-message">
+    <div *ngIf="registerForm.invalid && (registerForm.dirty || registerForm.touched)" class="error-message" style="text-align: center;color: red;">
       <p>Por favor, completa todos los campos requeridos.</p>
     </div>
   </form>
@@ -77,4 +91,38 @@
   </div>
 
 
+  <ion-modal [isOpen]="isPrivacyModalOpen" (ionModalDidDismiss)="isPrivacyModalOpen = false">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>{{translate('aviso-de-privacidad')}}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="isPrivacyModalOpen = false">{{translate('cerrar')}}</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div style="margin:25px">
+        <p>{{translate('contenido-del-aviso-de-privacidad')}}</p>
+        <h2>{{translate('contenido-comportamiento-usuario')}}</h2>
+        <h3>1. {{translate('prohibiciones-generales')}}</h3>
+        <p>{{translate('prohibiciones-generales-descripcion')}}</p>
+        <ul>
+          <li>{{translate('mensajes-de-odio')}}</li>
+          <li>{{translate('acoso-y-amenazas')}}</li>
+          <li>{{translate('publicacion-de-contenido-sexual')}}</li>
+          <li>{{translate('intento-de-fraude')}}</li>
+        </ul>
+        <h3>2. {{translate('tolerancia-cero')}}</h3>
+        <p>{{translate('tolerancia-cero-descripcion')}}</p>
+        <h3>3. {{translate('responsabilidad-usuario')}}</h3>
+        <p>{{translate('responsabilidad-usuario-descripcion')}}</p>
+        <h3>4. {{translate('denuncia-contenido')}}</h3>
+        <p>{{translate('denuncia-contenido-descripcion')}}</p>
+        <h3>5. {{translate('aceptacion-terminos')}} </h3>
+        <p>{{translate('aceptacion-terminos-descripcion')}}</p>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

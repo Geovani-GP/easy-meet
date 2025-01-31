@@ -30,7 +30,7 @@ export class Tab3Page implements OnInit {
   email: string = ''; 
   password: string = ''; 
   userData: any;
-
+  isPrivacyModalOpen: boolean = false;
   constructor(
     private router: Router,
     private spinnerService: SpinnerService,
@@ -45,6 +45,9 @@ export class Tab3Page implements OnInit {
         console.log('Redirect URL:', data.url);
       }
     });
+  }
+  openPrivacyModal() {
+    this.isPrivacyModalOpen = true;
   }
 
   ngOnInit() {

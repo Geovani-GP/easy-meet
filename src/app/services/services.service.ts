@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { catchError, finalize, map, retry } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'; 
@@ -721,6 +721,114 @@ registerUser2(data: any): Observable<any> {
     );
   }
 
+  blockMeets(usuario: string,meet:string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'ApiKey': '_$4DM1N$_',
+    });
+  
+    const body = {
+        usuario: usuario,
+        meet: meet
+    };
+  
+    return this.http.post(`${this.apiUrl}/block/block_meet`, body, { headers }).pipe(
+      map(response => response),
+      catchError(error => {
+        return throwError(error);
+      })
+    );
+  }
+
+  blockUsers(usuario: string,userblock:string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'ApiKey': '_$4DM1N$_',
+    });
+  
+    const body = {
+       usuario: usuario,
+       usuario_block:userblock
+    };
+  
+    return this.http.post(`${this.apiUrl}/block/block_user`, body, { headers }).pipe(
+      map(response => response),
+      catchError(error => {
+        return throwError(error);
+      })
+    );
+  }
+
+  UnlockUsers(usuario: string,userblock:string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'ApiKey': '_$4DM1N$_',
+    });
+  
+    const body = {
+       usuario: usuario,
+       usuario_block:userblock
+    };
+  
+    return this.http.patch(`${this.apiUrl}/block/unblock`, body, { headers }).pipe(
+      map(response => response),
+      catchError(error => {
+        return throwError(error);
+      })
+    );
+  }
+
+  sendReport(meet:string,user: string,type:string,description:string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'ApiKey': '_$4DM1N$_',
+    });
+  
+    const body = {
+      meet: meet,
+      usuario: user,
+      type: type,
+      descripcion:description
+    };
+  
+    return this.http.post(`${this.apiUrl}/complaints/registro`, body, { headers }).pipe(
+      map(response => response),
+      catchError(error => {
+        return throwError(error);
+      })
+    );
+  }
+
+  reportType(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'ApiKey': '_$4DM1N$_',
+    });
+  
+    return this.http.get(`${this.apiUrl}/complaints/types`, { headers }).pipe(
+      map(response => response),
+      catchError(error => {
+        return throwError(error);
+      })
+    );
+  }
+
+  blockList(uuid: string): Observable<any[]> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'ApiKey': '_$4DM1N$_',
+    });
+
+    return this.http.get<any>(`${this.apiUrl}/block/listado?uid=${uuid}`, { headers }).pipe(
+      map(response => response.payload || []),
+      catchError(error => {
+        console.error('Error al obtener la lista de bloqueados', error);
+        return of([]);
+      })
+    );
+  }
+
+  
 }
 
 
