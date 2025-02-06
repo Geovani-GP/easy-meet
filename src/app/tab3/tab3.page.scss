@@ -69,3 +69,13 @@ a {
     width: 70%; 
     height: auto; 
 }
+
+.password-container {
+  display: flex;
+  align-items: center; /* Alinea los elementos en el centro verticalmente */
+}
+
+.eye-icon {
+  font-size: 1.4rem; /* Ajusta el tamaño del icono */
+  margin-bottom: 5px; /* Ajusta la alineación vertical si es necesario */
+}

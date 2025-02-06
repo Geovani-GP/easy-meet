@@ -52,7 +52,7 @@ export class RegisterUserPage implements OnInit {
       identificador: this.email,
       password: this.password,
       nombre: this.nombre,
-      proveedor: 'email',
+      /* proveedor: 'email', */
       sexo: this.sexo || 'X',
       fec_nacimiento: this.selectedDate,
       telefono: this.pais + this.telefono

@@ -17,10 +17,23 @@
       <ion-input type="email"  [(ngModel)]="email" name="email" required></ion-input>
     </ion-item>
     
-    <ion-item>
+   <!--  <ion-item>
       <ion-label position="floating">{{translate('contrasena')}}</ion-label>
       <ion-input type="password" [(ngModel)]="password"  name="password" required></ion-input>
+    </ion-item> -->
+
+    <ion-item class="password-container">
+      <ion-label position="floating">{{ translate('contrasena') }}</ion-label>
+      <ion-input [type]="passwordType" [(ngModel)]="password" name="password" required></ion-input>
+      <ion-icon 
+        slot="end" 
+        class="eye-icon"
+        [name]="passwordType === 'password' ? 'eye-off-outline' : 'eye-outline'" 
+        (click)="togglePasswordVisibility()">
+      </ion-icon>
     </ion-item>
+    
+    
     
     <ion-button expand="full" type="submit">{{translate('iniciar')}}</ion-button>
     <div class="easy-meet-container">
@@ -31,10 +44,10 @@
     <div class="divider">o</div>
     
     <div class="social-buttons">
-        <ion-button expand="full" color="light" class="social-button" fill="clear" (click)="loginWithGoogle()">
+        <!-- <ion-button expand="full" color="light" class="social-button" fill="clear" (click)="loginWithGoogle()">
             <img src="assets/google.png" alt="Google">
             {{translate('iniciar-sesion-con-google')}}
-        </ion-button>
+        </ion-button> -->
 
        <!--  <ion-button expand="full" color="light" class="social-button" fill="clear">
             <img src="assets/facebook.png" alt="Facebook">
@@ -67,36 +80,57 @@
 
   <ion-modal [isOpen]="isPrivacyModalOpen" (ionModalDidDismiss)="isPrivacyModalOpen = false">
     <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>{{translate('aviso-de-privacidad')}}</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="isPrivacyModalOpen = false">{{translate('cerrar')}}</ion-button>
-          </ion-buttons>
+     <ion-header>
+        <ion-toolbar style="text-align: center;">
+          <h3>{{translate('aviso-de-privacidad')}}.</h3>
         </ion-toolbar>
       </ion-header>
       <ion-content>
         <div style="margin:25px">
-        <p>{{translate('contenido-del-aviso-de-privacidad')}}</p>
-        <h2>{{translate('contenido-comportamiento-usuario')}}</h2>
-        <h3>1. {{translate('prohibiciones-generales')}}</h3>
-        <p>{{translate('prohibiciones-generales-descripcion')}}</p>
+        <h3>{{translate('MyECI')}}.</h3>
+        <p>{{translate('TyCSubtitulo')}} </p>
+        <h3>1. {{translate('TyCP1')}}</h3>
         <ul>
-          <li>{{translate('mensajes-de-odio')}}</li>
-          <li>{{translate('acoso-y-amenazas')}}</li>
-          <li>{{translate('publicacion-de-contenido-sexual')}}</li>
-          <li>{{translate('intento-de-fraude')}}</li>
+          <li>{{translate('TyCP1.1')}}</li>
+          <li>{{translate('TyCP1.2')}}</li>
         </ul>
-        <h3>2. {{translate('tolerancia-cero')}}</h3>
-        <p>{{translate('tolerancia-cero-descripcion')}}</p>
-        <h3>3. {{translate('responsabilidad-usuario')}}</h3>
-        <p>{{translate('responsabilidad-usuario-descripcion')}}</p>
-        <h3>4. {{translate('denuncia-contenido')}}</h3>
-        <p>{{translate('denuncia-contenido-descripcion')}}</p>
-        <h3>5. {{translate('aceptacion-terminos')}} </h3>
-        <p>{{translate('aceptacion-terminos-descripcion')}}</p>
+        <h3>2. {{translate('TyCP2')}}</h3>
+        <ul>
+          <li>{{translate('TyCP2.1')}}</li>
+          <li>{{translate('TyCP2.2')}}</li>
+        </ul>
+        <h3>3. {{translate('TyCP3')}}</h3>
+        <ul>
+          <li>{{translate('TyCP3.1')}}</li>
+          <li>{{translate('TyCP3.2')}}</li>
+          <li>{{translate('TyCP3.3')}}</li>
+        </ul>
+        <h3>4. {{translate('TyCP4')}}</h3>
+        <ul>
+          <li>{{translate('TyCP4.1')}}</li>
+          <li>{{translate('TyCP4.2')}}</li>
+        </ul>
+        <h3>5. {{translate('tolerancia-cero')}}</h3>
+        <ul>
+          <li>{{translate('tolerancia-cero-descripcion')}}</li>
+        </ul>
+
+        <h3>6. {{translate('responsabilidad-usuario')}}</h3>
+        <ul>
+          <li>{{translate('responsabilidad-usuario-descripcion')}}</li>
+        </ul>
       </div>
       </ion-content>
+    <ion-footer class="footer-container">
+      <ion-item lines="none" button (click)="isAgreed = !isAgreed; toggleAcceptButton()">
+        <ion-checkbox id="checkTC" slot="start" [(ngModel)]="isAgreed"></ion-checkbox>
+        <ion-label> {{translate('TyCAcp')}}</ion-label>
+      </ion-item>      
+      <ion-button style="margin-bottom: 5%;" expand="full" [disabled]="!isAgreed" (click)="acceptPrivacyPolicy()">
+        {{translate('btn_continuar')}}
+      </ion-button>
+    </ion-footer>
     </ng-template>
   </ion-modal>
+
 </ion-content>

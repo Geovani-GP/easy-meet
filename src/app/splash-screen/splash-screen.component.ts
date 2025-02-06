@@ -2,6 +2,12 @@ import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, ViewChild, 
 import { Storage } from '@ionic/storage-angular';
 import { NavController } from '@ionic/angular';
 import { TranslationService } from '../services/translation.service';
+import { AlertController } from '@ionic/angular';
+import { Device } from '@capacitor/device';
+import { 
+  AppTrackingTransparency, 
+  AppTrackingStatusResponse 
+} from 'capacitor-plugin-app-tracking-transparency';
 
 @Component({
   selector: 'app-splash-screen',
@@ -13,7 +19,8 @@ import { TranslationService } from '../services/translation.service';
 export class SplashScreenComponent implements OnInit {
 
   @ViewChild('videoPlayer') videoPlayer!: ElementRef;
-
+  isPrivacyModalOpen: boolean = false;
+  isAgreed = false;  // Estado del checkbox
   async ngAfterViewInit() {
     const items = document.querySelectorAll('.item-native');
     items.forEach(item => {
@@ -50,11 +57,15 @@ export class SplashScreenComponent implements OnInit {
   constructor(
     private storage: Storage,
     private navCtrl: NavController,
-    private translationService: TranslationService
+    private translationService: TranslationService,
+    private alertController: AlertController
   ) {
     this.translationService.setLanguage('en').then(() => {
       this.updateImageDescriptions();
     });
+
+
+     
   }
 
   async ngOnInit() {
@@ -65,21 +76,43 @@ export class SplashScreenComponent implements OnInit {
       await this.storage.set('selectedLanguage', this.selectedLanguage);
       this.isLanguageSelected = !!this.selectedLanguage;
 
-      console.log('skipSplash:', this.skipSplash);
+      console.log('ingresa el usuario a la app', this.skipSplash);
+
       if (this.skipSplash) {
         this.dismissSplash();
-      } 
+      }
       this.startAutoSlide();
       this.desktop();
-
-     
       await this.translationService.setLanguage(this.selectedLanguage);
-      
-      
       await this.updateImageDescriptions(); 
+      //this.handleTrackingTransparency();
     } catch (error) {
       console.error('Error al inicializar:', error);
     }
+  }
+
+
+  async presentAlertTyC() {
+    const alert = await this.alertController.create({
+      header: 'Aviso',
+      message: 'Debes leer y aceptar los Terminos y Condiciones de Uso para continuar usando EasyMeet',
+      buttons: [{
+        text: 'Siguiente',
+        handler: () => {
+          console.log('El usuario aceptó.');
+          this.isPrivacyModalOpen = true;
+          //this.dismissSplash();
+          // Puedes ejecutar alguna acción aquí si es necesario
+        }
+      }],
+      backdropDismiss: false  // Evita que se cierre tocando fuera de la alerta
+    });
+
+    await alert.present();
+  }
+
+  acceptPrivacyPolicy() {
+    this.isPrivacyModalOpen = false;
   }
 
   async onLanguageChange(event: any) {
@@ -106,6 +139,7 @@ export class SplashScreenComponent implements OnInit {
         ];
 
         console.log('Descripciones de imágenes actualizadas:', this.imageDescriptionsTitle, this.imageDescriptions);
+        
         resolve();
       }, 100);
     });
@@ -119,14 +153,17 @@ export class SplashScreenComponent implements OnInit {
   }
 
   async continue() {
+    //this.presentAlertTyC();
+    
     if (this.skipSplash) {
       await this.storage.set('skipSplash', true);
     }
     else{
       await this.storage.set('skipSplash', false);
     }
-    console.log('Continuar pulsado');
+
     this.dismissSplash();
+//
   }
 
   private dismissSplash() {
@@ -141,6 +178,8 @@ export class SplashScreenComponent implements OnInit {
       this.fadeOut = false;
     }, 500);
   }
+
+  
 
   prevSlide() {
     this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
@@ -230,5 +269,61 @@ export class SplashScreenComponent implements OnInit {
     setTimeout(() => {
       video.style.display = 'none';
     }, 100);
+  }
+
+  toggleAcceptButton() {
+  }
+
+  async handleTrackingTransparency() {
+    try {
+      const deviceInfo = await Device.getInfo();
+
+      if (deviceInfo.platform === 'ios') {
+        console.log('Verificando estado de App Tracking Transparency en iOS');
+        const statusResponse: AppTrackingStatusResponse = await this.getTrackingStatus();
+
+        if (statusResponse.status === 'notDetermined') {
+          console.log('El usuario aún no ha decidido. Solicitando permiso...');
+          await this.requestTrackingPermission();
+        } else {
+
+          if(statusResponse.status == "denied"){
+            this.presentAlertTR(); 
+          }
+        }
+      } else {
+        console.log('Tracking no requiere permisos explícitos en esta plataforma.');
+       
+      }
+    } catch (error) {
+      console.error('Error al manejar el estado de tracking transparency:', error);
+      
+    }
+  }
+
+  async getTrackingStatus(): Promise<AppTrackingStatusResponse> {
+    const response = await AppTrackingTransparency.getStatus();
+    console.log('Estado del permiso de seguimiento:', response);
+    return response;
+  }
+
+  async requestTrackingPermission(): Promise<AppTrackingStatusResponse> {
+    const response = await AppTrackingTransparency.requestPermission();
+    console.log('Resultado de la solicitud de permiso de seguimiento:', response);
+    return response;
+  }
+
+  async presentAlertTR() {
+    const alert = await this.alertController.create({
+      header: this.translate("aviso"),
+      message: this.translate("txtTR"),
+      buttons: [{
+        text: this.translate("aceptar"),
+        handler: () => {
+        }
+      }],
+      backdropDismiss: false  
+    });
+    await alert.present();
   }
 }

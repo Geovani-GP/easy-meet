@@ -84,7 +84,7 @@
           <ion-select [(ngModel)]="selectedLanguage" (ionChange)="onLanguageChange($event)">
             <ion-select-option value="es"> &nbsp;{{ translate('es') }}</ion-select-option>
             <ion-select-option value="en"> &nbsp;{{ translate('en') }}</ion-select-option>
-            <ion-select-option value="fr"> &nbsp;{{ translate('fr') }}</ion-select-option>
+           <!--  <ion-select-option value="fr"> &nbsp;{{ translate('fr') }}</ion-select-option> -->
             <ion-select-option value="de"> &nbsp;{{ translate('de') }}</ion-select-option>
             
           </ion-select>
@@ -93,4 +93,61 @@
       <p class="footer-text">Powered by: Neural Network Initiative (nni.ai) https://nni.ai</p>
     </div>
   </div>
+  
+  <ion-modal [isOpen]="isPrivacyModalOpen" (ionModalDidDismiss)="isPrivacyModalOpen = false">
+    <ng-template>
+     <ion-header>
+        <ion-toolbar style="text-align: center;">
+          <h3>{{translate('aviso-de-privacidad')}}.</h3>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div style="margin:25px">
+        <h3>{{translate('MyECI')}}.</h3>
+        <p>{{translate('TyCSubtitulo')}} </p>
+        <h3>1. {{translate('TyCP1')}}</h3>
+        <ul>
+          <li>{{translate('TyCP1.1')}}</li>
+          <li>{{translate('TyCP1.2')}}</li>
+        </ul>
+        <h3>2. {{translate('TyCP2')}}</h3>
+        <ul>
+          <li>{{translate('TyCP2.1')}}</li>
+          <li>{{translate('TyCP2.2')}}</li>
+        </ul>
+        <h3>3. {{translate('TyCP3')}}</h3>
+        <ul>
+          <li>{{translate('TyCP3.1')}}</li>
+          <li>{{translate('TyCP3.2')}}</li>
+          <li>{{translate('TyCP3.3')}}</li>
+        </ul>
+        <h3>4. {{translate('TyCP4')}}</h3>
+        <ul>
+          <li>{{translate('TyCP4.1')}}</li>
+          <li>{{translate('TyCP4.2')}}</li>
+        </ul>
+        <h3>5. {{translate('tolerancia-cero')}}</h3>
+        <ul>
+          <li>{{translate('tolerancia-cero-descripcion')}}</li>
+        </ul>
+
+        <h3>6. {{translate('responsabilidad-usuario')}}</h3>
+        <ul>
+          <li>{{translate('responsabilidad-usuario-descripcion')}}</li>
+        </ul>
+      </div>
+      </ion-content>
+      <ion-footer class="footer-container">
+        <ion-item lines="none" button (click)="isAgreed = !isAgreed; toggleAcceptButton()">
+          <ion-checkbox id="checkTC" slot="start" [(ngModel)]="isAgreed"></ion-checkbox>
+          <ion-label> {{translate('TyCAcp')}}</ion-label>
+        </ion-item>      
+        <ion-button style="margin-bottom: 5%;" expand="full" [disabled]="!isAgreed" (click)="acceptPrivacyPolicy()">
+          {{translate('btn_continuar')}}
+        </ion-button>
+      </ion-footer>
+    </ng-template>
+  </ion-modal>
+
+
 </ion-content>

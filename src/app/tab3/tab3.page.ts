@@ -9,6 +9,12 @@ import { TranslationService } from '../services/translation.service';
 import { UserService } from '../services/user.service';
 import { SignInWithApple } from '@capacitor-community/apple-sign-in';
 import { App } from '@capacitor/app';
+import { Device } from '@capacitor/device';
+import { 
+  AppTrackingTransparency, 
+  AppTrackingStatusResponse 
+} from 'capacitor-plugin-app-tracking-transparency';
+import { AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
@@ -30,7 +36,10 @@ export class Tab3Page implements OnInit {
   email: string = ''; 
   password: string = ''; 
   userData: any;
+  isAgreed = false;  // Estado del checkbox
   isPrivacyModalOpen: boolean = false;
+  passwordType: string = 'password';
+
   constructor(
     private router: Router,
     private spinnerService: SpinnerService,
@@ -38,7 +47,8 @@ export class Tab3Page implements OnInit {
     private toastController: ToastController,
     public authService: AuthServiceService,
     private translationService: TranslationService,
-    private userService: UserService
+    private userService: UserService,
+    private alertController: AlertController
   ) {
     App.addListener('appUrlOpen', (data: any) => {
       if (data.url && data.url.startsWith('easymeet://callback')) {
@@ -50,15 +60,104 @@ export class Tab3Page implements OnInit {
     this.isPrivacyModalOpen = true;
   }
 
+  togglePasswordVisibility() {
+    this.passwordType = this.passwordType === 'password' ? 'text' : 'password';
+  }
+
+  closePrivacyModal() {
+    this.isPrivacyModalOpen = false;
+  }
+
   ngOnInit() {
     this.checkAuthAndRedirect();
   }
 
   ionViewWillEnter() {
     this.checkAuthAndRedirect();
+    
+  this.handleTrackingTransparency();
+    
   }
 
+  async handleTrackingTransparency() {
+    try {
+      const deviceInfo = await Device.getInfo();
+
+      if (deviceInfo.platform === 'ios') {
+        console.log('Verificando estado de App Tracking Transparency en iOS');
+        const statusResponse: AppTrackingStatusResponse = await this.getTrackingStatus();
+        console.log("statusResponse...", statusResponse);
+        
+        if (statusResponse.status === 'notDetermined') {
+          console.log('Solicitando permiso al usuario...');
+          //mandar la alerta de que se van a solicitar permiso de verificación
+          //despues de aceptar la alerta se manda a llamar la funcion de requestTracking
+          //await this.requestTrackingPermission();
+          console.log("Se lanza la alerta y despues el request");
+          this.presentAlertRequestTracking();
+          
+        } else {
+          console.log('Estado actual del permiso:', statusResponse.status);
+          if(statusResponse.status == "denied"){
+            //Si el usuario niega el permiso se le permite el acceso a la app sin problemas
+            //y ya no se le solicita de nuevo el acces0
+            //this.presentAlertTR(); 
+          }
+        }
+      } else {
+        console.log('Tracking no requiere permisos explícitos en esta plataforma.');
+        
+      }
+    } catch (error) {
+      console.error('Error al manejar el estado de tracking transparency:', error);
+      
+    }
+  }
+
+  async presentAlertRequestTracking() {
+    const alert = await this.alertController.create({
+      header: this.translate("aviso"),
+      message: this.translate("txtTR"),
+      buttons: [{
+        text: this.translate("siguiente"),
+        handler: () => {
+          this.requestTrackingPermission();
+        }
+      }],
+      backdropDismiss: false  
+    });
+    await alert.present();
+  }
+
+  async presentAlertTR() {
+    const alert = await this.alertController.create({
+      header: this.translate("aviso"),
+      message: this.translate("txtTR"),
+      buttons: [{
+        text: this.translate("siguiente"),
+        handler: () => {
+        }
+      }],
+      backdropDismiss: false  
+    });
+    await alert.present();
+  }
+
+  async getTrackingStatus(): Promise<AppTrackingStatusResponse> {
+    const response = await AppTrackingTransparency.getStatus();
+    console.log('Estado del permiso de seguimiento:', response);
+    return response;
+  }
+
+  async requestTrackingPermission(): Promise<AppTrackingStatusResponse> {
+    const response = await AppTrackingTransparency.requestPermission();
+    console.log('Resultado de la solicitud de permiso de seguimiento:', response);
+    return response;
+  }
+
+
   private async checkAuthAndRedirect() {
+    
     if (this.authService.isAuthenticated()) {
       await this.router.navigate(['/tabs/tab4']);
     } else {
@@ -69,6 +168,15 @@ export class Tab3Page implements OnInit {
     const userAgent = window.navigator.userAgent;
     const isStandalone = (window.navigator as any).standalone;
     return /iPad|iPhone|iPod/.test(userAgent) && !isStandalone;
+  }
+
+  acceptPrivacyPolicy() {
+    console.log('El usuario ha aceptado el aviso de privacidad.');
+    this.isPrivacyModalOpen = false;  // Cerrar el modal
+  }
+
+  toggleAcceptButton() {
+    // No es necesario hacer nada aquí, Angular detecta automáticamente el cambio en el template.
   }
 
   async signInWithApple() {
@@ -115,9 +223,14 @@ export class Tab3Page implements OnInit {
 
   async login() {
     this.spinnerService.show();
+    console.log("L...", this.password.length);
+    
     try {
       if (!this.email || !this.password) {
         this.showToast('Por favor, ingresa tu correo electrónico y contraseña.', 'warning');
+        return;
+      }else if(this.password.length < 8){
+        this.showToast('La contraseña ingresada debe de ser igual o mayor a 8 caracteres.', 'warning');
         return;
       }
 
@@ -130,14 +243,15 @@ export class Tab3Page implements OnInit {
       } else {
         this.showToast('Error al obtener los datos del usuario', 'danger');
       }
-    } catch (error) {
-      this.showToast('Error al iniciar sesión. Inténtalo de nuevo.', 'danger');
+    } catch (error:any) {
+      this.showToast('Usuario no encontrado. Inténtalo de nuevamente.', 'danger');
     } finally {
       this.spinnerService.hide();
     }
   }
 
   async loginWithGoogle() {
+   
     this.spinnerService.show();
     try {
       const response = await this.servicesService.loginWithGoogle().toPromise();

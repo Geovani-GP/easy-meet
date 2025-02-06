@@ -107,7 +107,16 @@ export class Tab4Page implements OnInit, ViewWillEnter {
 
 
   logout() {
-    localStorage.clear();
+    let tyc = null;
+    tyc = localStorage.getItem("tyc");
+    if(tyc){
+      localStorage.clear();
+      console.log("existe");
+      localStorage.setItem("tyc", "1");
+    }else{
+      localStorage.clear();
+    }
+
     this.router.navigate(['/tabs/tab3']);
   }
 

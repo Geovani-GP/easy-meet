@@ -79,21 +79,21 @@ EXTERNAL SOURCES:
     :path: "../capacitor-cordova-ios-plugins"
 
 SPEC CHECKSUMS:
-  Capacitor: 679f9673fdf30597493a6362a5d5bf233d46abc2
-  CapacitorApp: 0bc633b4eae40a1f32cd2834788fad3bc42da6a1
-  CapacitorAppTrackingTransparency: 3734ede692f13cbc95f8eab0d5e8b2091dfb8a40
-  CapacitorCamera: 9052bd3f464f135ba983feccd8ac1266272f0549
-  CapacitorCommunityAppleSignIn: c8bba4ca8ff6ff843367ece13ee8af24e9266eb9
+  Capacitor: 69c7f687aabb8d85e543497411e40638b5cc08c0
+  CapacitorApp: f51c08c64df914fc934239fd1b3fc809d62a02f6
+  CapacitorAppTrackingTransparency: 9af286b529c51bf8be00ff2770f2ba95e8397196
+  CapacitorCamera: 9bc7b005d0e6f1d5f525b8137045b60cffffce79
+  CapacitorCommunityAppleSignIn: c9c2541ee7580618055a91b3516c3f0313fe2544
   CapacitorCordova: f48c89f96c319101cd2f0ce8a2b7449b5fb8b3dd
-  CapacitorDevice: 1a215717f0b5061503b21a03508b0ec458a57d78
-  CapacitorHaptics: fe689ade56ef20ec9b041a753c6da70c5d8ec9a9
-  CapacitorKeyboard: 2700f9b18687be021e28b5a09b59eb151a46d5e0
-  CapacitorPluginAppTrackingTransparency: 2a2792623a5a72795f2e8f9ab3f1147573732fd8
-  CapacitorPushNotifications: 2912e63470b895aefadff55c49f1fb8d82769423
-  CapacitorShare: 591ae4693d85686ceb590db8e8b44aa014ec6490
-  CapacitorSplashScreen: 250df9ef8014fac5c7c1fd231f0f8b1d8f0b5624
-  CapacitorStatusBar: b81d4fb5d4e0064c712018071b3ab4b810b39a63
-  CordovaPlugins: 659d45036de94cf0a5a714aef344acea92027cf5
+  CapacitorDevice: 9efd479d71d1baad74b75df531184c3f730eaa48
+  CapacitorHaptics: 05d33e20e394b1977dfd2a00a2621e04098164c1
+  CapacitorKeyboard: 5bf4458dd989b56a60ea15c92cbca5fbfae6e9f9
+  CapacitorPluginAppTrackingTransparency: 92ae9c1cfb5cf477753db9269689332a686f675a
+  CapacitorPushNotifications: 9b178e010634d2f7bfca97b81478503463f86b6c
+  CapacitorShare: 5d49f1b220e991372b4d5d34be9a6080a042bae4
+  CapacitorSplashScreen: b46e61cc4345d73d510530b0c845a30e3602db40
+  CapacitorStatusBar: 9ed7f06318fd436917072a9bf60fda56d12c8bdb
+  CordovaPlugins: bc310919cfe71677750fd2f0954d240b9d0f775b
 
 PODFILE CHECKSUM: b1181dac05c064726e8f7124359b5cce36011602
 

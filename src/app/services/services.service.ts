@@ -7,6 +7,7 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import * as firebase from 'firebase/compat';
 import { AngularFireMessaging } from '@angular/fire/compat/messaging';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { AuthServiceService } from './auth-service.service';
 
 
 @Injectable({
@@ -24,17 +25,31 @@ export class ServicesService {
 
   detailUrl: any;
 
-  constructor() {
+  constructor(private authService:AuthServiceService) {
    this.getDeviceToken();
   }
 
   
   getTrends(page: number): Observable<any> {
+    const userData = localStorage.getItem('EMUser');
+    let urlApi: any;
+  
+    if (userData) {
+      const parsedData = JSON.parse(userData);
+      console.log("dataUser uid", parsedData.payload.uid);
+      urlApi = "/meet/trend?uid="+parsedData.payload.uid+"&page=" + page;
+      
+    } else {
+      console.warn('No hay datos de usuario en localStorage');
+      urlApi = "/meet/trend?page=" + page;
+      
+    }
+
     const headers = new HttpHeaders({
       'ApiKey': '_$4DM1N$_',
     });
 
-    return this.http.get(`${this.apiUrl}/meet/trend?page=${page}`, { headers, observe: 'response' }).pipe(
+    return this.http.get(`${this.apiUrl}${urlApi}`, { headers, observe: 'response' }).pipe(
       map((response) => {
         
         if (response.status === 200) {

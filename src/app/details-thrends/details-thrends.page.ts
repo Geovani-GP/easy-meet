@@ -10,6 +10,8 @@ import { EmailModalComponent } from '../components/email-modal/email-modal.compo
 import { IonActionSheet } from '@ionic/angular';
 import { ActionSheetController, IonModal } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { AlertController, NavController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-details-thrends',
@@ -36,6 +38,8 @@ export class DetailsThrendsPage implements OnInit {
     private toastController: ToastController,
     private translationService: TranslationService,
     private modalController: ModalController,
+    private alertController: AlertController,
+    private navCtrl: NavController,
     private router: Router) {
     
     this.trend = JSON.parse(localStorage.getItem('selectedTrend') || '{}');
@@ -295,9 +299,11 @@ async submitReport() {
           duration: 2000,
           color: 'success'
         });
-        await toast.present();
-        this.closeReportPostModal();
+        //await toast.present();
+       
+      
         this.spinnerService.hide();
+        this.presentAlert24hrs();
         return;
       },
       async (error) => {
@@ -321,6 +327,44 @@ async submitReport() {
     );
 }
 
+async presentAlert24hrs() {
+  const alert = await this.alertController.create({
+    header: this.translate("alertTyCT"),
+    message: this.translate("aler24hrs"),
+    buttons: [{
+      text: this.translate("alertbtnTxt"),
+      handler: () => {
+        console.log('El usuario reporto');
+        this.closeReportPostModal();
+        console.log("enviarlo al tab 2");
+        this.router.navigate(['/tabs/tab2']);
+      }
+    }],
+    backdropDismiss: false  
+  });
+
+  await alert.present();
+}
+
+/* async presentAlert24hrsBlockUser() {
+  const alert = await this.alertController.create({
+    header: this.translate("alertTyCT"),
+    message: this.translate("aler24hrs"),
+    buttons: [{
+      text: this.translate("alertbtnTxt"),
+      handler: () => {
+        console.log('El usuario reporto');
+        this.closeReportPostModal();
+        console.log("enviarlo al tab 2");
+        this.router.navigate(['/tabs/tab2']);
+      }
+    }],
+    backdropDismiss: false  
+  });
+
+  await alert.present();
+}
+ */
 loadReportType() {
   this.spinnerService.show();  
   this.apiService.reportType().subscribe(
