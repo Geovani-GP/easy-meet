@@ -16,6 +16,9 @@
     margin-top: 16px;
 }
 
+:host .datetime-time{
+  display: none !important;
+}
 
 .fecha {
     margin-top: 16px; 

@@ -10,59 +10,103 @@
 
 <ion-content [fullscreen]="true">
   <form (ngSubmit)="register()" #registerForm="ngForm">
-    <ion-item>
-      <ion-label position="floating">{{translate('nombre')}}</ion-label>
-      <ion-input [(ngModel)]="nombre" name="nombre" required></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">{{translate('correo-electronico')}}</ion-label>
-      <ion-input [(ngModel)]="email" name="email" type="email" required></ion-input>
-    </ion-item>
-    <div style="display: flex; justify-content: space-between;">
-      <ion-item style="flex-direction: column;">
+    <div *ngIf="currentStep === 1">
+      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 16px;">
+        <h1 class="easy-meet-title">Te damos la bienvenida a EasyMeet</h1>
+        <img src="../../assets/info_1.png" alt="EasyMeet" style="width: 90%;">
+        <h2 class="easy-meet-text" style="text-align: center;">Vamos a empezar con el registro a continuación te pediremos algunos datos personales a travez de unos sencillos pasos y luego podrás empezar a conocer a nuevas personas</h2>
+        <h2 class="easy-meet-text" style="text-align: center;">¿Estás listo?</h2>
+        <h2 class="easy-meet-text">Pulsa en siguiente para empezar</h2>
+
+      </div>
+      <ion-button expand="full" (click)="nextStep()">{{translate('siguiente')}}</ion-button>
+    </div>
+    <div *ngIf="currentStep === 2">
+      <ion-item>
+        <img src="../../assets/personal.jpg" alt="EasyMeet" style="width: 90%;">
+        <ion-label position="floating">{{translate('nombre')}}</ion-label>
+        <ion-input [(ngModel)]="nombre" name="nombre" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">{{translate('correo-electronico')}}</ion-label>
+        <ion-input [(ngModel)]="email" name="email" type="email" required></ion-input>
+      </ion-item>
+      <ion-button expand="full" (click)="nextStep()">{{translate('siguiente')}}</ion-button>
+      <ion-button expand="full" (click)="previousStep()">{{translate('anterior')}}</ion-button>
+    </div>
+
+    <div *ngIf="currentStep === 3">
+      <ion-item>
+        <img src="../../assets/personal2.jpg" alt="EasyMeet" style="width: 90%;">
         <ion-label position="floating">{{translate('telefono')}}</ion-label>
         <div style="display: flex; justify-content: space-between;flex-direction: row;">
           <ion-select [(ngModel)]="pais" name="pais" interface="popover">
-          <ion-select-option value="52" selected>🇲🇽</ion-select-option>
-          <ion-select-option value="1">🇺🇸</ion-select-option>
-          <ion-select-option value="34">🇪🇸</ion-select-option>
-          <ion-select-option value="54">🇦🇷</ion-select-option>
-          <ion-select-option value="55">🇧🇷</ion-select-option>
-        </ion-select>
-    
-        <ion-input [(ngModel)]="telefono" name="telefono" required></ion-input>
-      </div>
+            <ion-select-option value="52" selected>🇲🇽</ion-select-option>
+            <ion-select-option value="1">🇺🇸</ion-select-option>
+            <ion-select-option value="34">🇪🇸</ion-select-option>
+            <ion-select-option value="54">🇦🇷</ion-select-option>
+            <ion-select-option value="55">🇧🇷</ion-select-option>
+          </ion-select>
+          <ion-input [(ngModel)]="telefono" name="telefono" required></ion-input>
+        </div>
       </ion-item>
+      <ion-button expand="full" (click)="nextStep()">{{translate('siguiente')}}</ion-button>
+      <ion-button expand="full" (click)="previousStep()">{{translate('anterior')}}</ion-button>
     </div>
-    <ion-item>
-      <ion-label position="floating">{{translate('contrasena')}}</ion-label>
-      <ion-input [(ngModel)]="password" name="password" type="password" required></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>{{translate('sexo')}}</ion-label>
-      <ion-select [(ngModel)]="sexo" name="sexo">
-        <ion-select-option value="M">{{translate('masculino')}}</ion-select-option>
-        <ion-select-option value="F">{{translate('femenino')}}</ion-select-option>
-      </ion-select>
-    </ion-item>
 
-    <div class="fecha">
-      <h2 class="easy-meet-title">{{translate('fecha-de-nacimiento')}}</h2>
-      <p (click)="showDatePicker()">{{ selectedDate | date: 'dd MMMM yyyy' }}</p>
-      <div class="modal" *ngIf="isDatePickerVisible">
-        <ion-datetime 
-          [(ngModel)]="selectedDate" 
-          (ionChange)="onDateChange($event)"
-          displayFormat="MMM DD YYYY"
-          pickerFormat="MMM DD YYYY"
-          name="fecha">
-        </ion-datetime>
-        <ion-button expand="full" (click)="acceptDate()">{{translate('aceptar')}}</ion-button>
+    <div *ngIf="currentStep === 4">
+      
+      <ion-item>
+        <img src="../../assets/pass.jpg" alt="EasyMeet" style="width: 90%;">
+        <ion-label position="floating">{{translate('contrasena')}}</ion-label>
+        <ion-input [(ngModel)]="password" name="password" type="password" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{translate('sexo')}}</ion-label>
+        <ion-select [(ngModel)]="sexo" name="sexo">
+          <ion-select-option value="M">{{translate('masculino')}}</ion-select-option>
+          <ion-select-option value="F">{{translate('femenino')}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-button expand="full" (click)="nextStep()">{{translate('siguiente')}}</ion-button>
+      <ion-button expand="full" (click)="previousStep()">{{translate('anterior')}}</ion-button>
+    </div>
+
+    <div *ngIf="currentStep === 5">
+      <div class="fecha">
+        <img src="../../assets/Birth.jpg" alt="EasyMeet" style="width: 90%;">
+        <h2 class="easy-meet-title">{{translate('fecha-de-nacimiento')}}</h2>
+        <p (click)="showDatePicker()">{{ selectedDate | date: 'dd MMMM yyyy' }}</p>
+        <div class="modal" *ngIf="isDatePickerVisible">
+          <ion-datetime 
+            [(ngModel)]="selectedDate" 
+            (ionChange)="onDateChange($event)"
+            displayFormat="DD MMMM YYYY"
+            pickerFormat="DD MMMM YYYY"
+            name="fecha"
+            showDefaultTime="false"
+            doneText="{{translate('aceptar')}}"
+            cancelText="{{translate('cancelar')}}"
+            presentation="date">
+          </ion-datetime>
+          <ion-button expand="full" (click)="acceptDate()">{{translate('aceptar')}}</ion-button>
+        </div>
       </div>
+      <ion-button expand="full" (click)="nextStep()">{{translate('siguiente')}}</ion-button>
+      <ion-button expand="full" (click)="previousStep()">{{translate('anterior')}}</ion-button>
     </div>
 
-    <ion-button expand="full" type="submit">{{translate('registrarme')}}</ion-button>
-    
+    <div *ngIf="currentStep === 6">
+      <h2>{{translate('resumen')}}</h2>
+      <p>{{translate('nombre')}}: {{nombre}}</p>
+      <p>{{translate('correo-electronico')}}: {{email}}</p>
+      <p>{{translate('telefono')}}: {{pais}} {{telefono}}</p>
+      <p>{{translate('sexo')}}: {{sexo}}</p>
+      <p>{{translate('fecha-de-nacimiento')}}: {{ selectedDate | date: 'dd MMMM yyyy' }}</p>
+      <ion-button expand="full" type="submit">{{translate('registrarme')}}</ion-button>
+      <ion-button expand="full" (click)="previousStep()">{{translate('anterior')}}</ion-button>
+    </div>
+
     <div *ngIf="registerForm.invalid && (registerForm.dirty || registerForm.touched)" class="error-message">
       <p>Por favor, completa todos los campos requeridos.</p>
     </div>
@@ -72,8 +116,6 @@
 
   <div class="login-container">
     <p class="easy-meet-container">{{translate('ya-tienes-una-cuenta')}}</p>
-      <a style="text-decoration: none;text-align: center;" href="/tabs/tab3" class="easy-meet-title">{{translate('iniciar-sesion')}}</a>
+    <a style="text-decoration: none;text-align: center;" href="/tabs/tab3" class="easy-meet-title">{{translate('iniciar-sesion')}}</a>
   </div>
-
-
 </ion-content>

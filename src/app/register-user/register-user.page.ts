@@ -10,7 +10,7 @@ import { TranslationService } from '../services/translation.service';
   styleUrls: ['./register-user.page.scss'],
 })
 export class RegisterUserPage implements OnInit {
-  selectedDate: string = new Date().toISOString(); // Fecha inicial
+  selectedDate: string = new Date().toISOString(); 
   isDatePickerVisible: boolean = false;
   email: string = '';
   password: string = '';
@@ -18,6 +18,8 @@ export class RegisterUserPage implements OnInit {
   telefono: string = '';
   sexo: string = 'M';
   pais: string = '52'; 
+  currentStep: number = 1;
+  summaryData: any;
 
   constructor(private spinnerService: SpinnerService, private servicesService: ServicesService, private toastController: ToastController, private router: Router, private translationService: TranslationService) { }
 
@@ -32,49 +34,31 @@ export class RegisterUserPage implements OnInit {
   }
 
   async register() {
-    this.spinnerService.show(); // Mostrar el spinner
-
-    const data = {
+    this.spinnerService.show();
+    this.summaryData = {
       identificador: this.email,
-      password: this.password,
       nombre: this.nombre,
-      proveedor: 'email',
+      telefono: this.pais + this.telefono,
       sexo: this.sexo,
-      fec_nacimiento: this.selectedDate,
-      telefono: this.pais + this.telefono
+      fec_nacimiento: this.selectedDate
     };
 
-    this.servicesService.registerUser2(data).subscribe({
-      next: async (response) => {
-        this.spinnerService.hide();
-        if (response.success) {
-          const toast = await this.toastController.create({
-            message: this.translate('registro_exitoso'),
-            duration: 2000,
-            color: 'success'
-          });
-          await toast.present();
-          this.router.navigate(['/tabs/tab3']);
-        } else {
-          const toast = await this.toastController.create({
-            message: this.translate('error_registro') + ': ' + response.message,
-            duration: 2000,
-            color: 'danger'
-          });
-          await toast.present();
-        }
-      },
-      error: async (error) => {
-        this.spinnerService.hide();
-        console.log(error.message);
-        const toast = await this.toastController.create({
-          message: this.translate('error_verifica_datos'),
-          duration: 2000,
-          color: 'danger'
-        });
-        await toast.present();
-      }
-    });
+    this.showSummary();
+  }
+
+  showSummary() {
+  }
+
+  nextStep() {
+    if (this.currentStep < 6) { 
+      this.currentStep++;
+    }
+  }
+
+  previousStep() {
+    if (this.currentStep > 1) {
+      this.currentStep--;
+    }
   }
 
   showDatePicker() {
@@ -83,12 +67,9 @@ export class RegisterUserPage implements OnInit {
 
   onDateChange(event: any) {
     this.selectedDate = event.detail.value;
-    // this.isDatePickerVisible = false; // Eliminar esta línea
   }
 
   acceptDate() {
-    this.isDatePickerVisible = false; // Oculta el modal
-    console.log('Fecha seleccionada:', this.selectedDate); // Muestra la fecha seleccionada en la consola
-    // Aquí puedes agregar cualquier lógica adicional que necesites
+    this.isDatePickerVisible = false;
   }
 }
